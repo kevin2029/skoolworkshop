@@ -8,7 +8,7 @@ let controller = {
         const workshop = req.body
 
         try {
-            
+
 
 
             res.status(200).json({
@@ -20,7 +20,7 @@ let controller = {
                 error: error.toString()
             })
         }
-
-
     }
+
+    
 }
