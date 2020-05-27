@@ -3,12 +3,13 @@ const connection = require("../config/database");
 
 let controller = {
   validateUser(req, res, next) {
-    let { Name, Email, Address, Password } = req.body;
+    let { Name, Email, Organisation, Address, Password } = req.body;
 
     try {
       // Missing values giving errors
       assert(typeof Name === "string", "Name is missing!");
       assert(typeof Email === "string", "Email is missing!");
+      assert(typeof Organisation === "string", "Organisation is missing!");
       assert(typeof Address === "string", "Address is missing!");
       assert(typeof Password === "string", "Password is missing!");
 
@@ -16,8 +17,10 @@ let controller = {
       assert.match(
         req.body.email,
         /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "e-mail is invalid!"
+        "Email is invalid!"
       );
+
+      next();
     } catch (err) {
       res.status(400).json({
         message: "Error adding user!",
@@ -33,12 +36,13 @@ let controller = {
 
     console.log("user =", user);
 
-    let { Name, Email, Address, Password } = user;
+    let { Name, Email, Organisation, Address, Password } = user;
     let query; // = [query invoeren]
     console.log("createUser query:", query);
+
     connection.query(
       query,
-      [Name, Email, Address, Password],
+      [Name, Email, Organisation, Address, Password],
       (err, results, fields) => {
         if (err) {
           console.log("createUser", err);
