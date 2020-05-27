@@ -3,4 +3,4 @@ const router = express.Router();
 const usercontroller = require("../controllers/user.controller");
 // authenticationcontroller
 
-// router.post('/user', validateUser, createUser)
+router.post("/user", validateUser, createUser);
