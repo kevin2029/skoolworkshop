@@ -18,7 +18,7 @@ app.all('*', (req, res, next) => {
 });
 
 // routes
-app.use('/api', workshoproutes);
+// app.use('/api', workshoproutes);
 
 app.all('*', (req, res, next) => {
   res.status(404).json({
@@ -27,13 +27,13 @@ app.all('*', (req, res, next) => {
 });
 
 app.listen(port, () =>
-  logger.info(`Server listening at http://localhost:${port}`)
+  console.log(`Server listening at http://localhost:${port}`)
 );
 
 function gracefulShutdown() {
-  logger.info('Server shutting down');
+  console.log('Server shutting down');
   connection.end(function (err) {
-    logger.info('Database pool connections closed');
+    console.log('Database pool connections closed');
   });
 }
 
