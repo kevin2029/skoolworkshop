@@ -8,10 +8,7 @@ let controller = {
         logger.info('createworkshop called')
         const workshop = req.body
         let { name, description, tijdsduur, price } = workshop
-        console.log('workshop =', workshop)
-
-        // !!
-        const userId = 1
+        console.log('workshop =', workshop)        
 
         let sqlQuery =
         //query hier
@@ -29,7 +26,7 @@ let controller = {
             // Use the connection
             connection.query(
             sqlQuery,
-            [name, description, tijdsduur, price, userId],
+            [name, description, tijdsduur, price],
             (error, results, fields) => {
                 // When done with the connection, release it.
                 connection.release()
