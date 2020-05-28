@@ -1,10 +1,10 @@
-var formData = new FormData();
-var formData = new FormData(form);
+//var formData = new FormData();
+//var formData = new FormData(form);
 
 function verstuur() {
   console.log("start");
-  let form = document.getElementById("gebruikerNanmaken");
-  let formData = new FormData(form);
-  console.log(formData.getAll);
+  let naam = document.getElementById("naam-beheerder");
+  console.log(naam);
   console.log("stop");
+  alert("The form was submitted");
 }
