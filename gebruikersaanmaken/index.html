@@ -3,16 +3,17 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    <script src="gebruikeraanmaken.js"></script>
   </head>
   <body>
     <ul class="topnav">
-      <li><a class="active" href="#home">1</a></li>
+      <li><a class="active" href="#home">Gebruiker aanmaken</a></li>
       <li><a href="#4">2</a></li>
       <li><a href="#4">3</a></li>
       <li class="right"><a href="#about">4</a></li>
     </ul>
 
-    <form action="gebruikeraanmaken.js" onsubmit="verstuur()">
+    <form id="gebruikerAanmaken">
       <!-- code pagina invoeren-->
       <div class="container">
         <h1>Toevoegen van bedrijf</h1>
@@ -42,8 +43,8 @@
           id="email"
           required
         />
-        <label for="foto"><b>Foto van organisatie</b></label>
-        <input type="file" name="foto" id="foto" required />
+        <!--  <label for="foto"><b>Foto van organisatie</b></label>
+        <input type="file" name="foto" id="foto" required /> -->
 
         <label for="wachtwoord"><b>Wachtwoord</b></label>
         <input
@@ -63,7 +64,9 @@
           required
         />
         <hr />
-        <button type="submit" class="registerbtn">Toevoegen</button>
+        <button type="submit" class="registerbtn" onclick="verstuur()">
+          Toevoegen
+        </button>
       </div>
     </form>
   </body>
