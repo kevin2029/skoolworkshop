@@ -97,7 +97,7 @@ input[type="file"]:hover {
   margin-top: 6px;
 }
 
-/* Clear floats after the columns */
+/* verwijderd floats  na de kolommen */
 .row:after {
   content: "";
   display: table;
@@ -108,7 +108,6 @@ input[type="file"]:hover {
   box-sizing: border-box;
 }
 
-/* Add padding to containers */
 .container {
   margin-left: 10%;
   margin-right: 10%;
@@ -119,7 +118,7 @@ input[type="file"]:hover {
   padding-top: 5%;
 }
 
-/* Full-width input fields */
+/* inputfields */
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -136,13 +135,13 @@ input[type="password"]:focus {
   outline: none;
 }
 
-/* Overwrite default styles of hr */
+/* andere hr style*/
 hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
 
-/* Set a style for the submit/register button */
+/* style voor verstuur knop */
 .registerbtn {
   background-color: #f49700;
   color: white;
@@ -158,11 +157,7 @@ hr {
   opacity: 1;
 }
 
-/* Add a blue text color to links */
-a {
-  color: dodgerblue;
-}
-/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+/* resonpsive layout */
 @media screen and (max-width: 600px) {
   .col-25,
   .col-75,
