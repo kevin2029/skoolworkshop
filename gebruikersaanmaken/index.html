@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="opmaak.css" />
+  </head>
+  <body>
+    <ul class="topnav">
+      <li><a class="active" href="#home">1</a></li>
+      <li><a href="#4">2</a></li>
+      <li><a href="#4">3</a></li>
+      <li class="right"><a href="#about">4</a></li>
+    </ul>
+
+    <form action="gebruikeraanmaken.js" onsubmit="verstuur()">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Toevoegen van bedrijf</h1>
+        <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
+        <hr />
+        <label for="naam-beheerder"><b>Naam van de beheerder</b></label>
+        <input
+          type="text"
+          placeholder="Vul naam in"
+          name="naam-beheerder"
+          id="naam-beheerder"
+          required
+        />
+        <label for="naam-organisatie"><b>Naam van de Organisatie</b></label>
+        <input
+          type="text"
+          placeholder="Vul naam in"
+          name="naam-organisatie"
+          id="naam-organisatie"
+          required
+        />
+        <label for="email"><b>Email</b></label>
+        <input
+          type="text"
+          placeholder="Vul email in"
+          name="email"
+          id="email"
+          required
+        />
+        <label for="foto"><b>Foto van organisatie</b></label>
+        <input type="file" name="foto" id="foto" required />
+
+        <label for="wachtwoord"><b>Wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Vul wachtwoord in"
+          name="wachtwoord"
+          id="wachtwoord"
+          required
+        />
+
+        <label for="wachtwoord-herhaal"><b>Herhaal wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Herhaal wachtwoord"
+          name="wachtwoord-herhaal"
+          id="wachtwoord-herhaal"
+          required
+        />
+        <hr />
+        <button type="submit" class="registerbtn">Toevoegen</button>
+      </div>
+    </form>
+  </body>
+</html>
