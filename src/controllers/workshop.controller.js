@@ -60,7 +60,7 @@ let controller = {
         const workshopName = req.params.name
 
         let sqlQuery = 
-        'DELETE FROM `Workshop` WHERE Naam =' + workshopName
+        'DELETE FROM Workshop WHERE Naam =' + workshopName
         logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery)
 
         connection.query(
@@ -86,7 +86,6 @@ let controller = {
             }
         )
     }
-  
 }
 
 module.exports = controller
