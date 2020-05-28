@@ -50,8 +50,7 @@ let controller = {
                 if (error) {
                     console.log('createUser', error);
                     res.status(400).json({
-                        message: 'User already exists!',
-                        error: error
+                        message: 'User already exists!'
                     });
                 } else {
                     console.log('results', results);
