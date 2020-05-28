@@ -1,10 +1,10 @@
-const connection = require('../config/database');
+const pool = require('../config/database');
 const config = require('../config/config');
 const logger = config.logger;
 
 let connection = {
     connectDatabase(query, parameters, callback) {
-        connection.getConnection((err, connection) => {
+        pool.getConnection((err, connection) => {
             if (err) {
                 res.status(400).json({
                     message: 'Database connection failed!',
