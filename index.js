@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const pool = require('./src/config/database');
 
-const workshoproutes = require('./src/routes/workshop.routes');
+const userroutes = require('./src/routes/user.route');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.all('*', (req, res, next) => {
 });
 
 // routes
-// app.use('/api', workshoproutes);
+app.use('/api', userroutes);
 
 app.all('*', (req, res, next) => {
     res.status(404).json({
