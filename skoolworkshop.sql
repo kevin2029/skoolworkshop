@@ -3,8 +3,8 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
  USE `skoolworkshop`;
 
 
- CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
-    CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
+CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
+CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
 -- -- geef rechten aan deze user
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';

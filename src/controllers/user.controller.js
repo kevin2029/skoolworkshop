@@ -40,7 +40,7 @@ let controller = {
 
         let { Name, Email, Organisation, Address, Password } = user;
         let query =
-            'INSERT INTO `gebruiker` (`Naam`, `Email`, `Organisatie`, `Wachtwoord`) VALUES (?, ?, ?, ?) ';
+            'INSERT INTO `gebruiker` (`Naam`, `Email`, `Organisatie`, `Adress`, `Wachtwoord`) VALUES (?, ?, ?, ?, ?) ';
         console.log('createUser query:', query);
 
         connection.connectDatabase(
@@ -48,16 +48,15 @@ let controller = {
             [Name, Email, Organisation, Address, Password],
             (error, results) => {
                 if (error) {
-                    console.log('createUser', err);
+                    console.log('createUser', error);
                     res.status(400).json({
                         message: 'User already exists!',
-                        error: err
+                        error: error
                     });
                 } else {
                     console.log('results', results);
                     res.status(200).json({
                         result: {
-                            id: results.insertId,
                             ...user
                         }
                     });
