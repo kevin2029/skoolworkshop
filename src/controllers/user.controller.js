@@ -1,5 +1,5 @@
 const assert = require('assert');
-const connection = require('../config/database');
+const connection = require('../config/database.connection');
 
 let controller = {
     validateUser(req, res, next) {
@@ -18,7 +18,7 @@ let controller = {
 
             // Invalid values giving errors
             assert.match(
-                req.body.email,
+                req.body.Email,
                 /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                 'Email is invalid!'
             );
@@ -34,30 +34,29 @@ let controller = {
 
     createUser(req, res, next) {
         console.log('user: ', req.body);
-        const user = req.body;
-        // const currentUserId = req.userId
+        let user = req.body;
 
         console.log('user =', user);
 
-        let { Name, Email, Organisation, Password } = user; // Address ???
-        let query; // = [query invoeren]
+        let { Name, Email, Organisation, Address, Password } = user;
+        let query =
+            'INSERT INTO `gebruiker` (`Naam`, `Email`, `Organisatie`, `Adress`, `Wachtwoord`) VALUES (?, ?, ?, ?, ?) ';
         console.log('createUser query:', query);
 
-        connection.query(
+        connection.connectDatabase(
             query,
-            [Name, Email, Organisation, Password], // ADdress ???
-            (err, results, fields) => {
-                if (err) {
-                    console.log('createUser', err);
+            [Name, Email, Organisation, Address, Password],
+            (error, results) => {
+                if (error) {
+                    console.log('createUser', error);
                     res.status(400).json({
                         message: 'User already exists!',
-                        error: err
+                        error: error
                     });
                 } else {
                     console.log('results', results);
                     res.status(200).json({
                         result: {
-                            id: results.insertId,
                             ...user
                         }
                     });
