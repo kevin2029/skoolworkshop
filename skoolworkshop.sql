@@ -3,12 +3,21 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
  USE `skoolworkshop`;
 
 
+ CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
+    CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
+
+-- -- geef rechten aan deze user
+GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';
+GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
+
+
 
  DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Naam` VARCHAR(50) NOT NULL,
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Organisatie` VARCHAR(50) NOT NULL,
+    `Adress` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(50) BINARY NOT NULL,
 	PRIMARY KEY (`Email`)
 ) 
