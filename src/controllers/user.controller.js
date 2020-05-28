@@ -3,7 +3,7 @@ const connection = require('../config/database');
 
 let controller = {
     validateUser(req, res, next) {
-        let { Name, Email, Organisation, Address, Password } = req.body;
+        let { Name, Email, Organisation, Password } = req.body; // Address ???
 
         try {
             // Missing values giving errors
@@ -13,7 +13,7 @@ let controller = {
                 typeof Organisation === 'string',
                 'Organisation is missing!'
             );
-            assert(typeof Address === 'string', 'Address is missing!');
+            // assert(typeof Address === 'string', 'Address is missing!');
             assert(typeof Password === 'string', 'Password is missing!');
 
             // Invalid values giving errors
@@ -34,18 +34,18 @@ let controller = {
 
     createUser(req, res, next) {
         console.log('user: ', req.body);
-        let user = req.body;
+        const user = req.body;
         // const currentUserId = req.userId
 
         console.log('user =', user);
 
-        let { Name, Email, Organisation, Address, Password } = user;
+        let { Name, Email, Organisation, Password } = user; // Address ???
         let query; // = [query invoeren]
         console.log('createUser query:', query);
 
         connection.query(
             query,
-            [Name, Email, Organisation, Address, Password],
+            [Name, Email, Organisation, Password], // ADdress ???
             (err, results, fields) => {
                 if (err) {
                     console.log('createUser', err);
