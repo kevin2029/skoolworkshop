@@ -10,7 +10,7 @@ function verstuur() {
     const gegevens = { Name, Email, Organisation, Adress, Password };
     console.log(gegevens);
     const options = {
-        method: 'POST',
+        method: 'post',
         headers: {
             'Content-Type': 'application/json'
             // "Content-Type": "application/x-www-form-urlencoded"
