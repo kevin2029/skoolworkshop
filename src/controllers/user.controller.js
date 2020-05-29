@@ -1,3 +1,4 @@
+const logger = require('../config/config').logger;
 const assert = require('assert');
 const connection = require('../config/database.connection');
 
