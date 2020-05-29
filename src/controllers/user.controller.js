@@ -5,7 +5,7 @@ let controller = {
     validateUser(req, res, next) {
         let { Name, Email, Organisation, Adress, Password } = req.body; // Address ???
 
-        console.log(req.body);
+        logger.info('validateUser:', req.body);
         try {
             // Missing values giving errors
             assert(typeof Name === 'string', 'Name is missing!');
@@ -26,7 +26,7 @@ let controller = {
 
             next();
         } catch (err) {
-            console.log('!!!!');
+            logger.debug('Error adding user:', err.message);
             res.status(400).json({
                 message: 'Error adding user!',
                 error: err.message
@@ -35,12 +35,9 @@ let controller = {
     },
 
     createUser(req, res, next) {
-        console.log('user: ', req.body);
-        let user = req.body;
+        logger.info('createUser:', req.body);
 
-        console.log('user =', user);
-
-        let { Name, Email, Organisation, Adress, Password } = user;
+        let { Name, Email, Organisation, Adress, Password } = req.body;
         let query =
             'INSERT INTO `gebruiker` (`Naam`, `Email`, `Organisatie`, `Adress`, `Wachtwoord`) VALUES (?, ?, ?, ?, ?) ';
         console.log('createUser query:', query);
@@ -50,13 +47,13 @@ let controller = {
             [Name, Email, Organisation, Adress, Password],
             (error, results) => {
                 if (error) {
-                    console.log('createUser', error);
+                    logger.debug('createUser:', error);
                     res.status(400).json({
                         message: 'User already exists!',
                         error: error
                     });
                 } else {
-                    console.log('results', results);
+                    logger.info('User added:', user);
                     res.status(200).json({
                         result: {
                             ...user
