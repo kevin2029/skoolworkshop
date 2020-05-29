@@ -10,7 +10,7 @@ router.post(
 );
 router.delete(
     '/workshop/:workshopNaam',
-    workshopcontroller.checkdatabase,
+    workshopcontroller.checkDatabase,
     workshopcontroller.deleteWorkshop
 );
 

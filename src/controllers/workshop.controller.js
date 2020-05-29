@@ -43,8 +43,6 @@ let controller = {
             sqlQuery,
             [naam, beschrijving, kosten, vervolgKosten, genre],
             (error, results, fields) => {
-                // connection.release();
-
                 if (error) {
                     console.log('createWorkshop', error);
                     res.status(400).json({
@@ -63,7 +61,7 @@ let controller = {
         );
     },
 
-    checkdatabase(req, res, next) {
+    checkDatabase(req, res, next) {
         const workshopName = req.params.workshopNaam;
 
         let sqlQuery =
@@ -100,7 +98,6 @@ let controller = {
                     error: error
                 });
             } else {
-                console.log('results: ', results);
                 res.status(200).json({
                     message: 'Workshop succesfully deleted!'
                 });
