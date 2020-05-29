@@ -8,6 +8,10 @@ router.post(
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
-router.delete('/workshop/:workshopNaam', workshopcontroller.deleteWorkshop);
+router.delete(
+    '/workshop/:workshopNaam',
+    workshopcontroller.checkdatabase,
+    workshopcontroller.deleteWorkshop
+);
 
 module.exports = router;

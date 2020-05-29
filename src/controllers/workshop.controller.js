@@ -63,6 +63,25 @@ let controller = {
         );
     },
 
+    checkdatabase(req, res, next) {
+        const workshopName = req.params.workshopNaam;
+
+        let sqlQuery =
+            `SELECT Naam FROM Workshop WHERE Naam = '` + workshopName + `'`;
+        // logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
+
+        connection.connectDatabase(sqlQuery, (error, results, fields) => {
+            if (error) {
+                // logger
+                res.status(400).json({
+                    message: 'Workshop not found'
+                });
+            } else {
+                // logger workshop found
+                next();
+            }
+        });
+    },
     // Check of workshop in db staat
 
     deleteWorkshop(req, res, next) {
@@ -74,8 +93,6 @@ let controller = {
         // logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
-            // connection.release();
-
             if (error) {
                 console.log('deleteWorkshop', error);
                 res.status(400).json({
