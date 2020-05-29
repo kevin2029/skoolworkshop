@@ -1,12 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pool = require('./src/config/database');
+const multer = require('multer');
+var forms = multer();
 
 const userroutes = require('./src/routes/user.route');
+const workshoproutes = require('./src/routes/workshop.routes');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(forms.array());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 
@@ -19,6 +24,22 @@ app.all('*', (req, res, next) => {
 
 // routes
 app.use('/api', userroutes);
+app.use('/api', workshoproutes);
+
+// Add CORS headers
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*'); //Adres van server
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type'
+    );
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 
 app.all('*', (req, res, next) => {
     res.status(404).json({

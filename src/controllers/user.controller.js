@@ -3,8 +3,9 @@ const connection = require('../config/database.connection');
 
 let controller = {
     validateUser(req, res, next) {
-        let { Name, Email, Organisation, Password } = req.body; // Address ???
+        let { Name, Email, Organisation, Adress, Password } = req.body; // Address ???
 
+        console.log(req.body);
         try {
             // Missing values giving errors
             assert(typeof Name === 'string', 'Name is missing!');
@@ -13,7 +14,7 @@ let controller = {
                 typeof Organisation === 'string',
                 'Organisation is missing!'
             );
-            // assert(typeof Address === 'string', 'Address is missing!');
+            assert(typeof Adress === 'string', 'Address is missing!');
             assert(typeof Password === 'string', 'Password is missing!');
 
             // Invalid values giving errors
@@ -25,6 +26,7 @@ let controller = {
 
             next();
         } catch (err) {
+            console.log('!!!!');
             res.status(400).json({
                 message: 'Error adding user!',
                 error: err.message
@@ -38,19 +40,20 @@ let controller = {
 
         console.log('user =', user);
 
-        let { Name, Email, Organisation, Address, Password } = user;
+        let { Name, Email, Organisation, Adress, Password } = user;
         let query =
             'INSERT INTO `gebruiker` (`Naam`, `Email`, `Organisatie`, `Adress`, `Wachtwoord`) VALUES (?, ?, ?, ?, ?) ';
         console.log('createUser query:', query);
 
         connection.connectDatabase(
             query,
-            [Name, Email, Organisation, Address, Password],
+            [Name, Email, Organisation, Adress, Password],
             (error, results) => {
                 if (error) {
                     console.log('createUser', error);
                     res.status(400).json({
-                        message: 'User already exists!'
+                        message: 'User already exists!',
+                        error: error
                     });
                 } else {
                     console.log('results', results);
