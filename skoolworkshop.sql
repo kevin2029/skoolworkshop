@@ -70,8 +70,20 @@ CREATE TABLE IF NOT EXISTS `Evaluatie` (
 ) 
 ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `Factuur` ;
+CREATE TABLE IF NOT EXISTS `Factuur` (
+	`ID` INT NOT NULL UNIQUE,
+    `GebruikerEmail` VARCHAR(50) NOT NULL,
+	`URL` VARCHAR(90) NOT NULL,
+	`IsBetaald` BIT NOT NULL,
+	PRIMARY KEY (`ID`)
+) 
+ENGINE = InnoDB;
 
-
+ALTER TABLE `Factuur` 
+ADD CONSTRAINT `fk_gebruiker_factuur`
+FOREIGN KEY (`Gebruikeremail`) REFERENCES `Gebruiker` (`Email`)
+;
 ALTER TABLE `GebruikerWorkshop` 
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
