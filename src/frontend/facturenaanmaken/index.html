@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    <script src="gebruikeraanmaken.js"></script>
+  </head>
+  <body>
+    <ul class="topnav">
+      <li><a class="active" href="#home">Gebruiker aanmaken</a></li>
+      <li><a href="#4">2</a></li>
+      <li><a href="#4">3</a></li>
+      <li class="right"><a href="#about">4</a></li>
+    </ul>
+
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <label for="file">Choose a file:</label>
+        <input
+          id="fileToUpload"
+          name="fileToUpload"
+          type="file"
+          name="factuur"
+        />
+        <input type="submit" value="Send!" />
+      </div>
+    </form>
+  </body>
+</html>
