@@ -4,6 +4,7 @@ const pool = require('./src/config/database');
 const multer = require('multer');
 var forms = multer();
 
+const authenticationRoutes = require('./src/routes/authentication.routes');
 const userroutes = require('./src/routes/user.route');
 const workshoproutes = require('./src/routes/workshop.routes');
 
@@ -23,6 +24,7 @@ app.all('*', (req, res, next) => {
 });
 
 // routes
+app.use('/api', authenticationRoutes);
 app.use('/api', userroutes);
 app.use('/api', workshoproutes);
 

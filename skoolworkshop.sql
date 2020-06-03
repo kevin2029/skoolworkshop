@@ -2,7 +2,8 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
  CREATE DATABASE `skoolworkshop`;
  USE `skoolworkshop`;
 
-
+-- DROP USER IF EXISTS `skoolworkshop_admin'@'%`
+-- DROP USER IF EXISTS `skoolworkshop_admin'@'localhost`
 CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
 CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
@@ -16,6 +17,15 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Organisatie` VARCHAR(50) NOT NULL,
     `Adress` VARCHAR(50) NOT NULL,
+	`Wachtwoord` VARCHAR(50) BINARY NOT NULL,
+	PRIMARY KEY (`Email`)
+) 
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `Admin` ;
+CREATE TABLE IF NOT EXISTS `Admin` (
+	`Naam` VARCHAR(50) NOT NULL,
+	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Wachtwoord` VARCHAR(50) BINARY NOT NULL,
 	PRIMARY KEY (`Email`)
 ) 
@@ -85,6 +95,7 @@ ALTER TABLE `GebruikerWorkshop`
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
 ;
+ALTER TABLE `GebruikerWorkshop` 
 ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;

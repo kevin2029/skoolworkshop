@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const workshopcontroller = require('../controllers/workshop.controller');
-// authcontroller
+const authcontroller = require('../controllers/authenication.controller');
 
 router.post(
     '/workshop',
+    authcontroller.validateAdmin,
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
