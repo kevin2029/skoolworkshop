@@ -2,13 +2,13 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
  CREATE DATABASE `skoolworkshop`;
  USE `skoolworkshop`;
 
--- DROP USER IF EXISTS `skoolworkshop_admin'@'%`
--- DROP USER IF EXISTS `skoolworkshop_admin'@'localhost`
+DROP USER  'skoolworkshop_admin'@'%';
+DROP USER  'skoolworkshop_admin'@'localhost';
+flush privileges; 
 CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
 CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
 -- -- geef rechten aan deze user
-GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
 DROP TABLE IF EXISTS `gebruiker` ;
@@ -56,7 +56,7 @@ ENGINE= InnoDB;
 
 DROP TABLE IF EXISTS `Cadeaubon` ;
 CREATE TABLE IF NOT EXISTS `Cadeaubon` (
-	`ID` INT NOT NULL UNIQUE,
+	`ID` INT NOT NULL AUTO_INCREMENT UNIQUE ,
 	`Code` VARCHAR(32) NOT NULL,
     `Value` VARCHAR(32),
 	`MaxBedrag` INT,

@@ -128,7 +128,7 @@ module.exports = {
                     'Error getting connection from pool: ' + err.toString()
                 );
                 res.status(500).json({
-                    error: ex.toString(),
+                    error: err.toString(),
                     datetime: new Date().toISOString()
                 });
             }
