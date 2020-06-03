@@ -1,27 +1,29 @@
 const assert = require('assert');
 const connection = require('../config/database.connection');
+const logger = require('../config/config').logger;
 
 let controller = {
     validateWorkshop(req, res, next) {
         try {
             const {
-                naam,
+                naamWorkshop,
                 beschrijving,
                 kosten,
                 vervolgKosten,
-                genre
+                categorie
             } = req.body;
-            assert(typeof naam === 'string', 'Name is missing.');
+            assert(typeof naamWorkshop === 'string', 'Name is missing.');
             assert(typeof beschrijving === 'string', 'Description is missing.');
-            assert(typeof kosten === 'number', 'Price is missing.');
+            assert(typeof kosten === 'string', 'Price is missing.');
             assert(
-                typeof vervolgKosten === 'number',
+                typeof vervolgKosten === 'string',+
                 'Follow-up price is missing.'
             );
-            assert(typeof genre === 'string', 'Genre is missing.');
+            assert(typeof categorie === 'string', 'categorie is missing.');
 
             next();
         } catch (err) {
+            logger.debug('Error', err);
             res.status(400).json({
                 message: 'Error adding workshop!',
                 error: err.message
@@ -30,27 +32,28 @@ let controller = {
     },
 
     createWorkshop(req, res, next) {
-        // logger.info('createworkshop called');
+        logger.info('createworkshop called');
         const workshop = req.body;
-        let { naam, beschrijving, kosten, vervolgKosten, genre } = workshop;
-        console.log('workshop =', workshop);
+        let { naamWorkshop, beschrijving, kosten, vervolgKosten, categorie } = workshop;
+        logger.debug('workshop =', workshop);
 
         let sqlQuery =
-            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `Vervolg Kosten`, `genre`) VALUES (?, ?, ?, ?, ?)';
-        // logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
+            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `Vervolg Kosten`, `categorie`) VALUES (?, ?, ?, ?, ?)';
+        logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
             sqlQuery,
-            [naam, beschrijving, kosten, vervolgKosten, genre],
+            [naamWorkshop, beschrijving, kosten, vervolgKosten, categorie],
             (error, results, fields) => {
+                logger.debug('connectDatabase called');
                 if (error) {
-                    console.log('createWorkshop', error);
+                    logger.debug('createWorkshop', error);
                     res.status(400).json({
                         message: 'Workshop already exists!'
                     });
                 }
                 if (results) {
-                    console.log('results: ', results);
+                    logger.debug('results: ', results);
                     res.status(200).json({
                         result: {
                             ...workshop
@@ -66,16 +69,16 @@ let controller = {
 
         let sqlQuery =
             `SELECT Naam FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
+        logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {
-                // logger
+                logger.debug("Workshop not found")
                 res.status(400).json({
                     message: 'Workshop not found'
                 });
             } else {
-                // logger workshop found
+                logger.debug("Workshop found")
                 next();
             }
         });
@@ -83,12 +86,12 @@ let controller = {
     // Check of workshop in db staat
 
     deleteWorkshop(req, res, next) {
-        // logger.info('deleteWorkshop called');
+        logger.info('deleteWorkshop called');
         const workshopName = req.params.workshopNaam;
 
         let sqlQuery =
             `DELETE FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
+        logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {

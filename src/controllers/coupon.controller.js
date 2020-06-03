@@ -25,7 +25,7 @@ let controller = {
         logger.info('createcoupon called');
         const coupon = req.body;
         let {codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon } = coupon;
-        console.log('coupon =', coupon);
+        logger.debug('coupon =', coupon);
 
         let sqlQuery =
             'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`) VALUES (?, ?, ?, ?)';
@@ -36,13 +36,13 @@ let controller = {
             [codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon ],
             (error, results, fields) => {
                 if (error) {
-                    console.log('createcoupon', error);
+                    logger.debug('createcoupon', error);
                     res.status(400).json({
                         message: 'coupon already exists!'
                     });
                 }
                 if (results) {
-                    console.log('results: ', results);
+                    logger.debug('results: ', results);
                     res.status(200).json({
                         result: {
                             ...coupon
@@ -54,6 +54,7 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
+        logger.info('checkDatabase called')
         const couponCode = req.params.couponCode;
 
         let sqlQuery =
