@@ -100,16 +100,3 @@ ALTER TABLE `Evaluatie`
 ADD CONSTRAINT `fk_gEvaluatie_workshop`
 FOREIGN KEY (`Workshop`) REFERENCES `Workshop` (`Naam`)
 ;
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,6 +6,7 @@ var forms = multer();
 
 const userroutes = require('./src/routes/user.route');
 const workshoproutes = require('./src/routes/workshop.routes');
+const couponroutes = require('./src/routes/coupon.route');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.all('*', (req, res, next) => {
 // routes
 app.use('/api', userroutes);
 app.use('/api', workshoproutes);
+app.use('/api', couponroutes);
 
 // Add CORS headers
 app.use(function (req, res, next) {
