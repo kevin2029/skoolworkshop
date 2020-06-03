@@ -10,9 +10,7 @@ CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
-
-
- DROP TABLE IF EXISTS `gebruiker` ;
+DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Naam` VARCHAR(50) NOT NULL,
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
@@ -31,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `Workshop` (
     `CadeaubonId` INT,
 	`Kosten` INT NOT NULL ,
 	`Vervolg kosten` INT NOT NULL,
-	`Genre` VARCHAR(64)NOT NULL,
+	`Categorie` VARCHAR(64)NOT NULL,
 	PRIMARY KEY (`Naam`)
 ) 
 ENGINE = InnoDB;
@@ -46,14 +44,13 @@ CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
 )   
 ENGINE= InnoDB;
 
-
-
-
 DROP TABLE IF EXISTS `Cadeaubon` ;
 CREATE TABLE IF NOT EXISTS `Cadeaubon` (
 	`ID` INT NOT NULL UNIQUE,
 	`Code` VARCHAR(32) NOT NULL,
-    `Value` INT,
+    `Value` VARCHAR(32),
+	`MaxBedrag` INT,
+	`MaxGebruik` INT,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -72,7 +69,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `Factuur` ;
 CREATE TABLE IF NOT EXISTS `Factuur` (
-	`ID` INT NOT NULL UNIQUE,
+	`ID` INT,
     `GebruikerEmail` VARCHAR(50) NOT NULL,
 	`URL` VARCHAR(90) NOT NULL,
 	`IsBetaald` BIT NOT NULL,
@@ -82,12 +79,12 @@ ENGINE = InnoDB;
 
 ALTER TABLE `Factuur` 
 ADD CONSTRAINT `fk_gebruiker_factuur`
-FOREIGN KEY (`Gebruikeremail`) REFERENCES `Gebruiker` (`Email`)
+FOREIGN KEY (`GebruikerEmail`) REFERENCES `Gebruiker` (`Email`)
 ;
 ALTER TABLE `GebruikerWorkshop` 
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
-,
+;
 ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;
@@ -101,16 +98,3 @@ ALTER TABLE `Evaluatie`
 ADD CONSTRAINT `fk_gEvaluatie_workshop`
 FOREIGN KEY (`Workshop`) REFERENCES `Workshop` (`Naam`)
 ;
-
-
-
-
-
-
-
-
-
-
-
-
-

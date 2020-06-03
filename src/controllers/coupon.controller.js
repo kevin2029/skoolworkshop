@@ -3,58 +3,52 @@ const assert = require('assert');
 const connection = require('../config/database.connection');
 
 let controller = {
-    validateWorkshop(req, res, next) {
+    validateCoupon(req, res, next) {
         try {
             const {
-                naam,
-                beschrijving,
-                kosten,
-                vervolgKosten,
-                genre
+                Code,
+                Value,
+                MaxBedrag,
+                MaxGebruik
             } = req.body;
-            assert(typeof naam === 'string', 'Name is missing.');
-            assert(typeof beschrijving === 'string', 'Description is missing.');
-            assert(typeof kosten === 'number', 'Price is missing.');
-            assert(
-                typeof vervolgKosten === 'number',
-                'Follow-up price is missing.'
-            );
-            assert(typeof genre === 'string', 'Genre is missing.');
+            assert(typeof Code === 'string', 'Code is missing.');
+            assert(typeof Value === 'string', 'Value is missing.');
+            assert(typeof MaxGebruik === 'number','Max uses is missing.');
 
             next();
         } catch (err) {
             res.status(400).json({
-                message: 'Error adding workshop!',
+                message: 'Error adding coupon!',
                 error: err.message
             });
         }
     },
 
-    createWorkshop(req, res, next) {
-        // logger.info('createworkshop called');
-        const workshop = req.body;
-        let { naam, beschrijving, kosten, vervolgKosten, genre } = workshop;
-        console.log('workshop =', workshop);
+    createCoupon(req, res, next) {
+        // logger.info('createcoupon called');
+        const coupon = req.body;
+        let {Code, Value, MaxBedrag, MaxGebruik } = coupon;
+        console.log('coupon =', coupon);
 
         let sqlQuery =
-            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `Vervolg Kosten`, `genre`) VALUES (?, ?, ?, ?, ?)';
-        // logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
+            'INSERT INTO `coupon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`) VALUES (?, ?, ?, ?)';
+        // logger.debug('createcoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
             sqlQuery,
-            [naam, beschrijving, kosten, vervolgKosten, genre],
+            [Code, Value, MaxBedrag, MaxGebruik ],
             (error, results, fields) => {
                 if (error) {
-                    console.log('createWorkshop', error);
+                    console.log('createcoupon', error);
                     res.status(400).json({
-                        message: 'Workshop already exists!'
+                        message: 'coupon already exists!'
                     });
                 }
                 if (results) {
                     console.log('results: ', results);
                     res.status(200).json({
                         result: {
-                            ...workshop
+                            ...coupon
                         }
                     });
                 }
@@ -63,44 +57,44 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        const workshopName = req.params.workshopNaam;
+        const couponCode = req.params.couponCode;
 
         let sqlQuery =
-            `SELECT Naam FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
+            `SELECT Code FROM coupon WHERE Code = '` + couponCode + `'`;
+        //logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {
-                // logger
+                // logger.debug('checkDatabase', 'Coupon not found')
                 res.status(400).json({
-                    message: 'Workshop not found'
+                    message: 'coupon not found'
                 });
             } else {
-                // logger workshop found
+                // logger.debug('checkDatabase', 'Coupon found')
                 next();
             }
         });
     },
-    // Check of workshop in db staat
+    // Check of coupon in db staat
 
-    deleteWorkshop(req, res, next) {
-        // logger.info('deleteWorkshop called');
-        const workshopName = req.params.workshopNaam;
+    deleteCoupon(req, res, next) {
+        // logger.info('deletecoupon called');
+        const couponCode = req.params.couponCode;
 
         let sqlQuery =
-            `DELETE FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
+            `DELETE FROM coupon WHERE Code = '` + couponCode + `'`;
+        // logger.debug('deletecoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {
-                console.log('deleteWorkshop', error);
+                console.log('deletecoupon', error);
                 res.status(400).json({
-                    message: 'deleteWorkshop failed',
+                    message: 'deletecoupon failed',
                     error: error
                 });
             } else {
                 res.status(200).json({
-                    message: 'Workshop succesfully deleted!'
+                    message: 'coupon succesfully deleted!'
                 });
             }
         });
