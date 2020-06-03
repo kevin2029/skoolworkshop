@@ -85,6 +85,8 @@ ALTER TABLE `GebruikerWorkshop`
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
 ;
+
+ALTER TABLE `GebruikerWorkshop`
 ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;
