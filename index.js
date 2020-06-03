@@ -6,7 +6,7 @@ var forms = multer();
 
 const userroutes = require('./src/routes/user.route');
 const workshoproutes = require('./src/routes/workshop.routes');
-const couponroutes = require('./src/routes/coupon.routes');
+const couponroutes = require('./src/routes/coupon.route');
 
 const app = express();
 
