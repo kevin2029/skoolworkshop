@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
-    <script src="workshopaanmaken.js"></script>
-  </head>
-  <body>
-<ul class="topnav">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+  <script src="couponaanmaken.js"></script>
+</head>
+
+<body>
+  <ul class="topnav">
     <li class="dropdown">
       <a href="../gebruiker/index.html">Gebruikers</a>
       <div class="dropdown-content">
@@ -21,14 +23,14 @@
         <a href="../workshop/analysiek.html">Analysiek</a>
       </div>
     </li>
-  </li>
-  <li class="dropdown">
-    <a href="../factuur/index.html">Facturen</a>
-    <div class="dropdown-content">
-      <a href="../factuur/aanmaken.html">Aanmaken</a>
-    </div>
-  </li>
-  <li class="dropdown">
+    </li>
+    <li class="dropdown">
+      <a href="../factuur/index.html">Facturen</a>
+      <div class="dropdown-content">
+        <a href="../factuur/aanmaken.html">Aanmaken</a>
+      </div>
+    </li>
+    <li class="dropdown">
       <a class="active" href="../coupon/index.html">Coupon</a>
       <div class="dropdown-content">
         <a class="active" href="../coupon/aanmaken.html">Aanmaken</a>
@@ -37,5 +39,54 @@
 
     <li class="right"><a href="#about">Google drive</a></li>
   </ul>
-  </body>
-  </html>
+
+  <form id="couponAanmaken" onsubmit="verstuur();return false">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Toevoegen van coupon</h1>
+        <p>Vul dit hele formulier in om een coupon toe te voegen</p>
+        <hr />
+        <label for="code-coupon"><b>Code van de coupon</b></label>
+        <input
+          type="text"
+          placeholder="Vul code in"
+          name="code-coupon"
+          id="code-coupon"
+          required
+        />
+
+        <label for="value-coupon"><b>Vul hier een geldbedrag, percentage, of voor workshop naar keuze "Workshop" in</b></label>
+        <input
+          type="text"
+          placeholder="Vul een waarde in"
+          name="value-coupon"
+          id="value-coupon"
+          required
+        />
+        <label for="maxbedrag-coupon"><b>Maximaal geldbedrag (vul dit alleen bij een percentage in)</b></label>
+        <input
+          type="text"
+          placeholder="Vul maximaal geldbedrag in"
+          name="maxbedrag-coupon"
+          id="maxbedrag-coupon"
+        />
+
+        <label for="maximaalgebruik-coupon"><b>Vul in hoevaak de coupon gebruikt kan worden</b></label>
+        <input
+          type="password"
+          placeholder="Vul maximaal gebruik in"
+          name="maximaalgebruik-coupon"
+          id="maximaalgebruik-coupon"
+          required
+        />
+
+        <hr />
+        <button type="submit" class="registerbtn">
+          Toevoegen
+        </button>
+      </div>
+    </form>
+
+</body>
+
+</html>
