@@ -37,5 +37,54 @@
 
     <li class="right"><a href="#about">Google drive</a></li>
   </ul>
+
+  <form action="upload.php" method="post" enctype="multipart/form-data">
+    <!-- code pagina invoeren-->
+  
+
+  <form id="workshopAanmaken" onsubmit="verstuur();return false">
+    <!-- code pagina invoeren-->
+    <div class="container">
+      <h1>Aanmaken van factuur</h1>
+      <p>Vul dit hele formulier in om een factuur aan te maken</p>
+      <hr />
+      <label for="naam-workshop"><b>Naam van factuur</b></label>
+      <input
+        type="text"
+        placeholder="Vul naam in"
+        name="naam-factuur"
+        id="naam-factuur"
+        required
+      />
+      <label for="beschrijving"><b>E-mailadres</b></label>
+      <input
+        type="text"
+        placeholder="Vul e-mailadres in in"
+        name="emailadres"
+        id="emailadres"
+        required
+      />
+      <label for="start"><b>Datum</b></label>
+      <input type="date" id="start" name="trip-start"
+       value="2020-06-02"
+       min="2020-05-01" max="2020-07-01">
+       <br>
+      <label for="file"><b>Selecteer een bestand</b></label>
+      <input
+        id="fileToUpload"
+        name="fileToUpload"
+        type="file"
+        name="factuur"
+      />
+      <hr />
+      <button type="submit" class="registerbtn">
+        Toevoegen
+      </button>
+
+    
+    </div>
+  </form>
+  
+
   </body>
   </html>
