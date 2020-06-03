@@ -6,15 +6,10 @@ let controller = {
     validateCoupon(req, res, next) {
         logger.info('validatecoupon called', req.body);
         try {
-            const {
-                codeCoupon,
-                valueCoupon,
-                maxBedragCoupon,
-                maxGebruikCoupon
-            } = req.body;
+            const {codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon } = req.body;
             assert(typeof codeCoupon === 'string', 'Code is missing.');
             assert(typeof valueCoupon === 'string', 'Value is missing.');
-            assert(typeof maxGebruikCoupon === 'number','Max uses is missing.');
+            assert(typeof maxGebruikCoupon === 'string','Max uses is missing.');
 
             next();
         } catch (err) {
@@ -29,16 +24,16 @@ let controller = {
     createCoupon(req, res, next) {
         logger.info('createcoupon called');
         const coupon = req.body;
-        let {Code, Value, MaxBedrag, MaxGebruik } = coupon;
+        let {codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon } = coupon;
         console.log('coupon =', coupon);
 
         let sqlQuery =
-            'INSERT INTO `coupon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`) VALUES (?, ?, ?, ?)';
+            'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`) VALUES (?, ?, ?, ?)';
         logger.debug('createcoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
             sqlQuery,
-            [Code, Value, MaxBedrag, MaxGebruik ],
+            [codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon ],
             (error, results, fields) => {
                 if (error) {
                     console.log('createcoupon', error);
@@ -62,7 +57,7 @@ let controller = {
         const couponCode = req.params.couponCode;
 
         let sqlQuery =
-            `SELECT Code FROM coupon WHERE Code = '` + couponCode + `'`;
+            `SELECT Code FROM Cadeaubon WHERE Code = '` + couponCode + `'`;
         logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
@@ -84,7 +79,7 @@ let controller = {
         const couponCode = req.params.couponCode;
 
         let sqlQuery =
-            `DELETE FROM coupon WHERE Code = '` + couponCode + `'`;
+            `DELETE FROM Cadeaubon WHERE Code = '` + couponCode + `'`;
         logger.debug('deletecoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
