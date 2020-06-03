@@ -10,8 +10,6 @@ CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
-
-
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Naam` VARCHAR(50) NOT NULL,
@@ -71,22 +69,22 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `Factuur` ;
 CREATE TABLE IF NOT EXISTS `Factuur` (
-	`ID` INT NOT NULL UNIQUE,
+	`ID` INT,
     `GebruikerEmail` VARCHAR(50) NOT NULL,
-	`URL` VARCHAR(32) NOT NULL,
-	`IsBetaald` BIT NOT NULL
+	`URL` VARCHAR(90) NOT NULL,
+	`IsBetaald` BIT NOT NULL,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
 
-ALTER TABLE `GebruikerFactuur` 
+ALTER TABLE `Factuur` 
 ADD CONSTRAINT `fk_gebruiker_factuur`
-FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
-
+FOREIGN KEY (`GebruikerEmail`) REFERENCES `Gebruiker` (`Email`)
+;
 ALTER TABLE `GebruikerWorkshop` 
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
-,
+;
 ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;
