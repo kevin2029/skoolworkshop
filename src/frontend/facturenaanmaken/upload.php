@@ -37,7 +37,7 @@ if ($uploadOk == 0) {
     echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
     // !!! Script aanroepen !!!
     echo '<script type="text/javascript" src="factuur.js">',
-     `test('../../../upload/facturen/test_factuur.pdf');`,
+     `verstuur();`, // Roept het script niet aan ?????
      '</script>'
 ;
   } else {

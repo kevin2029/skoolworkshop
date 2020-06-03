@@ -19,16 +19,24 @@ async function postData(url = '', data = {}) {
     return response;
 }
 
-function verstuur(path) {
+function verstuur() {
     // const form = new FormData(document.getElementById('gebruikerAanmaken'));
 
-    const userMail = document.getElementById('');
+    // const userMail = document.getElementById('');
 
-    var gegevens = {};
+    // const path = path die meegegeven wordt vanuit upload.php
 
-    console.log(gegevens);
+    // const betaald = if statement die betaald uitleest
 
-    postData('http://localhost:3000/api/user', form)
+    // let gegevens = { userMail, path, betaald }
+
+    let gegevens = {
+        userMail: 's.vanderflaas@student.avans.nl',
+        path: '../../../upload/facturen/test_factuur.pdf',
+        betaald: 'Ja'
+    };
+
+    postData('http://localhost:3000/api/factuur', gegevens)
         .then((data) => {
             console.log(data);
             alert('The form was submitted');

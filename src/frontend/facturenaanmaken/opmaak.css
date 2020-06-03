@@ -1,5 +1,8 @@
+html,
 body {
     margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 ul.topnav {
@@ -45,6 +48,7 @@ ul.topnav li.right {
 }
 
 input[type='text'],
+input[type='password'],
 select,
 textarea {
     width: 100%;
@@ -183,4 +187,56 @@ hr {
 
 body {
     background-color: gray;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.center .login {
+    background-color: #f2f2f2;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.links {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.links a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    background-color: #f49700;
+    color: white;
+    padding: 0.25rem 2rem;
+    border-radius: 5px;
+}
+/*   Dropdown menu */
+li .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: darkgray;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
