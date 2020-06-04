@@ -56,11 +56,7 @@ ENGINE= InnoDB;
 
 DROP TABLE IF EXISTS `Cadeaubon` ;
 CREATE TABLE IF NOT EXISTS `Cadeaubon` (
-<<<<<<< HEAD
 	`ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
-=======
-	`ID` INT NOT NULL AUTO_INCREMENT UNIQUE ,
->>>>>>> develop
 	`Code` VARCHAR(32) NOT NULL,
     `Value` VARCHAR(32),
 	`MaxBedrag` INT,
