@@ -1,28 +1,30 @@
-//var formData = new FormData();
-//var formData = new FormData(form);
+async function postData(url = '', data = {}) {
+  const response = await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: data
+  });
+  return response;
+}
 
 function verstuur() {
-  console.log("start");
+  const form = new FormData(document.getElementById('workshopAanmaken'));
 
-  const naam = document.getElementById("naam-beheerder").value;
-  const organisatie = document.getElementById("naam-organisatie").value;
-  const email = document.getElementById("email").value;
-  const wachtwoord = document.getElementById("wachtwoord").value;
+  console.log(form);
 
-  const gegevens = {
-    Name: naam,
-    Email: email,
-    Organisation: organisatie,
-    Password: wachtwoord,
-  };
-
-  console.log(gegevens);
-
-  // POST request maken op server
-  var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "localhost:3000/api/user", true);
-  xhttp.send(gegevens);
-
-  console.log("stop");
-  alert("The form was submitted");
+  postData('http://localhost:3000/api/workshop', form)
+      .then((data) => {
+          console.log(data);
+          alert('The form was submitted');
+      })
+      .catch((err) => {
+          console.log(err);
+      });
 }
