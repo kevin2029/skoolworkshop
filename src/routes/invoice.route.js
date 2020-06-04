@@ -13,10 +13,10 @@ router.delete(
     invoicecontroller.checkDatabase,
     invoicecontroller.deleteInvoice
 );
-router.get('/Invoice/:InvoiceMail', invoicecontroller.getOne);
-router.get('/Invoice', invoicecontroller.getAll);
+router.get('/invoice/:invoiceMail', invoicecontroller.getOne);
+router.get('/invoice', invoicecontroller.getAll);
 router.put(
-    '/Invoice/:InvoiceMail',
+    '/invoice/:invoiceMail',
     invoicecontroller.checkDatabase,
     invoicecontroller.validateUpdateInvoice,
     invoicecontroller.updateInvoice
