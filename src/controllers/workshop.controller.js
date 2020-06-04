@@ -172,7 +172,7 @@ let controller = {
         }
     },
 
-    updateUser(req, res, next) {
+    updateWorkshop(req, res, next) {
         const workshopName = req.params.workshopName;
         logger.info('updateWorkshop', workshopName);
 
