@@ -36,9 +36,11 @@ function upload (){
   // if everything is ok, try to upload file
   } else {
    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-      echo "<script>alert(The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.)</script>";
+      echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+      return true;
     } else {
-     echo "<script>alert(Sorry, there was an error uploading your file.)</script>";
+     echo "Sorry, there was an error uploading your file.";
+     return false;
    }
   }
 }

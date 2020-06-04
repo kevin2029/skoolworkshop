@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="factuur.js"></script>
   </head>
   <body>
@@ -44,30 +45,30 @@
       <h1>Uploaden van factuur</h1>
       <p>Vul dit hele formulier in om een factuur te uploaden.</p>
       <hr />
-      <label for="E-mailadres"><b>E-mailadres</b></label>
+      <label for="GebruikerMail"><b>E-mailadres</b></label>
       <input
         type="text"
         placeholder="Vul gebruiker's e-mailadres in"
-        name="emailadres"
-        id="emailadres"
+        name="GebruikerMail"
+        id="GebruikerMail"
         required
       />
-      <label for="beschrijving"><b>Betaald?</b></label>
+      <label for="IsBetaald"><b>Betaald?</b></label>
       <input
         type="radio"
-        name="betaald"
-        id="ja"
-        value="ja"
+        name="IsBetaald"
+        id="true"
+        value="true"
         checked
       />
-      <label for="betaald">Ja</label>
+      <label for="IsBetaald">Ja</label>
       <input
         type="radio"
-        name="betaald"
-        id="nee"
-        value="nee"
+        name="IsBetaald"
+        id="false"
+        value="false"
       />
-      <label for="betaald">Nee</label><br>
+      <label for="IsBetaald">Nee</label><br>
       <label for="file"><b>Selecteer een bestand</b></label>
       <input
         id="fileToUpload"

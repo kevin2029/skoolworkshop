@@ -20,21 +20,34 @@ async function postData(url = '', data = {}) {
 }
 
 function verstuur() {
-    // const form = new FormData(document.getElementById('gebruikerAanmaken'));
+    // const GebruikerMail = document.getElementById('GebruikerMail');
 
-    // const userMail = document.getElementById('');
+    // const Path = path die meegegeven wordt vanuit upload.php
 
-    // const path = path die meegegeven wordt vanuit upload.php
+    // const IsBetaald = document.getElementById('IsBetaald').value;
 
-    // const betaald = if statement die betaald uitleest
-
-    // let gegevens = { userMail, path, betaald }
+    // let gegevens = { GebruikerMail, Path, IsBetaald }
 
     let gegevens = {
-        userMail: 's.vanderflaas@student.avans.nl',
-        path: 'test_factuur.pdf', //    ../../../upload/facturen/
-        betaald: 'Ja'
+        GebruikerMail: 's.vanderflaas@student.avans.nl',
+        Path: 'test_factuur.pdf', //    ../../../upload/facturen/
+        IsBetaald: true
     };
+
+    jQuery.ajax({
+        type: 'POST',
+        url: 'factuur.php',
+        dataType: 'json',
+        data: { functionname: 'upload', arguments: [1, 2] },
+
+        success: function (obj, textstatus) {
+            if (!('error' in obj)) {
+                yourVariable = obj.result;
+            } else {
+                console.log(obj.error);
+            }
+        }
+    });
 
     postData('http://localhost:3000/api/factuur', gegevens)
         .then((data) => {
