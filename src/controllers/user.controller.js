@@ -179,7 +179,7 @@ let controller = {
 
         let { Naam, Email, Organisatie, Adress } = req.body;
         let query =
-            `UPDATE gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE Email = '` +
+            `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE Email = '` +
             userMail +
             `';`;
 
