@@ -1,8 +1,8 @@
-html, body {
+body {
   margin: 0;
-  padding: 0;
-  height: 100%;
 }
+
+
 
 ul.topnav {
   list-style-type: none;
@@ -47,7 +47,6 @@ ul.topnav li.right {
 }
 
 input[type="text"],
-input[type="password"],
 select,
 textarea {
   width: 100%;
@@ -100,12 +99,6 @@ input[type="file"]:hover {
   margin-top: 6px;
 }
 
-/* verwijderd floats  na de kolommen */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
 
 * {
   box-sizing: border-box;
@@ -171,11 +164,13 @@ hr {
 }
 @media screen and (max-width: 800px) {
   .container {
+    float: left;
     margin-left: 0;
     margin-right: 0;
     padding-top: 4%;
   }
 }
+
 
 @media screen and (max-width: 375px) {
   .container {
@@ -188,39 +183,6 @@ body {
   background-color: gray;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.center {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
-}
-
-.center .login {
-  background-color: #f2f2f2;
-  padding: 2rem;
-  border-radius: 10px;
-}
-
-.links {
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 5rem;
-}
-
-.links a {
-  text-decoration: none;
-  font-size: 0.8rem;
-  background-color: #f49700;
-  color: white;
-  padding: .25rem 2rem;
-  border-radius: 5px;
-}
 /*   Dropdown menu */
 li .dropdown {
   position: relative;
@@ -239,3 +201,131 @@ li .dropdown {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+.titlefactuur {
+  float: left;
+  width: 70%;
+  background-color: green;
+}
+
+.amountworkshops {
+  width: 7%;
+  background-color: pink;
+}
+
+.search {
+  float: right;
+  width: 20%;
+  background-color: blue;
+  margin-right: 5%;
+}
+
+.containerleft {
+  float: left;
+  width: 75%;
+  background-color: red;
+}
+
+.containerright {
+  float: right;
+  width: 25%;
+  background-color: yellow;
+}
+
+/* zoekbalk */
+
+/*
+
+.search {
+  float: right;
+  display: flex;
+  margin-top: 2%;
+  margin-right: 10%;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #f49700;
+  border-right: none;
+  padding: 25px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #f49700;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #f49700;
+  background: #f49700;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+*/
+
+/* zielige poging om de containers naast elkaar te krijgen */
+
+ /*
+.containerleft {
+  margin-top: 14%;
+  float: left;
+  background-color: white;
+  border-radius: 25px;
+  width: 25%;
+  padding: 3%;
+  margin-left: 2%;
+}
+
+.containerright {
+  margin-top: 10%;
+  float: right;
+  background-color: white;
+  border-radius: 25px;
+  width: 25%;
+  padding: 3%;
+  margin-right: 2%;
+}
+
+.titlefactuur {
+  float: left;
+  margin-left: 10%;
+  margin-top: 1%;
+}
+
+.amountworkshops {
+  float: right;
+  margin-right: 2%;
+  margin-top: 3%;
+}
+*/
+
+/*
+.titlepage {
+  float: left;
+  margin-left: 6%;
+  background-color: orange;
+  margin-top: 3%;
+}
+
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 25px;
+  padding: 10%;
+  padding-top: 5%; 
+*/
