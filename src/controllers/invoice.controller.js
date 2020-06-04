@@ -35,7 +35,7 @@ let controller = {
 
         let { GebruikerMail, Path, IsBetaald } = req.body;
         let query =
-            'INSERT INTO Factuur (GebruikerMail, Path, IsBetaald) VALUES (?, ?, ?);';
+            'INSERT INTO Factuur (GebruikerEmail, Path, IsBetaald) VALUES (?, ?, ?);';
 
         connection.connectDatabase(
             query,
