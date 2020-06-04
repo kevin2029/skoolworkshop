@@ -26,5 +26,6 @@ function verstuur() {
         })
         .catch((err) => {
             console.log(err);
+            alert('The form was not submitted');
         });
 }
