@@ -9,11 +9,16 @@ let connection = {
                 //     message: 'Database connection failed!',
                 //     error: err
                 // });
+            } else {
+                connection.query(
+                    query,
+                    parameters,
+                    (error, results, fields) => {
+                        connection.release();
+                        callback(error, results);
+                    }
+                );
             }
-            connection.query(query, parameters, (error, results, fields) => {
-                connection.release();
-                callback(error, results);
-            });
         });
     }
 };
