@@ -9,9 +9,9 @@ let controller = {
         logger.info('validateInvoice:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof GebruikerMail === 'string', 'Name is missing!');
-            assert(typeof Path === 'string', 'Email is missing!');
-            assert(typeof IsBetaald === 'string', 'Organisation is missing!');
+            assert(typeof GebruikerMail === 'string', 'Email is missing!');
+            assert(typeof Path === 'string', 'Path is missing!');
+            assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
 
             // InvalID values giving errors
             assert.match(
@@ -148,9 +148,15 @@ let controller = {
         logger.info('validateUpdateInvoice:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof GebruikerMail === 'string', 'Name is missing!');
-            assert(typeof Path === 'string', 'Email is missing!');
-            assert(typeof IsBetaald === 'string', 'Organisation is missing!');
+            assert(
+                typeof GebruikerMail === 'string',
+                'Email needs to be a string!'
+            );
+            assert(typeof Path === 'string', 'Path needs to be a string!');
+            assert(
+                typeof IsBetaald === 'string',
+                'IsBetaald needs to be a string!'
+            );
 
             // InvalID values giving errors
             assert.match(
