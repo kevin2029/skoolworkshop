@@ -211,44 +211,43 @@ li .dropdown {
 
 .titlefactuur {
   float: left;
-  width: 70%;
-  background-color: green;
+  margin-left: 5%;
+  width: 50%;
+  margin-top: 3%;
 }
 
 .amountworkshops {
+  float: right;
   width: 7%;
-  background-color: pink;
+  margin-top: 5%;
 }
 
 .search {
   float: right;
   width: 20%;
-  background-color: blue;
   margin-right: 5%;
+  margin-top: 4%;
+  display: flex;
 }
 
 .containerleft {
   float: left;
-  width: 75%;
-  background-color: red;
+  width: 45%;
+  background-color: white;
+  margin-left: 4%;
+  padding: 5%;
+  border-radius: 25px;
 }
 
 .containerright {
   float: right;
-  width: 25%;
-  background-color: yellow;
+  width: 45%;
+  background-color: white;
+  margin-right: 4%;
+  padding: 5%;
+  border-radius: 25px;
 }
 
-/* zoekbalk */
-
-/*
-
-.search {
-  float: right;
-  display: flex;
-  margin-top: 2%;
-  margin-right: 10%;
-}
 
 .searchTerm {
   width: 100%;
@@ -275,57 +274,4 @@ li .dropdown {
   font-size: 20px;
 }
 
-*/
-
-/* zielige poging om de containers naast elkaar te krijgen */
-
- /*
-.containerleft {
-  margin-top: 14%;
-  float: left;
-  background-color: white;
-  border-radius: 25px;
-  width: 25%;
-  padding: 3%;
-  margin-left: 2%;
-}
-
-.containerright {
-  margin-top: 10%;
-  float: right;
-  background-color: white;
-  border-radius: 25px;
-  width: 25%;
-  padding: 3%;
-  margin-right: 2%;
-}
-
-.titlefactuur {
-  float: left;
-  margin-left: 10%;
-  margin-top: 1%;
-}
-
-.amountworkshops {
-  float: right;
-  margin-right: 2%;
-  margin-top: 3%;
-}
-*/
-
-/*
-.titlepage {
-  float: left;
-  margin-left: 6%;
-  background-color: orange;
-  margin-top: 3%;
-}
-
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 10px;
-  background-color: white;
-  border-radius: 25px;
-  padding: 10%;
-  padding-top: 5%; 
 */
