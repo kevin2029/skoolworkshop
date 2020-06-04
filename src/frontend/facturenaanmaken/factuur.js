@@ -32,7 +32,7 @@ function verstuur() {
 
     let gegevens = {
         userMail: 's.vanderflaas@student.avans.nl',
-        path: '../../../upload/facturen/test_factuur.pdf',
+        path: 'test_factuur.pdf', //    ../../../upload/facturen/
         betaald: 'Ja'
     };
 
