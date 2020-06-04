@@ -3,10 +3,10 @@ const assert = require('assert');
 const connection = require('../config/database.connection');
 
 let controller = {
-    valIDateInvoice(req, res, next) {
+    validateInvoice(req, res, next) {
         let { GebruikerMail, Path, IsBetaald } = req.body;
 
-        logger.info('valIDateInvoice:', req.body);
+        logger.info('validateInvoice:', req.body);
         try {
             // Missing values giving errors
             assert(typeof GebruikerMail === 'string', 'Name is missing!');
@@ -17,7 +17,7 @@ let controller = {
             assert.match(
                 req.body.GebruikerMail,
                 /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                'Email is invalID!'
+                'Email is invalid!'
             );
 
             next();
@@ -77,7 +77,7 @@ let controller = {
                 });
             } else {
                 res.status(200).json({
-                    User: results[0]
+                    Invoice: results[0]
                 });
             }
         });
@@ -98,7 +98,7 @@ let controller = {
                 });
             } else {
                 res.status(200).json({
-                    Users: results
+                    Invoices: results
                 });
             }
         });
@@ -113,86 +113,85 @@ let controller = {
             if (results.length == 0) {
                 logger.debug('invoice checkDatabase:', error);
                 res.status(400).json({
-                    message: 'User not found!'
+                    message: 'Invoice not found!'
                 });
             } else {
-                logger.debug('User found, continuing!');
+                logger.debug('Invoice found, continuing!');
                 next();
             }
         });
     },
 
-    deleteUser(req, res, next) {
+    deleteInvoice(req, res, next) {
         const ID = req.params.ID;
 
-        const query = `DELETE FROM Gebruiker WHERE Email = '` + ID + `';`;
+        const query = `DELETE FROM Factuur WHERE ID = '` + ID + `';`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
-                logger.debug('deleteUser', ID, error);
+                logger.debug('deleteInvoice', ID, error);
                 res.status(400).json({
                     error: error
                 });
             } else {
-                logger.info(ID, 'deleted!');
+                logger.info(ID, 'Invoice deleted!');
                 res.status(200).json({
-                    message: 'User deleted!'
+                    message: 'Invoice deleted!'
                 });
             }
         });
     },
 
     validateUpdateInvoice(req, res, next) {
-        let { Naam, Email, Organisatie, Adress } = req.body;
+        let { GebruikerMail, Path, IsBetaald } = req.body;
 
-        logger.info('valIDateUpdateUser:', req.body);
+        logger.info('validateUpdateInvoice:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof Naam === 'string', 'Name is missing!');
-            assert(typeof Email === 'string', 'Email is missing!');
-            assert(typeof Organisatie === 'string', 'Organisation is missing!');
-            assert(typeof Adress === 'string', 'Address is missing!');
+            assert(typeof GebruikerMail === 'string', 'Name is missing!');
+            assert(typeof Path === 'string', 'Email is missing!');
+            assert(typeof IsBetaald === 'string', 'Organisation is missing!');
 
             // InvalID values giving errors
             assert.match(
                 req.body.Email,
                 /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                'Email is invalID!'
+                'Email is invalid!'
             );
 
             next();
         } catch (err) {
-            logger.debug('Error updating user:', err.message);
+            logger.debug('Error updating invoice:', err.message);
             res.status(400).json({
-                message: 'Error updating user!',
+                message: 'Error updating invoice!',
                 error: err.message
             });
         }
     },
 
-    updateUser(req, res, next) {
+    updateInvoice(req, res, next) {
         const ID = req.params.ID;
-        logger.info('updateUser:', ID);
+        logger.info('updateInvoice:', ID);
 
-        let { Naam, Email, Organisatie, Adress } = req.body;
+        let { GebruikerMail, Path, IsBetaald } = req.body;
         let query =
-            `UPDATE gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE Email = '` +
+            `UPDATE Factuur SET GebruikerMail = ?, Path = ?, IsBetaald = ? WHERE Email = '` +
             ID +
             `';`;
 
         connection.connectDatabase(
             query,
-            [Naam, Email, Organisatie, Adress],
+            [GebruikerMail, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
-                    logger.debug('updateUser:', ID, req.body, error);
+                    logger.debug('updateInvoice:', ID, req.body, error);
                     res.status(400).json({
                         error: error
                     });
                 } else {
-                    logger.info('User updated:', req.body);
+                    logger.info('Invoice updated:', req.body);
                     res.status(200).json({
-                        message: 'User updated!',
+                        message: 'Invoice updated!',
                         result: {
                             ...req.body
                         },

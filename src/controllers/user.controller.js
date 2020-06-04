@@ -3,7 +3,7 @@ const assert = require('assert');
 const connection = require('../config/database.connection');
 
 let controller = {
-    validateInvoice(req, res, next) {
+    validateUser(req, res, next) {
         let { Naam, Email, Organisatie, Adress, Wachtwoord } = req.body;
 
         logger.info('validateUser:', req.body);
