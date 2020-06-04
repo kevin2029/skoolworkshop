@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="opmaak.css" />
-    <script src="workshopaanmaken.js"></script>
+    <script src="factuur.js"></script>
   </head>
   <body>
 <ul class="topnav">
@@ -38,7 +38,7 @@
     <li class="right"><a href="#about">Google drive</a></li>
   </ul>
 
-  <form action="upload.php" method="post" enctype="multipart/form-data">
+  <form id="factuurUploaden" onsubmit="verstuur();return false">
     <!-- code pagina invoeren-->
     <div class="container">
       <h1>Uploaden van factuur</h1>

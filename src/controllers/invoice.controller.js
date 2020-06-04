@@ -3,55 +3,53 @@ const assert = require('assert');
 const connection = require('../config/database.connection');
 
 let controller = {
-    validateInvoice(req, res, next) {
-        let { Naam, Email, Organisatie, Adress, Wachtwoord } = req.body;
+    valIDateInvoice(req, res, next) {
+        let { GebruikerMail, Path, IsBetaald } = req.body;
 
-        logger.info('validateUser:', req.body);
+        logger.info('valIDateInvoice:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof Naam === 'string', 'Name is missing!');
-            assert(typeof Email === 'string', 'Email is missing!');
-            assert(typeof Organisatie === 'string', 'Organisation is missing!');
-            assert(typeof Adress === 'string', 'Address is missing!');
-            assert(typeof Wachtwoord === 'string', 'Password is missing!');
+            assert(typeof GebruikerMail === 'string', 'Name is missing!');
+            assert(typeof Path === 'string', 'Email is missing!');
+            assert(typeof IsBetaald === 'string', 'Organisation is missing!');
 
-            // Invalid values giving errors
+            // InvalID values giving errors
             assert.match(
-                req.body.Email,
+                req.body.GebruikerMail,
                 /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                'Email is invalid!'
+                'Email is invalID!'
             );
 
             next();
         } catch (err) {
-            logger.debug('Error adding user:', err.message);
+            logger.debug('Error adding invoice:', err.message);
             res.status(400).json({
-                message: 'Error adding user!',
+                message: 'Error adding invoice!',
                 error: err.message
             });
         }
     },
 
-    createUser(req, res, next) {
-        logger.info('createUser:', req.body);
+    createInvoice(req, res, next) {
+        logger.info('createInvoice:', req.body);
 
-        let { Naam, Email, Organisatie, Adress, Wachtwoord } = req.body;
+        let { GebruikerMail, Path, IsBetaald } = req.body;
         let query =
-            'INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, ?);';
+            'INSERT INTO Factuur (GebruikerMail, Path, IsBetaald) VALUES (?, ?, ?);';
 
         connection.connectDatabase(
             query,
-            [Naam, Email, Organisatie, Adress, Wachtwoord],
+            [GebruikerMail, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
-                    logger.debug('createUser:', req.body, error);
+                    logger.debug('createInvoice:', req.body, error);
                     res.status(400).json({
-                        message: 'A user with this email already exists!'
+                        error: error
                     });
                 } else {
-                    logger.info('User added:', req.body);
+                    logger.info('Invoice added:', req.body);
                     res.status(200).json({
-                        message: 'User added!',
+                        message: 'Invoice added!',
                         result: {
                             ...req.body
                         }
@@ -62,20 +60,20 @@ let controller = {
     },
 
     getOne(req, res, next) {
-        const userMail = req.params.userMail;
+        const ID = req.params.ID;
 
         const query =
-            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE Email = '` +
-            userMail +
+            `SELECT GebruikerMail, Path, IsBetaald FROM Factuur WHERE ID = '` +
+            ID +
             `';`;
 
-        logger.info('getOne:', userMail);
+        logger.info('invoice getOne:', ID);
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
-                logger.debug(userMail, query, error);
+                logger.debug(ID, query, error);
                 res.status(400).json({
-                    message: 'User does not exist!'
+                    message: 'Invoice does not exist!'
                 });
             } else {
                 res.status(200).json({
@@ -86,17 +84,17 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = 'SELECT Naam, Email, Organisatie, Adress FROM gebruiker;';
+        const query = 'SELECT GebruikerMail, Path, IsBetaald FROM Invoice;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
-                logger.debug('getAll', query);
+                logger.debug('invoice getAll', query);
                 res.status(400).json({
                     error: error
                 });
             } else if (results.length == 0) {
                 res.status(200).json({
-                    message: 'There are no users!'
+                    message: 'There are no invoices!'
                 });
             } else {
                 res.status(200).json({
@@ -107,14 +105,13 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        const userMail = req.params.userMail;
+        const ID = req.params.ID;
 
-        const query =
-            `SELECT Naam FROM Gebruiker WHERE Email = '` + userMail + `';`;
+        const query = `SELECT ID FROM Factuur WHERE ID = '` + ID + `';`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (results.length == 0) {
-                logger.debug('checkDatabase:', error);
+                logger.debug('invoice checkDatabase:', error);
                 res.status(400).json({
                     message: 'User not found!'
                 });
@@ -126,18 +123,18 @@ let controller = {
     },
 
     deleteUser(req, res, next) {
-        const userMail = req.params.userMail;
+        const ID = req.params.ID;
 
-        const query = `DELETE FROM Gebruiker WHERE Email = '` + userMail + `';`;
+        const query = `DELETE FROM Gebruiker WHERE Email = '` + ID + `';`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
-                logger.debug('deleteUser', userMail, error);
+                logger.debug('deleteUser', ID, error);
                 res.status(400).json({
                     error: error
                 });
             } else {
-                logger.info(userMail, 'deleted!');
+                logger.info(ID, 'deleted!');
                 res.status(200).json({
                     message: 'User deleted!'
                 });
@@ -145,10 +142,10 @@ let controller = {
         });
     },
 
-    validateUpdateUser(req, res, next) {
+    validateUpdateInvoice(req, res, next) {
         let { Naam, Email, Organisatie, Adress } = req.body;
 
-        logger.info('validateUpdateUser:', req.body);
+        logger.info('valIDateUpdateUser:', req.body);
         try {
             // Missing values giving errors
             assert(typeof Naam === 'string', 'Name is missing!');
@@ -156,11 +153,11 @@ let controller = {
             assert(typeof Organisatie === 'string', 'Organisation is missing!');
             assert(typeof Adress === 'string', 'Address is missing!');
 
-            // Invalid values giving errors
+            // InvalID values giving errors
             assert.match(
                 req.body.Email,
                 /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                'Email is invalid!'
+                'Email is invalID!'
             );
 
             next();
@@ -174,13 +171,13 @@ let controller = {
     },
 
     updateUser(req, res, next) {
-        const userMail = req.params.userMail;
-        logger.info('updateUser:', userMail);
+        const ID = req.params.ID;
+        logger.info('updateUser:', ID);
 
         let { Naam, Email, Organisatie, Adress } = req.body;
         let query =
             `UPDATE gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE Email = '` +
-            userMail +
+            ID +
             `';`;
 
         connection.connectDatabase(
@@ -188,9 +185,8 @@ let controller = {
             [Naam, Email, Organisatie, Adress],
             (error, results, fields) => {
                 if (error) {
-                    logger.debug('updateUser:', userMail, req.body, error);
+                    logger.debug('updateUser:', ID, req.body, error);
                     res.status(400).json({
-                        message: 'A user with this email already exists!',
                         error: error
                     });
                 } else {
