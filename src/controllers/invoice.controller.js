@@ -11,12 +11,11 @@ let controller = {
             // Missing values giving errors
             assert(typeof GebruikerMail === 'string', 'Email is missing!');
             assert(typeof Path === 'string', 'Path is missing!');
-            assert(typeof IsBetaald === 'boolean', 'IsBetaald is missing!');
+            assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
 
             // InvalID values giving errors
-            assert.match(
-                req.body.GebruikerMail,
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            assert(req.body.GebruikerMail.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
                 'Email is invalid!'
             );
 
