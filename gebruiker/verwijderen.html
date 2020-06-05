@@ -1,26 +1,25 @@
-
 <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
-    <script src="workshopaanmaken.js"></script>
+    <script src="gebruikeraanmaken.js"></script>
   </head>
   <body>
     <ul class="topnav">
       <li class="dropdown">
-        <a href="../gebruiker/index.html">Gebruikers</a>
+        <a class="active" href="../gebruiker/index.html">Gebruikers</a>
         <div class="dropdown-content">
           <a href="../gebruiker/aanmaken.html">Aanmaken</a>
           <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+          <a class="active" href="../gebruiker/verwijderen.html">Verwijderen</a>
         </div>
       </li>
       <li class="dropdown">
-        <a  class="active" href="../workshop/index.html">Workshops</a>
+        <a href="../workshop/index.html">Workshops</a>
         <div class="dropdown-content">
           <a href="../workshop/aanmaken.html">Aanmaken</a>
           <a href="../workshop/analysiek.html">Analysiek</a>
-          <a href="../workshop/delete.html">Verwijderen</a>
         </div>
       </li>
     </li>
@@ -37,7 +36,28 @@
         </div>
       </li>
   
-      <li class="right"><a href="#about">Google Drive</a></li>
+      <li class="right"><a href="#about">Google drive</a></li>
     </ul>
+
+    <form id="gebruikerVerwijderen" onsubmit="verstuur();return false">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Verwijderen van gebruiker</h1>
+        <p>Vul dit hele formulier in om een gebruiker te verwijderen</p>
+        <hr />
+        <label for="Email"><b>Email van de gebruiker</b></label>
+        <input
+          type="text"
+          placeholder="Vul email in"
+          name="Email"
+          id="Email"
+          required
+        />
+        <hr />
+        <button type="submit" class="registerbtn">
+          Verwijderen
+        </button>
+      </div>
+    </form>
   </body>
 </html>
