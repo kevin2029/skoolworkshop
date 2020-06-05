@@ -15,11 +15,11 @@ async function postData(url = '', data = {}) {
 }
 
 function verstuur() {
-  const form = new FormData(document.getElementById('workshopAanmaken'));
+  const form = new FormData(document.getElementById('gebruikerAanmaken'));
 
   console.log(form);
 
-  postData('http://localhost:3000/api/workshop', form)
+  postData('http://localhost:3000/api/user/create', form)
       .then((data) => {
           console.log(data);
           alert('The form was submitted');
