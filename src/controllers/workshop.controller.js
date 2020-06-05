@@ -1,5 +1,6 @@
 const assert = require('assert');
 const connection = require('../config/database.connection');
+const logger = require('../config/config').logger;
 
 let controller = {
     validateWorkshop(req, res, next) {
@@ -42,7 +43,7 @@ let controller = {
         console.log('workshop =', workshop);
 
         let sqlQuery =
-            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `VervolgKosten`, `genre`) VALUES (?, ?, ?, ?, ?)';
+            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `VervolgKosten`, `Categorie`) VALUES (?, ?, ?, ?, ?)';
         // logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
@@ -68,20 +69,20 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        const workshopName = req.params.workshopNaam;
+        const workshopName = req.body.workshopNaam;
 
         let sqlQuery =
             `SELECT Naam FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
+        logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {
-                // logger
+                logger.debug('checkDatabase deleteWorkshop not found');
                 res.status(400).json({
                     message: 'Workshop not found'
                 });
             } else {
-                // logger workshop found
+                logger.debug('checkDatabase deleteWorkshop workshop found');
                 next();
             }
         });
@@ -89,12 +90,12 @@ let controller = {
     // Check of workshop in db staat
 
     deleteWorkshop(req, res, next) {
-        // logger.info('deleteWorkshop called');
-        const workshopName = req.params.workshopNaam;
+        logger.info('deleteWorkshop called');
+        const workshopNaam = req.body.workshopNaam;
 
         let sqlQuery =
-            `DELETE FROM Workshop WHERE Naam = '` + workshopName + `'`;
-        // logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
+            `DELETE FROM Workshop WHERE Naam = '` + workshopNaam + `'`;
+        logger.debug('deleteWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {

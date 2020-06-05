@@ -1,6 +1,6 @@
 async function postData(url = '', data = {}) {
     const response = await fetch(url, {
-        method: 'DELETE',
+        method: 'POST',
         mode: 'no-cors',
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -16,12 +16,10 @@ async function postData(url = '', data = {}) {
 
 function verstuur() {
     const form = new FormData(document.getElementById('workshopverwijderen'));
-    const workshopNaam = document.getElementById('naam-workshop');
-    const url = 'localhost:3000/api/workshop/' + workshopNaam;
 
     console.log(form);
 
-    postData(url, form)
+    postData('http://localhost:3000/api/deleteworkshop', form)
         .then((data) => {
             console.log(data);
             alert('The workshop has been deleted!');

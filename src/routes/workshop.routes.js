@@ -8,8 +8,8 @@ router.post(
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
-router.delete(
-    '/workshop/:workshopNaam',
+router.post(
+    '/deleteworkshop',
     workshopcontroller.checkDatabase,
     workshopcontroller.deleteWorkshop
 );
