@@ -1,10 +1,5 @@
 <?php
-$target_dir = "..\\..\\..\\upload\\facturen\\";
-
-$isBetaald = 0;
-if($_POST['IsBetaald'] == 'true') {
-  $isBetaald = 1;
-}
+$target_dir = "..\\..\\..\\upload\\afbeeldingen\\";
 
 // Check ofdat een bestand is geslecteerd.
 if (($_FILES['fileToUpload']['name'] != "")) {
@@ -13,11 +8,11 @@ if (($_FILES['fileToUpload']['name'] != "")) {
   $file = $_FILES['fileToUpload']['name'];
   $path = pathinfo($file);
   $filename = $path['filename'];
-  $ext = $path['extension'];
+  $ext = strtolower($path['extension']);
   
   // Check ofdat bestand PDF is.
-  if(strtolower($ext) != 'pdf') {
-    echo "Sorry, file is not PDF.";
+  if($ext != 'png' || $ext != 'jpg' || $ext != 'jpeg' || $ext != 'bmp' || $ext != 'webp') {
+    echo "Sorry, file is not an image.";
     exit();
   }
 
@@ -33,8 +28,8 @@ if (($_FILES['fileToUpload']['name'] != "")) {
     move_uploaded_file($temp_name, $path_filename_ext);
     echo "File uploaded successfully.";
 
-    // Registreer bestand in API.
-    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext, 'IsBetaald' => $isBetaald]);
+     // Registreer bestand in API.
+    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext]);
 
     exit();
   }
