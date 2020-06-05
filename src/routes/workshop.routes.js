@@ -1,12 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const workshopcontroller = require('../controllers/workshop.controller');
-// authcontroller
+const authcontroller = require('../controllers/authenication.controller');
 
-router.post('/workshop', workshopcontroller.validateWorkshop, workshopcontroller.createWorkshop)
-router.delete('/workshop/:naamWorkshop', workshopcontroller.deleteWorkshop)
-router.get('/workshop/:naamWorkshop', workshopcontroller.getOne)
-router.get('/workshop', workshopcontroller.getAll)
-router.put('/workshop/:naamWorkshop', workshopcontroller.validateUpdateWorkshop, workshopcontroller.updateWorkshop)
+router.post(
+    '/create',
+    workshopcontroller.validateWorkshop,
+    workshopcontroller.createWorkshop
+);
+router.post('/delete', workshopcontroller.deleteWorkshop);
+router.post('/getone', workshopcontroller.getOne);
+router.post('/getall', workshopcontroller.getAll);
+router.post(
+    '/update',
+    workshopcontroller.checkDatabase,
+    workshopcontroller.validateUpdateUser,
+    workshopcontroller.updateWorkshop
+);
 
 module.exports = router;

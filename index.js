@@ -4,6 +4,7 @@ const pool = require('./src/config/database');
 const multer = require('multer');
 var forms = multer();
 
+const authenticationRoutes = require('./src/routes/authentication.routes');
 const userroutes = require('./src/routes/user.route');
 const workshoproutes = require('./src/routes/workshop.routes');
 const couponroutes = require('./src/routes/coupon.route');
@@ -24,9 +25,9 @@ app.all('*', (req, res, next) => {
 });
 
 // routes
-app.use('/api', userroutes);
-app.use('/api', workshoproutes);
-app.use('/api', couponroutes);
+app.use('/api', authenticationRoutes);
+app.use('/api/user', userroutes);
+app.use('/api/workshop', workshoproutes);
 
 // Add CORS headers
 app.use(function (req, res, next) {

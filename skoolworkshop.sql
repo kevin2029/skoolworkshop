@@ -2,12 +2,13 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
  CREATE DATABASE `skoolworkshop`;
  USE `skoolworkshop`;
 
-
+-- DROP USER  'skoolworkshop_admin'@'%';
+-- DROP USER  'skoolworkshop_admin'@'localhost';
+-- flush privileges; 
 CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
 CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
 -- -- geef rechten aan deze user
-GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'%';
 GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
 DROP TABLE IF EXISTS `gebruiker` ;
@@ -16,7 +17,17 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Organisatie` VARCHAR(50) NOT NULL,
     `Adress` VARCHAR(50) NOT NULL,
-	`Wachtwoord` VARCHAR(50) BINARY NOT NULL,
+	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
+	`CadeaubonId` INT,
+	PRIMARY KEY (`Email`)
+) 
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `Admin` ;
+CREATE TABLE IF NOT EXISTS `Admin` (
+	`Naam` VARCHAR(50) NOT NULL,
+	`Email` VARCHAR(50) NOT NULL UNIQUE,
+	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	PRIMARY KEY (`Email`)
 ) 
 ENGINE = InnoDB;
@@ -46,7 +57,7 @@ ENGINE= InnoDB;
 
 DROP TABLE IF EXISTS `Cadeaubon` ;
 CREATE TABLE IF NOT EXISTS `Cadeaubon` (
-	`ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
+	`ID` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`Code` VARCHAR(32) NOT NULL,
     `Value` VARCHAR(32),
 	`MaxBedrag` INT,
@@ -59,10 +70,10 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Evaluatie` ;
 CREATE TABLE IF NOT EXISTS `Evaluatie` (
 	`ID` INT NOT NULL UNIQUE,
-    `Workshop` VARCHAR(50) NOT NULL,
 	`Titel` VARCHAR(32) NOT NULL,
     `Beschrijving` VARCHAR(100),
     `Naam` VARCHAR(50) DEFAULT 'ANON',
+	`GebruikerEmail` VARCHAR(50),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -71,8 +82,8 @@ DROP TABLE IF EXISTS `Factuur` ;
 CREATE TABLE IF NOT EXISTS `Factuur` (
 	`ID` INT AUTO_INCREMENT,
     `GebruikerEmail` VARCHAR(50) NOT NULL,
-	`URL` VARCHAR(90) NOT NULL,
-	`IsBetaald` BIT NOT NULL,
+	`Path` VARCHAR(90) NOT NULL UNIQUE,
+	`IsBetaald` BOOLEAN NOT NULL,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -91,12 +102,12 @@ ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;
 
-ALTER TABLE `Workshop`
-ADD CONSTRAINT `fk_Workshop_CadueaBon`
+ALTER TABLE `Gebruiker`
+ADD CONSTRAINT `fk_Gebruiker_CadueaBon`
 FOREIGN KEY (`CadeaubonId`) REFERENCES `Cadeaubon` (`ID`)
 ;
 
 ALTER TABLE `Evaluatie`
-ADD CONSTRAINT `fk_gEvaluatie_workshop`
-FOREIGN KEY (`Workshop`) REFERENCES `Workshop` (`Naam`)
+ADD CONSTRAINT `fk_Evaluatie_gebruiker`
+FOREIGN KEY (`GebruikerEmail`) REFERENCES `Gebruiker` (`Email`)
 ;
