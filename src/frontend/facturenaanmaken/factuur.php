@@ -32,6 +32,8 @@ if (($_FILES['fileToUpload']['name'] != "")) {
   } else {
     move_uploaded_file($temp_name, $path_filename_ext);
     echo "File uploaded successfully.";
+
+    // Registreer bestand in API.
     post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext, 'IsBetaald' => $isBetaald]);
 
     exit();
