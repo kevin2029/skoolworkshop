@@ -22,6 +22,9 @@ function verstuur() {
     console.log(form);
 
     postData('http://localhost:3000/api/user', form)
+        .then((response) => {
+            console.log(response.json());
+        })
         .then((data) => {
             console.log(data); // JSON data parsed by `response.json()` call
             alert('The form was submitted');
