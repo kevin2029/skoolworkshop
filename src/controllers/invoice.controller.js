@@ -154,7 +154,7 @@ let controller = {
             );
             assert(typeof Path === 'string', 'Path needs to be a string!');
             assert(
-                typeof IsBetaald === 'string',
+                typeof IsBetaald === 'boolean',
                 'IsBetaald needs to be a string!'
             );
 
