@@ -19,7 +19,7 @@ function verstuur() {
 
     console.log(form);
 
-    postData('http://localhost:3000/api/deleteuser', form)
+    postData('http://localhost:3000/api/user/delete', form)
         .then((data) => {
             console.log(data);
             alert('The user was deleted');
