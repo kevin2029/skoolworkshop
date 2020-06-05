@@ -56,7 +56,7 @@ ENGINE= InnoDB;
 
 DROP TABLE IF EXISTS `Cadeaubon` ;
 CREATE TABLE IF NOT EXISTS `Cadeaubon` (
-	`ID` INT NOT NULL AUTO_INCREMENT UNIQUE ,
+	`ID` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`Code` VARCHAR(32) NOT NULL,
     `Value` VARCHAR(32),
 	`MaxBedrag` INT,
@@ -81,8 +81,8 @@ DROP TABLE IF EXISTS `Factuur` ;
 CREATE TABLE IF NOT EXISTS `Factuur` (
 	`ID` INT AUTO_INCREMENT,
     `GebruikerEmail` VARCHAR(50) NOT NULL,
-	`URL` VARCHAR(90) NOT NULL,
-	`IsBetaald` BIT NOT NULL,
+	`Path` VARCHAR(90) NOT NULL UNIQUE,
+	`IsBetaald` BOOLEAN NOT NULL,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -95,7 +95,8 @@ ALTER TABLE `GebruikerWorkshop`
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
 FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
 ;
-ALTER TABLE `GebruikerWorkshop` 
+
+ALTER TABLE `GebruikerWorkshop`
 ADD CONSTRAINT `fk_workshop_gebruikerworkshop`
 FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ;
@@ -109,16 +110,3 @@ ALTER TABLE `Evaluatie`
 ADD CONSTRAINT `fk_gEvaluatie_workshop`
 FOREIGN KEY (`Workshop`) REFERENCES `Workshop` (`Naam`)
 ;
-
-
-
-
-
-
-
-
-
-
-
-
-
