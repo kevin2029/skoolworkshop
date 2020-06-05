@@ -44,7 +44,7 @@ let controller = {
 
         let sqlQuery =
             'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `VervolgKosten`, `Categorie`) VALUES (?, ?, ?, ?, ?)';
-        // logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
+        logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
             sqlQuery,
