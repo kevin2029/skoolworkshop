@@ -1,6 +1,5 @@
 // Example POST method implementation:
 async function postData(url = '', data = {}) {
-    // Default options are marked with *
     const response = await fetch(url, {
         method: 'POST',
         mode: 'no-cors',
@@ -11,9 +10,9 @@ async function postData(url = '', data = {}) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: data // body data type must match "Content-Type" header
+        body: data
     });
-    return response; //.json(); // parses JSON response into native JavaScript objects
+    return response;
 }
 
 function verstuur() {
@@ -26,7 +25,7 @@ function verstuur() {
             console.log(response.json());
         })
         .then((data) => {
-            console.log(data); // JSON data parsed by `response.json()` call
+            console.log(data);
             alert('The form was submitted');
         })
         .catch((err) => {

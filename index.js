@@ -8,6 +8,7 @@ const authenticationRoutes = require('./src/routes/authentication.routes');
 const userroutes = require('./src/routes/user.route');
 const workshoproutes = require('./src/routes/workshop.routes');
 const couponroutes = require('./src/routes/coupon.route');
+const invoiceroutes = require('./src/routes/invoice.route');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.all('*', (req, res, next) => {
 app.use('/api', authenticationRoutes);
 app.use('/api/user', userroutes);
 app.use('/api/workshop', workshoproutes);
+app.use('/api/invoice', invoiceroutes);
 
 // Add CORS headers
 app.use(function (req, res, next) {
