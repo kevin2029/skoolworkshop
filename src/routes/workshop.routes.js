@@ -4,15 +4,18 @@ const workshopcontroller = require('../controllers/workshop.controller');
 const authcontroller = require('../controllers/authenication.controller');
 
 router.post(
-    '/workshop',
-    authcontroller.validateAdmin,
+    '/create',
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
-router.delete(
-    '/workshop/:workshopNaam',
+router.post('/delete', workshopcontroller.deleteWorkshop);
+router.post('/getone', workshopcontroller.getOne);
+router.post('/getall', workshopcontroller.getAll);
+router.post(
+    '/update',
     workshopcontroller.checkDatabase,
-    workshopcontroller.deleteWorkshop
+    workshopcontroller.validateUpdateUser,
+    workshopcontroller.updateWorkshop
 );
 
 module.exports = router;

@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<link rel="stylesheet" href="opmaak.css" />
-	</head>
-	<body class="center">
-		<div class="login">
-			<h1 class="text-center">Inloggen SkoolWorkshop</h1>
-			<label for="email-inlog"><b>Email</b></label>
-			<input type="text" placeholder="Vul email in" name="email-inlog" id="email-inlog" required />
-        
-            <label for="wachtwoord-inlog"><b>Wachtwoord</b></label>
-			<input type="password" placeholder="Vul wachtwoord in" name="wachtwoord-inlog" id="wachtwoord-inlog" required />
-        
-            <button type="submit" class="registerbtn">
-                Log in
-            </button>
-        </div>
-	</body>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="opmaak.css" />
+        <script src="inloggen.js"></script>
+    </head>
+    <body>
+        <ul class="topnav">
+            <li><a class="active" href="#home">Gebruiker aanmaken</a></li>
+            <li><a href="#4">2</a></li>
+            <li><a href="#4">3</a></li>
+            <li class="right"><a href="#about">4</a></li>
+        </ul>
+
+        <form id="inloggen" onsubmit="verstuur();return false">
+            <!-- code pagina invoeren-->
+            <div class="container">
+                <h1 class="text-center">Inloggen SkoolWorkshop</h1>
+                <label for="Email"><b>Email</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul email in"
+                    name="Email"
+                    id="Email"
+                    required
+                />
+
+                <label for="Wachtwoord"><b>Wachtwoord</b></label>
+                <input
+                    type="password"
+                    placeholder="Vul wachtwoord in"
+                    name="Wachtwoord"
+                    id="Wachtwoord"
+                    required
+                />
+
+                <button type="submit" class="registerbtn">
+                    Log in
+                </button>
+            </div>
+        </form>
+    </body>
 </html>

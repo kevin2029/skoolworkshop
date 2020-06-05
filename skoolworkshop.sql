@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `Workshop` (
 	`Beschrijving` VARCHAR(1000) NOT NULL,
     `CadeaubonId` INT,
 	`Kosten` INT NOT NULL ,
-	`Vervolg kosten` INT NOT NULL,
+	`VervolgKosten` INT NOT NULL,
 	`Categorie` VARCHAR(64)NOT NULL,
 	PRIMARY KEY (`Naam`)
 ) 

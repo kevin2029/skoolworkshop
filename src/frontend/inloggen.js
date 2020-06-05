@@ -17,14 +17,11 @@ async function postData(url = '', data = {}) {
 }
 
 function verstuur() {
-    const form = new FormData(document.getElementById('gebruikerAanmaken'));
+    const form = new FormData(document.getElementById('inloggen'));
 
     console.log(form);
 
-    postData('http://localhost:3000/api/user', form)
-        .then((response) => {
-            console.log(response.json());
-        })
+    postData('http://localhost:3000/api/login', form)
         .then((data) => {
             console.log(data); // JSON data parsed by `response.json()` call
             alert('The form was submitted');

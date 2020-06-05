@@ -25,8 +25,8 @@ app.all('*', (req, res, next) => {
 
 // routes
 app.use('/api', authenticationRoutes);
-app.use('/api', userroutes);
-app.use('/api', workshoproutes);
+app.use('/api/user', userroutes);
+app.use('/api/workshop', workshoproutes);
 
 // Add CORS headers
 app.use(function (req, res, next) {
