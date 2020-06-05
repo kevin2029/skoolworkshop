@@ -1,47 +1,50 @@
 <?php
-function upload (){
+$target_dir = "..\\..\\..\\upload\\facturen\\";
 
-  $target_dir = "..\\..\\..\\upload\\facturen\\";
-  $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-  $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+$isBetaald = 0;
+if($_POST['IsBetaald'] == 'true') {
+  $isBetaald = 1;
+}
 
-  // Check if image file is a actual image or fake image
-  if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-   if($check !== false) {
-      echo "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-   } else {
-      echo "File is not an image. <br> ";
-     $uploadOk = 0;
-   }
+// Check ofdat een bestand is geslecteerd.
+if (($_FILES['fileToUpload']['name'] != "")) {
+
+  // Waar het bestand opgeslagen wordt.
+  $file = $_FILES['fileToUpload']['name'];
+  $path = pathinfo($file);
+  $filename = $path['filename'];
+  $ext = $path['extension'];
+  
+  // Check ofdat bestand PDF is.
+  if(strtolower($ext) != 'pdf') {
+    echo "Sorry, file is not PDF.";
+    exit();
   }
 
-   // Check if file already exists
-   if (file_exists($target_file)) {
-    echo "Sorry, file already exists. <br> ";
-   $uploadOk = 0;
-  }
+  $temp_name = $_FILES['fileToUpload']['tmp_name'];
+  $path_filename_ext = $target_dir . $filename . "." . $ext;
 
-  // Allow certain file formats
-  if($imageFileType != "pdf") {
-   echo "Sorry, only PDF files are allowed. <br> ";
-   $uploadOk = 0;
-  }
+  // Check ofdat bestand al bestaad.
+  if (file_exists($path_filename_ext)) {
+    echo "Sorry, file already exists.";
+    exit();
 
-  // Check if $uploadOk is set to 0 by an error
-  if ($uploadOk == 0) {
-  echo "Sorry, your file was not uploaded.";
-  // if everything is ok, try to upload file
   } else {
-   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-      echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-      return $target_file;
-    } else {
-     echo "Sorry, there was an error uploading your file.";
-     return false;
-   }
+    move_uploaded_file($temp_name, $path_filename_ext);
+    echo "File uploaded successfully.";
+    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext, 'IsBetaald' => $isBetaald]);
+
+    exit();
   }
 }
-?>
+
+function post($url, $data)
+{
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return $response;
+}
