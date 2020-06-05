@@ -237,7 +237,7 @@ li .dropdown {
   background-color: white;
   margin-left: 4%;
   padding: 5%;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
 .containerright {
@@ -246,7 +246,7 @@ li .dropdown {
   background-color: white;
   margin-right: 4%;
   padding: 5%;
-  border-radius: 25px;
+  border-radius: 5px;
 }
 
 
