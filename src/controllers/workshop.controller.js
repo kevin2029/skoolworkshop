@@ -5,20 +5,20 @@ let controller = {
     validateWorkshop(req, res, next) {
         try {
             const {
-                naam,
-                beschrijving,
-                kosten,
-                vervolgKosten,
-                genre
+                Naam,
+                Beschrijving,
+                Kosten,
+                VervolgKosten,
+                Categorie
             } = req.body;
-            assert(typeof naam === 'string', 'Name is missing.');
-            assert(typeof beschrijving === 'string', 'Description is missing.');
-            assert(typeof kosten === 'number', 'Price is missing.');
+            assert(typeof Naam === 'string', 'Name is missing.');
+            assert(typeof Beschrijving === 'string', 'Description is missing.');
+            assert(typeof Kosten === 'number', 'Price is missing.');
             assert(
-                typeof vervolgKosten === 'number',
+                typeof VervolgKosten === 'number',
                 'Follow-up price is missing.'
             );
-            assert(typeof genre === 'string', 'Genre is missing.');
+            assert(typeof Categorie === 'string', 'Categorie is missing.');
 
             next();
         } catch (err) {
@@ -32,16 +32,22 @@ let controller = {
     createWorkshop(req, res, next) {
         // logger.info('createworkshop called');
         const workshop = req.body;
-        let { naam, beschrijving, kosten, vervolgKosten, genre } = workshop;
+        const {
+            Naam,
+            Beschrijving,
+            Kosten,
+            VervolgKosten,
+            Categorie
+        } = workshop;
         console.log('workshop =', workshop);
 
         let sqlQuery =
-            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `Vervolg Kosten`, `genre`) VALUES (?, ?, ?, ?, ?)';
+            'INSERT INTO `Workshop` (`Naam`, `Beschrijving`, `Kosten`, `VervolgKosten`, `genre`) VALUES (?, ?, ?, ?, ?)';
         // logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
             sqlQuery,
-            [naam, beschrijving, kosten, vervolgKosten, genre],
+            [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
             (error, results, fields) => {
                 if (error) {
                     console.log('createWorkshop', error);

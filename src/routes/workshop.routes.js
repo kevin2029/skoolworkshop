@@ -5,7 +5,6 @@ const authcontroller = require('../controllers/authenication.controller');
 
 router.post(
     '/workshop',
-    authcontroller.validateAdmin,
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
