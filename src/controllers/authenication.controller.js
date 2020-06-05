@@ -107,6 +107,8 @@ module.exports = {
 
     validateLogin(req, res, next) {
         // Verify that we receive the expected input
+
+        logger.debug(req.body);
         const { Email, Wachtwoord } = req.body;
         try {
             assert(typeof Email === 'string', 'email must be a string.');
