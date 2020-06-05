@@ -11,7 +11,7 @@ let controller = {
             // Missing values giving errors
             assert(typeof GebruikerMail === 'string', 'Email is missing!');
             assert(typeof Path === 'string', 'Path is missing!');
-            assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
+            assert(typeof IsBetaald === 'boolean', 'IsBetaald is missing!');
 
             // InvalID values giving errors
             assert.match(
