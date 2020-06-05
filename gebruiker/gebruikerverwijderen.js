@@ -15,14 +15,14 @@ async function postData(url = '', data = {}) {
 }
 
 function verstuur() {
-    const form = new FormData(document.getElementById('workshopVerwijderen'));
+    const form = new FormData(document.getElementById('gebruikerVerwijderen'));
 
     console.log(form);
 
-    postData('http://localhost:3000/api/workshop', form)
+    postData('http://localhost:3000/api/deleteuser', form)
         .then((data) => {
             console.log(data);
-            alert('The form was submitted');
+            alert('The user was deleted');
         })
         .catch((err) => {
             console.log(err);
