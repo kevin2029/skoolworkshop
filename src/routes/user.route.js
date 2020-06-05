@@ -3,15 +3,16 @@ const router = express.Router();
 const usercontroller = require('../controllers/user.controller');
 const authenticationcontroller = require('../controllers/authenication.controller');
 
-router.post('/user', usercontroller.validateUser, usercontroller.createUser);
-router.post('/user', usercontroller.checkDatabase, usercontroller.deleteUser);
-router.post('/user', usercontroller.getOne);
-router.post('/user', usercontroller.getAll);
+router.post('/create', usercontroller.validateUser, usercontroller.createUser);
+router.post('/delete', usercontroller.checkDatabase, usercontroller.deleteUser);
+router.post('/getone', usercontroller.getOne);
+router.post('/getall', usercontroller.getAll);
 router.post(
-    '/user',
+    '/update',
     usercontroller.checkDatabase,
     usercontroller.validateUpdateUser,
     usercontroller.updateUser
 );
+router.post('/uploadimage', usercontroller.uploadImage);
 
 module.exports = router;

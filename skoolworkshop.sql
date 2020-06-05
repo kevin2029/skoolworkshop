@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
     `Adress` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	`CadeaubonId` INT,
+	`Path` VARCHAR(50),
 	PRIMARY KEY (`Email`)
 ) 
 ENGINE = InnoDB;

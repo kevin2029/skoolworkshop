@@ -205,6 +205,36 @@ let controller = {
                 }
             }
         );
+    },
+
+    uploadImage(req, res, next) {
+        logger.info('uploadImage', req.body);
+        const { GebruikerMail, Path } = req.body;
+
+        let query = 'UPDATE Gebruiker SET Path = ? WHERE GebruikerMail = ?;';
+
+        connection.connectDatabase(
+            query,
+            [Path, GebruikerMail],
+            (error, results, fields) => {
+                if (error) {
+                    logger.debug('uploadImage', GebruikerMail, Path);
+                    res.status(400).json({
+                        error: error
+                    });
+                } else {
+                    logger.info(
+                        'Image uploaded for:',
+                        GebruikerMail,
+                        'on',
+                        Path
+                    );
+                    res.status(200).json({
+                        message: 'Image uploaded!'
+                    });
+                }
+            }
+        );
     }
 };
 
