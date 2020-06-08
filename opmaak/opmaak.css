@@ -249,6 +249,16 @@ li .dropdown {
   border-radius: 5px;
 }
 
+.containermid {
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  background-color: white;
+  margin-top: 10%;
+  padding: 5%;
+  border-radius: 5px;
+}
+
 
 .searchTerm {
   width: 100%;
