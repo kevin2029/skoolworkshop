@@ -11,10 +11,10 @@ if (($_FILES['fileToUpload']['name'] != "")) {
   $ext = strtolower($path['extension']);
   
   // Check ofdat bestand PDF is.
-  if($ext != 'png' || $ext != 'jpg' || $ext != 'jpeg' || $ext != 'bmp' || $ext != 'webp') {
-    echo "Sorry, file is not an image.";
-    exit();
-  }
+  // if($ext != 'png' || $ext != 'jpg' || $ext != 'jpeg' || $ext != 'bmp' || $ext != 'webp') {
+  //   echo "Sorry, file is not an image.";
+  //   exit();
+  // }
 
   $temp_name = $_FILES['fileToUpload']['tmp_name'];
   $path_filename_ext = $target_dir . $filename . "." . $ext;
