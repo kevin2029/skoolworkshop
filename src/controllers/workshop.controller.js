@@ -139,9 +139,23 @@ let controller = {
     },
 
     getAll(req, res, next) {
+<<<<<<< HEAD
         const query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop GROUP BY Categorie;`;
 
         connection.connectDatabase(query, (error, results, fields) => {
+=======
+        let query = '';
+       
+        console.log('urls:',req.url)
+        if (req.url !== '/getall') {
+            query = "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.Gebruikersemail = '" + req.params.Email + "';"
+        }else{
+            query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop GROUP BY Categorie;`;
+        }
+         
+        logger.debug("sql query: ", query)
+        connection.connectDatabase(query,(error, results, fields) => {
+>>>>>>> 3bc02fa27db73b1863b36b62c4609da3d0e6abfa
             if (error) {
                 logger.debug('getAll', query);
                 res.status(400).json({

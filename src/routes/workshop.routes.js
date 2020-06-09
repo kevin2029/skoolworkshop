@@ -18,4 +18,6 @@ router.post(
     workshopcontroller.updateWorkshop
 );
 
+router.get('/getWorkshopUser/:Email', workshopcontroller.getAll)
+
 module.exports = router;
