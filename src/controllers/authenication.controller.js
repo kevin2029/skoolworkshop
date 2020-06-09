@@ -116,15 +116,15 @@ module.exports = {
                 typeof Wachtwoord === 'string',
                 'password must be a string.'
             );
-            assert.match(
-                req.body.Email,
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            assert(
+                req.body.Email.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
                 'e-mail is invalid!'
             );
 
-            assert.match(
-                req.body.Wachtwoord,
-                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
+            assert(
+                req.body.Wachtwoord.match(
+                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/),
                 'Password must contain at least one letter, at least one number, and be longer than six charaters.'
             );
             next();
@@ -271,15 +271,15 @@ module.exports = {
                 'email must be a string.'
             );
 
-            assert.match(
-                req.body.Email,
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            assert(
+                req.body.Email.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
                 'e-mail is invalid!'
             );
 
-            assert.match(
-                req.body.Wachtwoord,
-                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
+            assert(
+                req.body.Wachtwoord.match(
+                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/),
                 'Password must contain at least one letter, at least one number, and be longer than six charaters.'
             );
             assert(
@@ -321,7 +321,7 @@ module.exports = {
                     logger.debug('token is valid', payload);
                     // User heeft toegang. Voeg UserId uit payload toe aan
                     // request, voor ieder volgend endpoint.
-                    req.userId = payload.id;
+                    req.email = payload.email;
                     next();
                 }
             });
@@ -354,6 +354,7 @@ module.exports = {
                     // User heeft toegang. Voeg UserId uit payload toe aan
                     // request, voor ieder volgend endpoint.
                     if (payload.IsAdmin === 1) {
+                        req.email = payload.email;
                         next();
                     } else {
                         res.status(401).json({
