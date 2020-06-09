@@ -3,37 +3,7 @@ html, body {
   height: 100%;
 }
 
-ul.topnav {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: black;
-}
 
-ul.topnav li {
-  float: left;
-}
-
-ul.topnav li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-ul.topnav li a:hover:not(.active) {
-  background-color: #f49700;
-}
-
-ul.topnav li a.active {
-  background-color: #f49700;
-}
-
-ul.topnav li.right {
-  float: right;
-}
 
 @media screen and (max-width: 600px) {
   ul.topnav li.right,
@@ -61,7 +31,7 @@ label {
 }
 
 input[type="submit"] {
-  background-color: #4caf50;
+  background-color: #f49700;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -83,7 +53,7 @@ input[type="file"]:hover {
 .containermenubar {
   border-radius: 5px;
   background-color: #f2f2f2;
-  padding: 20px;
+  padding: 10px;
 }
 
 .col-25 {
@@ -104,14 +74,13 @@ input[type="file"]:hover {
 }
 
 .container {
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 10px;
-  margin-bottom: 10%;
+  width: 60%;
+  margin: 20px auto;
   background-color: white;
-  border-radius: 5px;
-  padding: 10%;
+  border-radius: 3px;
+  padding: 5%;
   padding-top: 5%;
+  box-shadow: 0 8px 16px 0 rgb(0, 0, 0, 0.3), 0 12px 40px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* inputfields */
@@ -138,6 +107,15 @@ hr {
 }
 
 /* style voor verstuur knop */
+@keyframes submitFade {
+  from{
+    background-color: #f49700;
+  }
+  to{
+    background-color: black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
 .registerbtn {
   background-color: #f49700;
   color: white;
@@ -150,7 +128,10 @@ hr {
 }
 
 .registerbtn:hover {
-  opacity: 1;
+  animation: submitFade 2s;
+  background-color: black;
+  opacity: inherit;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 19px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* resonpsive layout */
@@ -180,27 +161,97 @@ hr {
 }
 
 body {
-  background-color: gray;
+  background-image: url('https://www.publicdomainpictures.net/pictures/250000/velka/white-rocks-background.jpg');
+  background-attachment: fixed;
+  background-position: fixed;
   font-family: Helvetica,Verdana,Arial,sans-serif
 }
 
 /*   Dropdown menu */
-li .dropdown {
-  position: relative;
+@keyframes fadeMenu {
+  0%{
+    background-color: white;
+  }
+  100% {
+    background-color: #f49700;
+  }
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  color: black;
+}
+
+li {
+  float: left;
+}
+
+li a, .dropbtn {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: black;
+}
+
+li a:hover .dropdown:hover .dropbtn {
+  background-color: #f49700;
+  color: white;
+  overflow: visible;
+}
+
+li a:hover:not(.active), .dropdown:hover:not(.active) .dropbtn {
+  background-color: #f49700;
+  color: white;
+  animation: fadeMenu 1s;
+  overflow: visible;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+li.dropdown .active {
+  background-color: #f49700;
+  color: white;
+}
+
+li.dropdown {
   display: inline-block;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: darkgray;
-  min-width: 150px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover:not(.active) {
+  background-color: #f49700;
+  color: white;
+  animation: fadeMenu 1s;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+ul.topnav li.right {
+  float: right;
 }
 
 .row:after {
