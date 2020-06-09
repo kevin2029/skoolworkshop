@@ -15,6 +15,11 @@ router.post(
     usercontroller.updateUser
 );
 
-router.post('/edit', userEditController.validateEdit, userEditController.editUser);
+router.post(
+    '/edit',
+    authenticationcontroller.validateToken,
+    userEditController.validateEdit,
+    userEditController.editUser
+);
 
 module.exports = router;
