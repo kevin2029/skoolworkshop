@@ -11,7 +11,8 @@
         <a class="active" href="../gebruiker/index.html">Gebruikers</a>
         <div class="dropdown-content">
           <a href="../gebruiker/aanmaken.html">Aanmaken</a>
-          <a class="active" href="../gebruiker/deelnemers.html">Deelnemers</a>
+          <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+          <a class="active" href="../gebruiker/verwijderen.html">Verwijderen</a>
         </div>
       </li>
       <li class="dropdown">
@@ -35,7 +36,28 @@
         </div>
       </li>
   
-      <li class="right"><a href="#about">Google Drive</a></li>
+      <li class="right"><a href="#about">Google drive</a></li>
     </ul>
+
+    <form id="gebruikerVerwijderen" onsubmit="verstuur();return false">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Verwijderen van gebruiker</h1>
+        <p>Vul dit hele formulier in om een gebruiker te verwijderen</p>
+        <hr />
+        <label for="Email"><b>Email van de gebruiker</b></label>
+        <input
+          type="text"
+          placeholder="Vul email in"
+          name="Email"
+          id="Email"
+          required
+        />
+        <hr />
+        <button type="submit" class="registerbtn">
+          Verwijderen
+        </button>
+      </div>
+    </form>
   </body>
 </html>
