@@ -20,13 +20,13 @@ function verstuur() {
 
     console.log(form);
 
-    postData('http://localhost:3000/api/user', form)
+    postData('http://localhost:3000/api/user/create', form)
         .then((response) => {
-            console.log(response.json());
+            console.log('response.json()', response.json());
+            alert('The form was submitted');
         })
         .then((data) => {
-            console.log(data);
-            alert('The form was submitted');
+            console.log('data', data);
         })
         .catch((err) => {
             console.log(err);

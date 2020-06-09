@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const pool = require('./src/config/database');
+const logger = require('./src/config/config').logger;
 const multer = require('multer');
 var forms = multer();
 
