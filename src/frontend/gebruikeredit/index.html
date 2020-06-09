@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    <script src="gebruikeredit.js"></script>
+  </head>
+  <body>
+    <ul class="topnav">
+      <li><a class="active" href="#home">Gebruiker wijzigen</a></li>
+      <li><a href="#4">2</a></li>
+      <li><a href="#4">3</a></li>
+      <li class="right"><a href="#about">4</a></li>
+    </ul>
+
+    <form id="gebruikerEdit" onsubmit="verstuur();return false">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Gebruikerdetails aanpassen</h1>
+        <p>Wijzig de velden die aangepast moeten worden</p>
+        <hr />
+        <label for="Naam"><b>Naam van de beheerder</b></label>
+        <input
+          type="text"
+          placeholder="Vul naam in"
+          name="Naam"
+          id="Naam"
+          required
+        />
+        <label for="Organisatie"><b>Naam van de organisatie</b></label>
+        <input
+          type="text"
+          placeholder="Vul naam in"
+          name="Organisatie"
+          id="Organisatie"
+          required
+        />
+        <label for="Adress"><b>Adress van de organisatie</b></label>
+        <input
+          type="text"
+          placeholder="Vul adres in"
+          name="Adress"
+          id="Adress"
+          required
+        />
+        
+        <!--  <label for="foto"><b>Foto van organisatie</b></label>
+        <input type="file" name="foto" id="foto" required /> -->
+
+        <label for="Wachtwoord"><b>Nieuw wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Vul wachtwoord in"
+          name="Wachtwoord"
+          id="Wachtwoord"
+          required
+        />
+
+        <label for="wachtwoord-herhaal"><b>Herhaal wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Herhaal wachtwoord"
+          name="wachtwoord-herhaal"
+          id="wachtwoord-herhaal"
+          required
+        />
+        <hr />
+        <button type="submit" class="registerbtn">
+          Wijzig
+        </button>
+      </div>
+    </form>
+  </body>
+</html>
