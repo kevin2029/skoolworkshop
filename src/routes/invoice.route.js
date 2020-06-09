@@ -15,6 +15,11 @@ router.delete(
 );
 router.get('/invoice/:ID', invoicecontroller.getOne);
 router.get('/invoice', invoicecontroller.getAll);
+router.get(
+    '/invoice/CheckPayment/:ID', 
+    invoicecontroller.checkDatabase,
+    invoicecontroller.getPayment
+);
 router.put(
     '/invoice/:ID',
     invoicecontroller.checkDatabase,
