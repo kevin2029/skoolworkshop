@@ -1,6 +1,8 @@
 <?php
 $target_dir = "..\\..\\..\\upload\\facturen\\";
 
+// IsBetaald == true  -> 1
+// IsBetaald == false -> 0
 $isBetaald = 0;
 if($_POST['IsBetaald'] == 'true') {
   $isBetaald = 1;
@@ -21,16 +23,19 @@ if (($_FILES['fileToUpload']['name'] != "")) {
     exit();
   }
 
-  $temp_name = $_FILES['fileToUpload']['tmp_name'];
-  $path_filename_ext = $target_dir . $filename . "." . $ext;
+  // Tijdelijke bestand.
+  $temp_file = $_FILES['fileToUpload']['tmp_name'];
+
+  // Permanente bestand.
+  $perm_file = $target_dir . $filename . "." . $ext;
 
   // Check ofdat bestand al bestaad.
-  if (file_exists($path_filename_ext)) {
+  if (file_exists($perm_file)) {
     echo "Sorry, file already exists.";
     exit();
 
   } else {
-    move_uploaded_file($temp_name, $path_filename_ext);
+    move_uploaded_file($temp_file, $perm_file);
     echo "File uploaded successfully.";
     post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext, 'IsBetaald' => $isBetaald]);
 
@@ -38,6 +43,7 @@ if (($_FILES['fileToUpload']['name'] != "")) {
   }
 }
 
+// Executeerd een post request.
 function post($url, $data)
 {
     $curl = curl_init($url);
