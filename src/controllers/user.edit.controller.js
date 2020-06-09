@@ -66,41 +66,50 @@ let controller = {
 
         if (typeof Wachtwoord === 'string') {
             query += ' `Wachtwoord` = ?';
-            values.push(Wachtwoord);
 
             bcrypt.genSalt(10, function (err, salt) {
                 bcrypt.hash(req.body.Wachtwoord, salt, function (err, hash) {
-                 // vanaf hier pas connectie doen tenzij er geen wachtwoord meegegeven is???
+                    values.push(hash);
+
+                    query += ' WHERE `Email` = ?';
+                    values.push(Email);
+
+                    doEdit(req, res, query, values);
                 });
             });
+        } else {
+            query += ' WHERE `Email` = ?';
+            values.push(Email);
+
+            doEdit(req, res, query, values);
         }
-
-        query += ' WHERE `Email` = ?';
-        values.push(Email);
-
-        connection.connectDatabase(query, values, (error, results, fields) => {
-            if (error) {
-                logger.debug('editUser:', req.body, error);
-                res.status(400).json({
-                    message: 'Could not edit user!',
-                    error: error
-                });
-            } else if (results.affectedRows == 0) {
-                logger.debug('editUser: email not in use');
-                res.status(400).json({
-                    message: 'No user with that email exists!'
-                });
-            } else {
-                logger.info('User edited:', req.body);
-                res.status(200).json({
-                    message: `User edited with ${results.changedRows} changes`,
-                    result: {
-                        ...req.body
-                    }
-                });
-            }
-        });
     }
 };
+
+function doEdit(req, res, query, values) {
+
+    connection.connectDatabase(query, values, (error, results, fields) => {
+        if (error) {
+            logger.debug('editUser:', req.body, error);
+            res.status(400).json({
+                message: 'Could not edit user!',
+                error: error
+            });
+        } else if (results.affectedRows == 0) {
+            logger.debug('editUser: email not in use');
+            res.status(400).json({
+                message: 'No user with that email exists!'
+            });
+        } else {
+            logger.info('User edited:', req.body);
+            res.status(200).json({
+                message: `User edited with ${results.changedRows} changes`,
+                result: {
+                    ...req.body
+                }
+            });
+        }
+    });
+}
 
 module.exports = controller;
