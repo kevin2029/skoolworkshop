@@ -2,9 +2,8 @@
 const apiUrl = 'http://localhost:3000'
 
 const options = {
-  mode: 'cors', // no-cors, *cors, same-origin
-  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-  credentials: 'same-origin', // include, *same-origin, omit
+  mode: 'no-cors', // no-cors, *cors, same-origin
+  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached // include, *same-origin, omit
   headers: {
     'Content-Type': 'application/json'
     // authorisation token header
@@ -18,7 +17,8 @@ async function sendGetRequest(url = '', data = {}) {
   // Default options are marked with *
   const response = await fetch(url, {
     ...options,
-    method: 'GET'
+    method: 'GET',
+    mode: 'cors',
   })
   return response.json() // parses JSON response into native JavaScript objects
 }

@@ -14,7 +14,7 @@
       media-src *;
       font-src *;
       connect-src *;
-      img-src * data:;"
+      img-src *;"
     />
 
     <!-- Bootstrap CSS -->
@@ -46,7 +46,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" name="navbarsExampleDefault">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="/"
@@ -69,7 +69,7 @@
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
-                name="dropdown01"
+                id="dropdown01"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
@@ -113,14 +113,13 @@
               onsubmit="sendForm();return false;"
               novalidate
             >
-            <input type="text">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="Name">Naam</label>
                   <input
                     type="text"
                     class="form-control"
-                    name="Naam"
+                    id="Naam"
                     placeholder=""
                     required
                   />
@@ -136,7 +135,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    name="Email"
+                    id="Email"
                     placeholder=""
                     required
                   />
@@ -150,10 +149,9 @@
                 <div class="col-md-6 mb-3">
                   <label for="Adress">Adress</label>
                   <input
-                  
                     type="text"
                     class="form-control"
-                    name="Adress"
+                    id="Adress"
                     placeholder=""
                   />
                 </div>
@@ -162,7 +160,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    name="Wachtwoord"
+                    id="Wachtwoord"
                     placeholder=""
                   />
                 </div>
@@ -174,12 +172,34 @@
                   <input
                     type="text"
                     class="form-control"
-                    name="CadeaubonId"
+                    id="CadeaubonId"
                     placeholder=""
                   />
                 </div>
               </div>
-              
+              <hr class="mb-4" />
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="same-address"
+                />
+                <label class="custom-control-label" for="same-address"
+                  >Shipping address is the same as my billing address</label
+                >
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="save-info"
+                />
+                <label class="custom-control-label" for="save-info"
+                  >Save this information for next time</label
+                >
+              </div>
+              <hr class="mb-4" />
+
               <button class="btn btn-primary btn-lg btn-block" type="submit">
                 Create Studenthome
               </button>
@@ -216,13 +236,12 @@
     <script>
       function sendForm() {
         console.log('sendForm called')
-        console.log(document.getElementById('Naam'))
-        let formData = new FormData(document.querySelector('#createStudenthomeForm'))
-        let value = formData.value
-        console.log(value)
-        
-        console.log(...formData)
-        alert('we have je maformData')
+
+        const formData = new FormData(
+          document.getElementById('createStudenthomeForm')
+        )
+        console.log(formData)
+        alert('we have formData')
 
         // API call uitvoeren om data op te halen
 
