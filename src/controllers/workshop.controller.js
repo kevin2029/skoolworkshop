@@ -25,7 +25,7 @@ let controller = {
         } catch (err) {
             logger.debug('Error', err);
             res.status(400).json({
-                message: 'Error adding workshop!',
+                message: 'Error validating workshop!',
                 error: err.message
             });
         }
@@ -139,7 +139,7 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = `SELECT Naam, Beschrijving, Kosten, Vervolg Kosten, Categorie FROM Workshop;'`;
+        const query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop GROUP BY Categorie;`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -159,31 +159,11 @@ let controller = {
         });
     },
 
-    validateUpdateUser(req, res, next) {
-        let { Naam, Email, Organisatie, Adress } = req.body;
-
-        logger.info('validateUpdateUser:', req.body);
-        try {
-            assert(typeof naam === 'string', 'name is missing.');
-            assert(typeof beschrijving === 'string', 'description is missing.');
-            assert(typeof Kosten === 'number', 'tijdsduur is missing.');
-            assert(typeof vervolgKosten === 'number', 'price is missing.');
-            assert(typeof categorie === 'string', 'categorie is missing');
-            next();
-        } catch (err) {
-            logger.debug('Error updating workshop:', err.message);
-            res.status(400).json({
-                message: 'Error updating workshop!',
-                error: err.message
-            });
-        }
-    },
-
     updateWorkshop(req, res, next) {
         const workshopName = req.params.workshopName;
         logger.info('updateWorkshop', workshopName);
 
-        let { naam, beschrijving, kosten, vervolgKosten, categorie } = req.body;
+        let { Naam, Beschrijving, Kosten, VervolgKosten, Categorie } = req.body;
         let query =
             `UPDATE Workshop SET Naam = ?, Besschrijving = ?, Kosten = ?, VervolgKosten = ?, Categorie = ? WHERE name = '` +
             workshopName +
@@ -191,7 +171,7 @@ let controller = {
 
         connection.connectDatabase(
             query,
-            [naam, beschrijving, kosten, vervolgKosten, categorie],
+            [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
             (error, results, fields) => {
                 if (error) {
                     logger.debug(
@@ -219,6 +199,4 @@ let controller = {
     }
 };
 
-
-
-module.exports = controller
+module.exports = controller;

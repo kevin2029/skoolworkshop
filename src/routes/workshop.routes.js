@@ -14,7 +14,7 @@ router.post('/getall', workshopcontroller.getAll);
 router.post(
     '/update',
     workshopcontroller.checkDatabase,
-    workshopcontroller.validateUpdateUser,
+    workshopcontroller.validateWorkshop,
     workshopcontroller.updateWorkshop
 );
 
