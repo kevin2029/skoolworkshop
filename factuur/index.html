@@ -75,9 +75,8 @@
         <h2>Gesloten</h2>
         <table>
           <tr>
-            <td>Naam</td>
             <td>E-mailadres</td>
-            <td>Datum</td>
+            <td>Betaald</td>
             <td>Download</td>
           </tr>
         </table>
@@ -97,10 +96,8 @@
             data.result.forEach((item) => {
               console.log(item)
               rows +=
-                `<tr><td><a>${item.Name}</a> </td>` +
-                `<td>${item.Address} ${item.House_Nr}</td>` +
-                `<td>${item.City}</td>` +
-                `<td>${item.Telephone}</td></tr>`
+                `<tr><td>${item.GebruikerEmail}</td>` +
+                `<td>${item.IsBetaald}</td></tr>`
             })
 
             tableBody.innerHTML = rows
