@@ -181,33 +181,31 @@
     <script src="../requests.js"></script>
 
     <script>
-      function getStudenthomes() {
-        sendGetRequest(apiUrl + '/api/user/getall')
-          .then((data) => {
-            console.log(data.Users)
-            let tableBody = document.getElementById('tableStudenthomes')
+      sendGetRequest(apiUrl + '/api/user/getall')
+        .then((data) => {
+          console.log(data.Users)
+          let tableBody = document.getElementById('tableStudenthomes')
 
-            let rows = ''
-            data.Users.forEach((item) => {
-              console.log(item)
-              rows +=
-                `<tr><td>${item.Naam}</td>` +
-                `<td>${item.Email}</td>` +
-                `<td>${item.Organisatie}</td>` +
-                `<td>${item.Adress}</td>` +
-                `<td>${item.Wachtwoord}</td>` +
-                `<td>${item.CadeaubonId}</td></tr>`
-            })
+          let rows = ''
+          data.Users.forEach((item) => {
+            console.log(item)
+            rows +=
+              `<tr><td>${item.Naam}</td>` +
+              `<td>${item.Email}</td>` +
+              `<td>${item.Organisatie}</td>` +
+              `<td>${item.Adress}</td>` +
+              `<td>${item.Wachtwoord}</td>` +
+              `<td>${item.CadeaubonId}</td></tr>`
+          })
 
-            tableBody.innerHTML = rows
-          })
-          .catch((error) => {
-            console.error(
-              'There has been a problem with your fetch operation:',
-              error
-            )
-          })
-      }
+          tableBody.innerHTML = rows
+        })
+        .catch((error) => {
+          console.error(
+            'There has been a problem with your fetch operation:',
+            error
+          )
+        })
     </script>
   </body>
 </html>

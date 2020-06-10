@@ -1,4 +1,3 @@
-// const apiUrl = 'https://studenthomes.herokuapp.com'
 const apiUrl = 'http://localhost:3000'
 
 const options = {
@@ -18,7 +17,7 @@ async function sendGetRequest(url = '', data = {}) {
   const response = await fetch(url, {
     ...options,
     method: 'GET',
-    mode: 'cors',
+    mode: 'cors'
   })
   return response.json() // parses JSON response into native JavaScript objects
 }
