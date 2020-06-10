@@ -96,6 +96,28 @@ let controller = {
                 });
             }
         });
+    },
+
+    checkValidCoupon(req, res, next) {
+        logger.info('checkValidCoupon called');
+        const couponCode = req.param.couponCode;
+
+        let sqlQuery = 
+            `SELECT MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` + couponCode + `';`
+        logger.debug('checkValidCoupon', 'sqlQuery = ', sqlQuery);
+
+        connection.connectDatabase(sqlQuery, (error, results, fields) => {
+            if (error) {
+                console.log('checkValidCoupon ', error);
+                res.status(400).json({
+                    message: 'checkValidCoupon failed',
+                    error: error
+                });
+            } else {
+                console.log(results)
+            }
+        })
+
     }
 };
 
