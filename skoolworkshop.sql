@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `Cadeaubon` (
 	`MaxBedrag` INT,
 	`MaxGebruik` INT NOT NULL,
 	`AantalGebruikt` INT,
+	`Organisatie` VARCHAR(50),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
