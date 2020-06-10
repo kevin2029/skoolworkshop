@@ -21,7 +21,7 @@ const port = process.env.PORT || 3000;
 
 // Add CORS headers
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*'); //Adres van server
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
         'GET, POST, OPTIONS, PUT, PATCH, DELETE'
@@ -38,6 +38,14 @@ app.use((req, res, next) => {
     logger.info(req.method, req.originalUrl, req.params, req.query);
     next();
 });
+
+app.get('/', function (request, response) {
+    response.sendFile(__dirname + '/frontend/gebruikersaanmaken/test.html');
+});
+
+// Serve files from the ./static folder
+app.get('/', express.static(__dirname + '/frontend/gebruikersaanmaken'));
+app.get('/', express.static(__dirname + '/frontend'));
 
 // routes
 app.use('/api', authenticationRoutes);
