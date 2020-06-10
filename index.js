@@ -37,9 +37,9 @@ app.use((req, res, next) => {
 })
 
 
-// app.get('/', function (request, response) {
-//   response.sendFile(__dirname + '/frontend/gebruikersaanmaken/test2.html');
-// });
+app.get('/', function (request, response) {
+  response.sendFile(__dirname + '/frontend/gebruikersaanmaken/test2.html');
+});
 
 // Serve files from the ./static folder
 app.use('/', express.static(__dirname + '/frontend/gebruikersaanmaken'))
