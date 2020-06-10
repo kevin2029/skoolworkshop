@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', function (request, response) {
-    response.sendFile(__dirname + '/frontend/gebruikersaanmaken/test.html');
+    response.sendFile(__dirname + '/src/frontend/workshopdelete/index.html');
 });
 
 // Serve files from the ./static folder
