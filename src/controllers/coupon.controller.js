@@ -28,7 +28,7 @@ let controller = {
         logger.debug('coupon =', coupon);
 
         let sqlQuery =
-            'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`, `AantalGebruikt`) VALUES (?, ?, ?, ?, 11)';
+            'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`, `AantalGebruikt`) VALUES (?, ?, ?, ?, 0)';
         logger.debug('createcoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
@@ -113,27 +113,42 @@ let controller = {
                     message: 'checkValidCoupon failed',
                     error: error
                 });
+
             } else {
                 console.log(results);
                 for (var i = 0; i < results.length; i++) {
                     logger.debug("parsedJSON: ", results[i]);
-                    logger.debug("RowDataPacket: ", results[i].MaxGebruik);
                     const MaxGebruik = results[i].MaxGebruik;
                     const AantalGebruikt = results[i].AantalGebruikt;
                     if (AantalGebruikt < MaxGebruik) {
-                        res.status(200).json({
-                            message: 'Coupon is valid',
-                        })
+                        next();
                     } else {
                         res.status(200).json({
                             message: 'Coupon is invalid',
                         })
+                    }
                 }
             }
-        }
 
-    })
-}
+        })
+    },
+
+    useCoupon(req, res, next) {
+        logger.info("useCoupon called");
+        const couponCode = req.params.Code;
+
+        
+    },
+
+    updateCoupon(req, res, next) {
+        logger.info("updateCoupon called");
+        const couponCode = req.body.Code;
+    },
+
+    workshopCouponHandler(req, res, next) {
+
+    }
+
 };
 
 module.exports = controller;
