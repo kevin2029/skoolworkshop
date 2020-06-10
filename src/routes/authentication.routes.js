@@ -17,4 +17,6 @@ router.post(
 
 router.post('/login', AuthController.validateLogin, AuthController.login);
 
+router.post('/adminlogin', AuthController.validateAdmin);
+
 module.exports = router;

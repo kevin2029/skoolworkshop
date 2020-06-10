@@ -35,7 +35,7 @@ async function sendDeleteRequest(url = '', data = {}) {
     const response = await fetch(url, {
         ...options,
         method: 'DELETE',
-        body = data
+        body: data
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }

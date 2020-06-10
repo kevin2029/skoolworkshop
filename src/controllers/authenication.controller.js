@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../config/database');
 const logger = require('../config/config').logger;
+const path = require('path');
 
 module.exports = {
     login(req, res, next) {
@@ -91,7 +92,9 @@ module.exports = {
                                                         expiresIn: '2h'
                                                     }
                                                 ),
-                                                Organisatie: rows[0].Organisatie
+                                                Organisatie:
+                                                    rows[0].Organisatie,
+                                                IsAdmin: payload.IsAdmin
                                             };
                                             res.status(200).json(userinfo);
                                         }
