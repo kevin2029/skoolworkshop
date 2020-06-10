@@ -39,15 +39,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// Url redirect
 app.get('/', function (request, response) {
     response.sendFile(__dirname + '/frontend/index.html');
 });
 
-// Serve files from the ./static folder
-app.get('/', express.static(__dirname + '/frontend/gebruikersaanmaken'));
-app.get('/', express.static(__dirname + '/frontend'));
+// // Serve files from the ./static folder
+app.use('/', express.static(__dirname + '/frontend'));
 
-// routes
+// Routes
 app.use('/api', authenticationRoutes);
 app.use('/api/user', userroutes);
 app.use('/api/workshop', workshoproutes);
