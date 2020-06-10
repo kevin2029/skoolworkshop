@@ -28,7 +28,7 @@ let controller = {
         logger.debug('coupon =', coupon);
 
         let sqlQuery =
-            'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`) VALUES (?, ?, ?, ?)';
+            'INSERT INTO `Cadeaubon` (`Code`, `Value`, `MaxBedrag`, `MaxGebruik`, `AantalGebruikt`) VALUES (?, ?, ?, ?, 11)';
         logger.debug('createcoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
@@ -55,7 +55,7 @@ let controller = {
 
     checkDatabase(req, res, next) {
         logger.info('checkDatabase called')
-        const couponCode = req.params.couponCode;
+        const couponCode = req.params.Code;
 
         let sqlQuery =
             `SELECT Code FROM Cadeaubon WHERE Code = '` + couponCode + `'`;
@@ -77,7 +77,7 @@ let controller = {
 
     deleteCoupon(req, res, next) {
         logger.info('deletecoupon called');
-        const couponCode = req.params.couponCode;
+        const couponCode = req.params.Code;
 
         let sqlQuery =
             `DELETE FROM Cadeaubon WHERE Code = '` + couponCode + `'`;
@@ -100,7 +100,7 @@ let controller = {
 
     checkValidCoupon(req, res, next) {
         logger.info('checkValidCoupon called');
-        const couponCode = req.param.couponCode;
+        const couponCode = req.params.Code;
 
         let sqlQuery = 
             `SELECT MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` + couponCode + `';`
@@ -114,11 +114,26 @@ let controller = {
                     error: error
                 });
             } else {
-                console.log(results)
+                console.log(results);
+                for (var i = 0; i < results.length; i++) {
+                    logger.debug("parsedJSON: ", results[i]);
+                    logger.debug("RowDataPacket: ", results[i].MaxGebruik);
+                    const MaxGebruik = results[i].MaxGebruik;
+                    const AantalGebruikt = results[i].AantalGebruikt;
+                    if (AantalGebruikt < MaxGebruik) {
+                        res.status(200).json({
+                            message: 'Coupon is valid',
+                        })
+                    } else {
+                        res.status(200).json({
+                            message: 'Coupon is invalid',
+                        })
+                }
             }
-        })
+        }
 
-    }
+    })
+}
 };
 
 module.exports = controller;
