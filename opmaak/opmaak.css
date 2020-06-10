@@ -261,7 +261,7 @@ ul.topnav li.right {
 }
 
 
-.titlefactuur {
+.titlepage {
   float: left;
   margin-left: 5%;
   width: 50%;
@@ -296,6 +296,16 @@ ul.topnav li.right {
   width: 45%;
   background-color: white;
   margin-right: 4%;
+  padding: 5%;
+  border-radius: 5px;
+}
+
+.containermid {
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  background-color: white;
+  margin-top: 10%;
   padding: 5%;
   border-radius: 5px;
 }

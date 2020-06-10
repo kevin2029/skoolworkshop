@@ -15,15 +15,15 @@
         </div>
       </li>
       <li class="dropdown">
-        <a class="active" href="../workshop/index.html">Workshops</a>
+        <a href="../workshop/index.html">Workshops</a>
         <div class="dropdown-content">
           <a href="../workshop/aanmaken.html">Aanmaken</a>
-          <a class="active" href="../workshop/analysiek.html">Analysiek</a>
+          <a href="../workshop/analysiek.html">Analysiek</a>
         </div>
       </li>
     </li>
     <li class="dropdown">
-      <a href="../factuur/index.html">Facturen</a>
+      <a class="active" href="../factuur/index.html">Facturen</a>
       <div class="dropdown-content">
         <a href="../factuur/aanmaken.html">Uploaden</a>
       </div>
@@ -38,19 +38,7 @@
       <li class="right"><a href="#about">Google Drive</a></li>
     </ul>
 
-    <!--
-
-    <div id="titlefactuur">
-      <div class="titlepage">
-      <h1>Facturen</h1>
-      </div>
-     </div>
-
-    -->
-
-
-
-    <div class="titlefactuur">
+    <div class="titlepage">
       <h1>Facturen</h1>
     </div>
      
@@ -70,66 +58,14 @@
       <div class="containerleft">
         <h2>Openstaand</h2>
         <table>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
+          <thead>
+            <th>Naam</th>
+            <th>E-mailadres</th>
+            <th>Datum</th>
+            <th>Download</th>
+          </thead>
+        
+          <tbody id="Facturen"></tbody>
         </table>
       </div>
     </div>
@@ -139,69 +75,40 @@
         <h2>Gesloten</h2>
         <table>
           <tr>
-            <td>Naam</td>
             <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
+            <td>Betaald</td>
             <td>Download</td>
           </tr>
         </table>
       </div>
     </div>
   
+    <script src="****"></script>
+    <script > getOpenFacturen();</script>
+    <script>
+      function getOpenFacturen() {
+        sendGetRequest(apiUrl + '/api/skoolworkshop')
+          .then((data) => {
+            console.log(data.result)
+            let tableBody = document.getElementById('Facturen')
 
+            let rows = ''
+            data.result.forEach((item) => {
+              console.log(item)
+              rows +=
+                `<tr><td>${item.GebruikerEmail}</td>` +
+                `<td>${item.IsBetaald}</td></tr>`
+            })
+
+            tableBody.innerHTML = rows
+          })
+          .catch((error) => {
+            console.error(
+              'There has been a problem with your fetch operation:',
+              error
+            )
+          })
+      }
+    </script>
   </body>
 </html>
