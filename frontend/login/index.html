@@ -14,7 +14,7 @@
 
         <form
             class="needs-validation"
-            id="createStudenthomeForm"
+            id="loginForm"
             onsubmit="sendForm();return false;"
             novalidate
         >
@@ -55,7 +55,7 @@
 
             function sendForm() {
                 let formData = new FormData(
-                    document.querySelector('#createStudenthomeForm')
+                    document.querySelector('#loginForm')
                 ); // ingevulde gegevens uit form worden opgehaald
 
                 // API call uitvoeren om data op te halen

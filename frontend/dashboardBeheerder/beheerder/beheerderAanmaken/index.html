@@ -38,7 +38,12 @@
       <li class="right"><a href="#about">Google Drive</a></li>
     </ul>
 
-    <form id="gebruikerAanmaken" onsubmit="verstuur();return false">
+    <form
+            class="needs-validation"
+            id="beheerderAanmakenForm"
+            onsubmit="sendForm();return false;"
+            novalidate
+        >
       <!-- code pagina invoeren-->
       <div class="container">
         <h1>Toevoegen van bedrijf</h1>
@@ -83,5 +88,18 @@
         </button>
       </div>
     </form>
+
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+
+    <script>
+      checkAdminCookie();
+
+      function sendForm(){
+        let formData = new FormData(
+          document.querySelector('#beheerderAanmakenForm')
+          );
+      }
+    </script>
   </body>
 </html>
