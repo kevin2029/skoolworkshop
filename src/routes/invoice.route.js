@@ -4,24 +4,24 @@ const invoicecontroller = require('../controllers/invoice.controller');
 // authenticationcontroller
 
 router.post(
-    '/invoice',
+    '/',
     invoicecontroller.validateInvoice,
     invoicecontroller.createInvoice
 );
 router.delete(
-    '/invoice/:ID',
+    '/:ID',
     invoicecontroller.checkDatabase,
     invoicecontroller.deleteInvoice
 );
-router.get('/invoice/:ID', invoicecontroller.getOne);
-router.get('/invoice', invoicecontroller.getAll);
+router.get('/:ID', invoicecontroller.getOne);
+router.get('/', invoicecontroller.getAll);
 router.get(
-    '/invoice/CheckPayment/:ID', 
+    '/CheckPayment/:ID', 
     invoicecontroller.checkDatabase,
     invoicecontroller.getPayment
 );
 router.put(
-    '/invoice/:ID',
+    '/:ID',
     invoicecontroller.checkDatabase,
     invoicecontroller.validateUpdateInvoice,
     invoicecontroller.updateInvoice
