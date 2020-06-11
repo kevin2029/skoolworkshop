@@ -29,8 +29,8 @@ if (($_FILES['fileToUpload']['name'] != "")) {
     echo "File uploaded successfully.";
 
      // Registreer bestand in API.
-    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext]);
-
+    post('localhost:3000/api/invoice', ['GebruikerMail' => $_COOKIE['userID'], 'Path' => $filename . "." . $ext]);
+    
     exit();
   }
 }

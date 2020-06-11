@@ -12,30 +12,27 @@ const options = {
 };
 
 // Example method implementation:
-async function sendGetRequest(url = '', data = {}) {
+async function sendGetRequest(url = '', data = {}, token = '') {
     // Default options are marked with *
     const response = await fetch(url, {
         ...options,
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-async function sendPostRequest(url = '', data = {}) {
+async function sendPostRequest(url = '', data = {}, token = '') {
     const response = await fetch(url, {
         ...options,
         method: 'POST',
         body: data,
-        mode: 'no-cors'
-    });
-    return response.json(); // parses JSON response into native JavaScript objects
-}
-
-async function sendDeleteRequest(url = '', data = {}) {
-    const response = await fetch(url, {
-        ...options,
-        method: 'DELETE',
-        body: data
+        mode: 'no-cors',
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
