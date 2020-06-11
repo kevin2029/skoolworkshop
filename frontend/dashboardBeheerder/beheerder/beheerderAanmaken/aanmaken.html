@@ -2,23 +2,24 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
     <script src="gebruikeraanmaken.js"></script>
   </head>
   <body>
     <ul class="topnav">
       <li class="dropdown">
-        <a href="../gebruiker/index.html">Gebruikers</a>
+        <a class="active" href="../gebruiker/index.html">Gebruikers</a>
         <div class="dropdown-content">
-          <a href="../gebruiker/aanmaken.html">Aanmaken</a>
+          <a class="active" href="../gebruiker/aanmaken.html">Aanmaken</a>
           <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+          <a href="../gebruiker/verwijderen.html">Verwijderen</a>
         </div>
       </li>
       <li class="dropdown">
         <a href="../workshop/index.html">Workshops</a>
         <div class="dropdown-content">
           <a href="../workshop/aanmaken.html">Aanmaken</a>
-          <a class="active" href="../workshop/analysiek.html">Analysiek</a>
+          <a href="../workshop/analysiek.html">Analysiek</a>
         </div>
       </li>
     </li>
@@ -35,7 +36,7 @@
         </div>
       </li>
   
-      <li class="right"><a href="#about">Google drive</a></li>
+      <li class="right"><a href="#about">Google Drive</a></li>
     </ul>
 
     <form id="gebruikerAanmaken" onsubmit="verstuur();return false">
@@ -44,56 +45,37 @@
         <h1>Toevoegen van bedrijf</h1>
         <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
         <hr />
-        <label for="Naam"><b>Naam van de beheerder</b></label>
+        <label for="naamBeheerder"><b>Naam van de beheerder</b></label>
         <input
           type="text"
           placeholder="Vul naam in"
-          name="Naam"
-          id="Naam"
+          name="naamBeheerder"
+          id="naamBeheerder"
           required
         />
-        <label for="Organisatie"><b>Naam van de Organisatie</b></label>
+        <label for="naamOrganisatie"><b>Naam van de Organisatie</b></label>
         <input
           type="text"
           placeholder="Vul naam in"
-          name="Organisatie"
-          id="Organisatie"
+          name="naamOrganisatie"
+          id="naamOrganisatie"
           required
         />
-        <label for="Adress"><b>Adres van de Organisatie</b></label>
+        <label for="email"><b>Email</b></label>
+        <input
+          type="text"
+          placeholder="Vul email in"
+          name="email"
+          id="email"
+          required
+        />
+
+        <label for="Adress"><b>Adres</b></label>
         <input
           type="text"
           placeholder="Vul adres in"
           name="Adress"
           id="Adress"
-          required
-        />
-        <label for="Email"><b>Email</b></label>
-        <input
-          type="text"
-          placeholder="Vul email in"
-          name="Email"
-          id="Email"
-          required
-        />
-        <!--  <label for="foto"><b>Foto van organisatie</b></label>
-        <input type="file" name="foto" id="foto" required /> -->
-
-        <label for="Wachtwoord"><b>Wachtwoord</b></label>
-        <input
-          type="password"
-          placeholder="Vul wachtwoord in"
-          name="Wachtwoord"
-          id="Wachtwoord"
-          required
-        />
-
-        <label for="wachtwoord-herhaal"><b>Herhaal wachtwoord</b></label>
-        <input
-          type="password"
-          placeholder="Herhaal wachtwoord"
-          name="wachtwoord-herhaal"
-          id="wachtwoord-herhaal"
           required
         />
         <hr />
