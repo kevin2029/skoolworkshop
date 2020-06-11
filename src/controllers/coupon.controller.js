@@ -1,6 +1,8 @@
 const logger = require('../config/config').logger;
 const assert = require('assert');
 const connection = require('../config/database.connection');
+const express = require('express');
+const router = express.Router();
 
 let controller = {
     validateCoupon(req, res, next) {
@@ -155,13 +157,61 @@ let controller = {
         
     },
 
+    checkValue(req, res, next) {
+        logger.info("checkValue called");
+        const couponCode = req.params.Code;
+        logger.debug("Couponcode: ", couponCode);
+        let getOneResults;
+        controller.getOne(couponCode, (results) => {
+            logger.debug("results: ", results);
+            getOneResults = results[0];
+            const couponValue = getOneResults.Value;
+            logger.debug(couponValue);
+            const cMOR = couponValue.substring(couponValue.length - 1);
+            logger.debug("Substring check: ", cMOR);
+
+            if (couponValue.endsWith(Number)) {
+                router.get('/coupon/money/' + couponCode, controller.useCoupon(), controller.moneyCouponHandler());
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
+                logger.debug("couponCode: ", couponCode);
+                router.get(`/coupon/percentage/` + couponCode, controller.useCoupon(), controller.percentageCouponHandler());
+            } else if (cMOR == "%" && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
+                router.get('/coupon/percentageMax/' + couponCode);
+            } else if (couponValue == "workshop") {
+                router.get('/coupon/workshop/' + couponCode);
+            } else {
+                logger.debug("Error, invalid type");
+                res.status(400).json({
+                    message: "Error, invalid type"
+                })
+            }
+
+            // switch (couponValue) {
+            //     case checkMoneyOrPercentage == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9:
+            //         route.use('/coupon/money/' + couponCode);
+            //     case checkMoneyOrPercentage == "%" && getOneResults.maxBedragCoupon == undefined:
+            //         route.use('/coupon/percentage/' + couponCode);
+            //     case checkMoneyOrPercentage == "%" && getOneResults.maxBedragCoupon != undefined:
+            //         route.use('/coupon/percentageMax/' + couponCode);
+            //     case "workshop":
+            //         route.use('/coupon/workshop/' + couponCode);
+            //     default:
+            //         logger.debug("Error, default reached");
+            //         res.status(400).json({
+            //             message: "Error, default reached"
+            //         })
+            // }
+
+        });
+
+    },
+
     useCoupon(req, res, next) {
         logger.info("useCoupon called");
         const couponCode = req.params.Code;
         logger.debug("Couponcode: ", couponCode);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
-            logger.debug("results: ", results);
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug(couponValue);
@@ -177,7 +227,7 @@ let controller = {
         controller.getOne(couponCode, (results) => {
             logger.debug("results: ", results);
             getOneResults = results[0];
-            const couponAantalGebruikt = getOneResults.AantalGebruikt;
+            let couponAantalGebruikt = getOneResults.AantalGebruikt;
             logger.debug(couponValue);
 
             couponAantalGebruikt += 1;
@@ -203,7 +253,43 @@ let controller = {
     },
 
     workshopCouponHandler(req, res, next) {
+        logger.info("workshopCouponHandler called");
+        const coupon = req.coupon;
 
+        res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+        });
+    },
+
+    moneyCouponHandler(req, res, next) {
+        logger.info("moneyCouponHandler called");
+        const coupon = req.coupon;
+
+        res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+        });
+    },
+
+    percentageCouponHandler(req, res, next) {
+        logger.info("percentageCouponHandler called");
+        const coupon = req.coupon;
+
+        res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+        });
+    },
+
+    percentageMaxCouponHandler(req, res, next) {
+        logger.info("percentageMaxCouponHandler called");
+        const coupon = req.coupon;
+
+        res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+        });
     }
 };
 

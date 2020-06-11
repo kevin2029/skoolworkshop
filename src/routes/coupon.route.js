@@ -4,10 +4,7 @@ const couponcontroller = require('../controllers/coupon.controller');
 
 router.post('/coupon', couponcontroller.validateCoupon, couponcontroller.createCoupon);
 router.delete('/coupon/:Code', couponcontroller.checkDatabase, couponcontroller.deleteCoupon);
-router.use('/coupon/checkValue', couponcontroller.checkValidCoupon, couponcontroller.checkValue);
-router.get('/coupon/workshop/:Code', couponcontroller.useCoupon, couponcontroller.workshopCouponHandler);
-router.get('/coupon/money/:Code', couponcontroller.useCoupon, couponcontroller.workshopCouponHandler);
-router.get('/coupon/percentage/:Code', couponcontroller.useCoupon, couponcontroller.workshopCouponHandler);
-router.get('/coupon/percantageMax/:Code', couponcontroller.useCoupon, couponcontroller.workshopCouponHandler);
+router.get('/coupon/checkValue/:Code', couponcontroller.checkValidCoupon, couponcontroller.checkValue,
+couponcontroller.workshopCouponHandler, couponcontroller.moneyCouponHandler, couponcontroller.percentageCouponHandler, couponcontroller.percentageMaxCouponHandler);
 
 module.exports = router;
