@@ -142,7 +142,6 @@ let controller = {
             `';`;
 
         logger.info('getOne:', couponCode);
-        let returnable;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -171,9 +170,8 @@ let controller = {
         });
     },
 
-    updateCoupon(req, res, next) {
+    updateCoupon(couponCode) {
         logger.info("updateCoupon called");
-        const couponCode = req.body.Code;
 
         let getOneResults;
         controller.getOne(couponCode, (results) => {
@@ -187,6 +185,15 @@ let controller = {
             const query = 
                 `UPDATE Cadeaubon SET AantalGebruikt = '` + couponAantalGebruikt
                  + `' WHERE Code = '` + couponCode + `';`;
+
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    
+                } else {
+                    logger.debug("results: ", results[0]);
+                }
+            });
 
             res.status(200).json({
             result: results[0]
