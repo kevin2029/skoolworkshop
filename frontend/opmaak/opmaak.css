@@ -366,3 +366,12 @@ ul.topnav li.right {
   padding: .25rem 2rem;
   border-radius: 5px;
 } 
+
+.welkomst {
+  text-decoration: none;
+  font-size: 4.5rem;
+  color: white;
+  text-align: center;
+  margin-top: 20%;
+  text-shadow: 2px 2px 4px black;
+}
