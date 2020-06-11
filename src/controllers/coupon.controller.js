@@ -133,38 +133,51 @@ let controller = {
         })
     },
 
-    getOne(req, res, next) {
+    getOne(couponCode, callback) {
         logger.info("getOne called");
-        const couponCode = req.params.Code;
 
         const query =
-            `SELECT Code, Value, MaxBedrag, MaxGebruik, AantalGebruikt, Organisatie FROM Cadeaubon WHERE Code = '` +
+            `SELECT Code, Value, MaxBedrag, MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` +
             couponCode +
             `';`;
 
         logger.info('getOne:', couponCode);
+        let returnable;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
-                logger.debug(userMail, query, error);
-                res.status(400).json({
-                    message: 'User does not exist!'
-                });
+                logger.debug(couponCode, query, error);
+                return 'coupon does not exist!';
             } else {
-                res.status(200).json({
-                    User: results[0]
-                });
+                logger.debug("results: ", results[0]);
+                callback(results);
             }
         });
+        
     },
 
     useCoupon(req, res, next) {
         logger.info("useCoupon called");
         const couponCode = req.params.Code;
+        logger.debug("Couponcode: ", couponCode);
+        let getOneResults;
+        controller.getOne(couponCode, (results) => {
+            logger.debug("results: ", results);
+            getOneResults = results[0];
+            const couponValue = getOneResults.Value;
+            logger.debug(couponValue);
 
-        switch (couponCode){
-            case x:
-        }
+
+
+            res.status(200).json({
+            result: results[0]
+            });
+        });
+        
+
+        // switch (getoneResults){
+        //     case undefined:
+        // }
 
     },
 
