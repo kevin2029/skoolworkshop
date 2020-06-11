@@ -56,53 +56,53 @@
             <li class="right"><a href="#">Uitloggen</a></li>
         </ul>
 
-        <form id="workshopAanmaken" onsubmit="verstuur();return false">
+        <form id="workshopAanmaken" onsubmit="sendForm();return false">
             <!-- code pagina invoeren-->
             <div class="container">
                 <h1>Toevoegen van workshop</h1>
                 <p>Vul dit hele formulier in om een workshop toe te voegen</p>
                 <hr />
-                <label for="naam-workshop"><b>Naam van de workshop</b></label>
+                <label for="Naam"><b>Naam van de workshop</b></label>
                 <input
                     type="text"
                     placeholder="Vul naam in"
-                    name="naam-workshop"
-                    id="naam-workshop"
+                    name="Naam"
+                    id="Naam"
                     required
                 />
-                <label for="beschrijving"
+                <label for="Beschrijving"
                     ><b>Beschrijving van de workshop</b></label
                 >
                 <input
                     type="text"
                     placeholder="Vul beschrijving in"
-                    name="beschrijving"
-                    id="beschrijving"
+                    name="Beschrijving"
+                    id="Beschrijving"
                     required
                 />
-                <label for="prijs"><b>Prijs van de workshop</b></label>
+                <label for="Kosten"><b>Prijs van de workshop</b></label>
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Vul prijs in"
-                    name="prijs"
-                    id="prijs"
+                    name="Kosten"
+                    id="Kosten"
                     required
                 />
-                <label for="vervolg-prijs"><b>Vervolg prijs</b></label>
+                <label for="VervolgKosten"><b>Vervolg prijs</b></label>
                 <input
-                    type="text"
+                    type="number"
                     placeholder="Vul vervolg prijs in"
-                    name="vervolg-prijs"
-                    id="vervolg-prijs"
+                    name="VervolgKosten"
+                    id="VervolgKosten"
                     required
                 />
 
-                <label for="genre"><b>Genre</b></label>
+                <label for="Categorie"><b>Categorie</b></label>
                 <input
                     type="text"
-                    placeholder="Genre"
-                    name="genre"
-                    id="genre"
+                    placeholder="Categorie"
+                    name="Categorie"
+                    id="Categorie"
                     required
                 />
                 <hr />
@@ -111,5 +111,34 @@
                 </button>
             </div>
         </form>
+
+        <script src="/scripts/requests.js"></script>
+        <script src="/scripts/cookie.js"></script>
+
+        <script>
+            checkAdminCookie();
+
+            function sendForm() {
+                let formData = new FormData(
+                    document.querySelector('#workshopAanmaken')
+                );
+
+                sendPostRequest(apiUrl + '/api/workshop/create', formData)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error creating user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
     </body>
 </html>

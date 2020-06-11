@@ -1,6 +1,7 @@
 const logger = require('../config/config').logger;
 const assert = require('assert');
 const connection = require('../config/database.connection');
+const bcrypt = require('bcrypt');
 
 let controller = {
     validateUser(req, res, next) {
@@ -35,28 +36,34 @@ let controller = {
         logger.info('createUser:', req.body);
 
         let { Naam, Email, Organisatie, Adress } = req.body;
-        let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, 'Welkom01');`;
 
-        connection.connectDatabase(
-            query,
-            [Naam, Email, Organisatie, Adress],
-            (error, results, fields) => {
-                if (error) {
-                    logger.debug('createUser:', req.body, error);
-                    res.status(400).json({
-                        message: 'A user with this email already exists!'
-                    });
-                } else {
-                    logger.info('User added:', req.body);
-                    res.status(200).json({
-                        message: 'User added!',
-                        result: {
-                            ...req.body
+        bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash('Welkom01', salt, function (err, hash) {
+                let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, ?);`;
+
+                connection.connectDatabase(
+                    query,
+                    [Naam, Email, Organisatie, Adress, hash],
+                    (error, results, fields) => {
+                        if (error) {
+                            logger.debug('createUser:', req.body, error);
+                            res.status(400).json({
+                                message:
+                                    'A user with this email already exists!'
+                            });
+                        } else {
+                            logger.info('User added:', req.body);
+                            res.status(200).json({
+                                message: 'User added!',
+                                result: {
+                                    ...req.body
+                                }
+                            });
                         }
-                    });
-                }
-            }
-        );
+                    }
+                );
+            });
+        });
     },
 
     getOne(req, res, next) {
@@ -84,7 +91,8 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = 'SELECT Naam, Email, Organisatie, Adress FROM gebruiker;';
+        const query =
+            'SELECT ID, Naam, Email, Organisatie, Adress FROM gebruiker;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -93,7 +101,7 @@ let controller = {
                     error: error
                 });
             } else if (results.length == 0) {
-                res.status(200).json({
+                res.status(404).json({
                     message: 'There are no users!'
                 });
             } else {
@@ -105,8 +113,9 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        const userID = req.params.userID;
+        let userID = req.params.Id;
 
+        logger.debug(req.params.Id);
         const query = `SELECT Naam FROM Gebruiker WHERE ID = ?;`;
 
         connection.connectDatabase(query, userID, (error, results, fields) => {
@@ -123,7 +132,7 @@ let controller = {
     },
 
     deleteUser(req, res, next) {
-        const userID = req.params.userID;
+        const userID = req.params.Id;
 
         const query = `DELETE FROM Gebruiker WHERE ID = ?;`;
 
@@ -134,7 +143,7 @@ let controller = {
                     error: error
                 });
             } else {
-                logger.info(userMail, 'deleted!');
+                logger.info(userID, 'deleted!');
                 res.status(200).json({
                     message: 'User deleted!'
                 });

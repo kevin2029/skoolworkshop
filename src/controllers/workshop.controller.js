@@ -14,11 +14,6 @@ let controller = {
             } = req.body;
             assert(typeof Naam === 'string', 'Name is missing.');
             assert(typeof Beschrijving === 'string', 'Description is missing.');
-            assert(typeof Kosten === 'number', 'Price is missing.');
-            assert(
-                typeof VervolgKosten === 'number',
-                'Follow-up price is missing.'
-            );
             assert(typeof Categorie === 'string', 'Categorie is missing.');
 
             next();
@@ -61,6 +56,7 @@ let controller = {
                 if (results) {
                     logger.debug('results: ', results);
                     res.status(200).json({
+                        message: 'workshop added!',
                         result: {
                             ...workshop
                         }
@@ -93,7 +89,7 @@ let controller = {
 
     deleteWorkshop(req, res, next) {
         logger.info('deleteWorkshop called');
-        const workshopNaam = req.body.workshopNaam;
+        const workshopNaam = req.params.Naam;
 
         let sqlQuery =
             `DELETE FROM Workshop WHERE Naam = '` + workshopNaam + `'`;
@@ -144,8 +140,8 @@ let controller = {
         console.log('urls:', req.url);
         if (req.url !== '/getall') {
             query =
-                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.Gebruikersemail = '" +
-                req.params.Email +
+                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.GebruikersID = '" +
+                req.params.ID +
                 "';";
         } else {
             query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop GROUP BY Categorie;`;
@@ -164,7 +160,7 @@ let controller = {
                 });
             } else {
                 res.status(200).json({
-                    Users: results
+                    result: results
                 });
             }
         });

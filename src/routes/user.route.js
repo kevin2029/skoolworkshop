@@ -6,13 +6,13 @@ const authenticationcontroller = require('../controllers/authenication.controlle
 
 router.post(
     '/create',
-    authenticationcontroller.validateAdmin,
+    // authenticationcontroller.validateAdmin,
     usercontroller.validateUser,
     usercontroller.createUser
 );
 router.post(
-    '/delete',
-    authenticationcontroller.validateAdmin,
+    '/delete/:Id',
+    // authenticationcontroller.validateAdmin,
     usercontroller.checkDatabase,
     usercontroller.deleteUser
 );

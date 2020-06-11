@@ -48,7 +48,11 @@
                 ); // ingevulde gegevens uit form worden opgehaald
 
                 // API call uitvoeren om data op te halen
-                sendPostRequest(apiUrl + '/api/login', formData)
+                sendPostRequest(
+                    apiUrl + '/api/login',
+                    formData,
+                    getCookie('admintoken')
+                )
                     .then((data) => {
                         if (data.error) {
                             alert(

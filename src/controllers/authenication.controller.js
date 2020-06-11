@@ -337,7 +337,7 @@ module.exports = {
     },
     validateAdmin(req, res, next) {
         logger.info('validateadmin called');
-        logger.trace(req.headers);
+        logger.debug(req.headers);
         // The headers should contain the authorization-field with value 'Bearer [token]'
         const authHeader = req.headers.authorization;
         if (!authHeader) {
