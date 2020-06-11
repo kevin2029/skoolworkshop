@@ -103,6 +103,35 @@ let controller = {
         });
     },
 
+    getPayment(req, res, next) {
+        const ID = req.params.ID;
+        logger.info('checkPayment: ', ID);
+
+        let IsBetaald = req.body;
+        let query =
+            `SELECT IsBetaald FROM Factuur WHERE ID = '` + ID + `';`;
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug(ID, query, error);
+                res.status(400).json({
+                    message: 'Invoice does not exist!'
+                });
+            } else {
+                if(results === true) {
+                    res.status(200).json({
+                        Invoice: 'Is betaald.'
+                    });
+                } else {
+                    res.status(200).json({
+                        Invoice: 'Is niet betaald!'
+                    })
+                }
+                
+            }
+        });    
+    },
+
     checkDatabase(req, res, next) {
         const ID = req.params.ID;
 
