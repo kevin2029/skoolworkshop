@@ -13,7 +13,6 @@ let controller = {
             assert(typeof Email === 'string', 'Email is missing!');
             assert(typeof Organisatie === 'string', 'Organisation is missing!');
             assert(typeof Adress === 'string', 'Address is missing!');
-            assert(typeof Wachtwoord === 'string', 'Password is missing!');
 
             // Invalid values giving errors
             assert.match(
@@ -35,13 +34,12 @@ let controller = {
     createUser(req, res, next) {
         logger.info('createUser:', req.body);
 
-        let { Naam, Email, Organisatie, Adress, Wachtwoord } = req.body;
-        let query =
-            'INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, ?);';
+        let { Naam, Email, Organisatie, Adress } = req.body;
+        let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, 'Welkom01');`;
 
         connection.connectDatabase(
             query,
-            [Naam, Email, Organisatie, Adress, Wachtwoord],
+            [Naam, Email, Organisatie, Adress],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('createUser:', req.body, error);
@@ -62,10 +60,10 @@ let controller = {
     },
 
     getOne(req, res, next) {
-        const userMail = req.params.userMail || req.email;
+        const userMail = req.params.userID;
 
         const query =
-            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE Email = '` +
+            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE ID = '` +
             userMail +
             `';`;
 
@@ -107,12 +105,11 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        const userMail = req.params.userMail;
+        const userID = req.params.userID;
 
-        const query =
-            `SELECT Naam FROM Gebruiker WHERE Email = '` + userMail + `';`;
+        const query = `SELECT Naam FROM Gebruiker WHERE ID = ?;`;
 
-        connection.connectDatabase(query, (error, results, fields) => {
+        connection.connectDatabase(query, userID, (error, results, fields) => {
             if (results.length == 0) {
                 logger.debug('checkDatabase:', error);
                 res.status(400).json({
@@ -126,13 +123,13 @@ let controller = {
     },
 
     deleteUser(req, res, next) {
-        const userMail = req.params.userMail;
+        const userID = req.params.userID;
 
-        const query = `DELETE FROM Gebruiker WHERE Email = '` + userMail + `';`;
+        const query = `DELETE FROM Gebruiker WHERE ID = ?;`;
 
-        connection.connectDatabase(query, (error, results, fields) => {
+        connection.connectDatabase(query, userID, (error, results, fields) => {
             if (error) {
-                logger.debug('deleteUser', userMail, error);
+                logger.debug('deleteUser', userID, error);
                 res.status(400).json({
                     error: error
                 });
@@ -145,50 +142,19 @@ let controller = {
         });
     },
 
-    validateUpdateUser(req, res, next) {
-        let { Naam, Email, Organisatie, Adress } = req.body;
-
-        logger.info('validateUpdateUser:', req.body);
-        try {
-            // Missing values giving errors
-            assert(typeof Naam === 'string', 'Name is missing!');
-            assert(typeof Email === 'string', 'Email is missing!');
-            assert(typeof Organisatie === 'string', 'Organisation is missing!');
-            assert(typeof Adress === 'string', 'Address is missing!');
-
-            // Invalid values giving errors
-            assert.match(
-                req.body.Email,
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                'Email is invalid!'
-            );
-
-            next();
-        } catch (err) {
-            logger.debug('Error updating user:', err.message);
-            res.status(400).json({
-                message: 'Error updating user!',
-                error: err.message
-            });
-        }
-    },
-
     updateUser(req, res, next) {
-        const userMail = req.params.userMail;
-        logger.info('updateUser:', userMail);
+        const userID = req.params.userID;
+        logger.info('updateUser:', userID);
 
         let { Naam, Email, Organisatie, Adress } = req.body;
-        let query =
-            `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE Email = '` +
-            userMail +
-            `';`;
+        let query = `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE ID = ?;`;
 
         connection.connectDatabase(
             query,
-            [Naam, Email, Organisatie, Adress],
+            [Naam, Email, Organisatie, Adress, userID],
             (error, results, fields) => {
                 if (error) {
-                    logger.debug('updateUser:', userMail, req.body, error);
+                    logger.debug('updateUser:', userID, req.body, error);
                     res.status(400).json({
                         message: 'A user with this email already exists!',
                         error: error
@@ -199,8 +165,7 @@ let controller = {
                         message: 'User updated!',
                         result: {
                             ...req.body
-                        },
-                        test: query
+                        }
                     });
                 }
             }
@@ -208,27 +173,23 @@ let controller = {
     },
 
     uploadImage(req, res, next) {
-        logger.info('uploadImage', req.body);
-        const { GebruikerMail, Path } = req.body;
+        const { userID, Path } = req.body;
 
-        let query = 'UPDATE Gebruiker SET Path = ? WHERE GebruikerMail = ?;';
+        logger.info('uploadImage', req.body);
+
+        let query = 'UPDATE Gebruiker SET Path = ? WHERE ID = ?;';
 
         connection.connectDatabase(
             query,
-            [Path, GebruikerMail],
+            [Path, userID],
             (error, results, fields) => {
                 if (error) {
-                    logger.debug('uploadImage', GebruikerMail, Path);
+                    logger.debug('uploadImage', userID, Path);
                     res.status(400).json({
                         error: error
                     });
                 } else {
-                    logger.info(
-                        'Image uploaded for:',
-                        GebruikerMail,
-                        'on',
-                        Path
-                    );
+                    logger.info('Image uploaded for:', userID, 'on', Path);
                     res.status(200).json({
                         message: 'Image uploaded!'
                     });

@@ -18,7 +18,7 @@ module.exports = {
             if (connection) {
                 // Check if the acc exists
                 connection.query(
-                    "SELECT Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?",
+                    "SELECT ID, Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT ID, Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?",
                     [req.body.Email, req.body.Email],
                     (err, rows, fields) => {
                         connection.release();
@@ -69,14 +69,14 @@ module.exports = {
                                                 'passwords DID match, sending valid token'
                                             );
                                             let payload = {
-                                                email: rows[0].Email,
+                                                ID: rows[0].ID,
                                                 IsAdmin: 0
                                             };
                                             if (
                                                 rows[0].Origin === 'AdminTable'
                                             ) {
                                                 payload = {
-                                                    email: rows[0].Email,
+                                                    ID: rows[0].ID,
                                                     IsAdmin: 1
                                                 };
                                             }
@@ -94,7 +94,7 @@ module.exports = {
                                                 ),
                                                 Organisatie:
                                                     rows[0].Organisatie,
-                                                IsAdmin: payload.IsAdmin
+                                                payload: payload
                                             };
                                             res.status(200).json(userinfo);
                                         }
@@ -121,13 +121,15 @@ module.exports = {
             );
             assert(
                 req.body.Email.match(
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
                 'e-mail is invalid!'
             );
 
             assert(
                 req.body.Wachtwoord.match(
-                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/),
+                    /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/
+                ),
                 'Password must contain at least one letter, at least one number, and be longer than six charaters.'
             );
             next();
@@ -234,11 +236,12 @@ module.exports = {
                                                         'succes user added!'
                                                     );
 
-                                                    res.status(200).json(
-                                                        'Succes ' +
+                                                    res.status(200).json({
+                                                        message:
+                                                            'Succes ' +
                                                             req.body.Naam +
                                                             ' is aangemaakt!'
-                                                    );
+                                                    });
                                                 }
                                             }
                                         );
@@ -276,13 +279,15 @@ module.exports = {
 
             assert(
                 req.body.Email.match(
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
                 'e-mail is invalid!'
             );
 
             assert(
                 req.body.Wachtwoord.match(
-                /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/),
+                    /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/
+                ),
                 'Password must contain at least one letter, at least one number, and be longer than six charaters.'
             );
             assert(
@@ -361,7 +366,7 @@ module.exports = {
                         next();
                     } else {
                         res.status(401).json({
-                            error: 'je hebt geen rechten om dit te doen!',
+                            error: 'Je hebt geen rechten om dit te doen!',
                             datetime: new Date().toISOString()
                         });
                     }

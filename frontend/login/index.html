@@ -5,13 +5,6 @@
         <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
     </head>
     <body>
-        <ul class="topnav">
-            <li><a class="active" href="#home">Gebruiker aanmaken</a></li>
-            <li><a href="#4">2</a></li>
-            <li><a href="#4">3</a></li>
-            <li class="right"><a href="#about">4</a></li>
-        </ul>
-
         <form
             class="needs-validation"
             id="loginForm"
@@ -66,6 +59,7 @@
                                 'De gebruikers-mail en/of wachtwoord is/zijn niet correct.'
                             );
                         } else {
+                            setCookie('userID', data.payload.ID);
                             if (data.IsAdmin === 1) {
                                 setCookie('admintoken', data.token);
                                 window.location.href = 'test.html';

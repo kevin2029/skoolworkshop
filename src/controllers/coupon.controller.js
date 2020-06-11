@@ -6,10 +6,13 @@ let controller = {
     validateCoupon(req, res, next) {
         logger.info('validatecoupon called', req.body);
         try {
-            const {codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon } = req.body;
+            const { codeCoupon, valueCoupon, maxGebruikCoupon } = req.body;
             assert(typeof codeCoupon === 'string', 'Code is missing.');
             assert(typeof valueCoupon === 'string', 'Value is missing.');
-            assert(typeof maxGebruikCoupon === 'string','Max uses is missing.');
+            assert(
+                typeof maxGebruikCoupon === 'string',
+                'Max uses is missing.'
+            );
 
             next();
         } catch (err) {
@@ -24,7 +27,12 @@ let controller = {
     createCoupon(req, res, next) {
         logger.info('createcoupon called');
         const coupon = req.body;
-        let {codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon } = coupon;
+        let {
+            codeCoupon,
+            valueCoupon,
+            maxBedragCoupon,
+            maxGebruikCoupon
+        } = coupon;
         logger.debug('coupon =', coupon);
 
         let sqlQuery =
@@ -33,7 +41,7 @@ let controller = {
 
         connection.connectDatabase(
             sqlQuery,
-            [codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon ],
+            [codeCoupon, valueCoupon, maxBedragCoupon, maxGebruikCoupon],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('createcoupon', error);
@@ -54,7 +62,7 @@ let controller = {
     },
 
     checkDatabase(req, res, next) {
-        logger.info('checkDatabase called')
+        logger.info('checkDatabase called');
         const couponCode = req.params.Code;
 
         let sqlQuery =
@@ -63,12 +71,12 @@ let controller = {
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
             if (error) {
-                logger.debug('checkDatabase', 'Coupon not found')
+                logger.debug('checkDatabase', 'Coupon not found');
                 res.status(400).json({
                     message: 'coupon not found'
                 });
             } else {
-                logger.debug('checkDatabase', 'Coupon found')
+                logger.debug('checkDatabase', 'Coupon found');
                 next();
             }
         });
@@ -102,8 +110,10 @@ let controller = {
         logger.info('checkValidCoupon called');
         const couponCode = req.params.Code;
 
-        let sqlQuery = 
-            `SELECT MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` + couponCode + `';`
+        let sqlQuery =
+            `SELECT MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` +
+            couponCode +
+            `';`;
         logger.debug('checkValidCoupon', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
@@ -113,24 +123,22 @@ let controller = {
                     message: 'checkValidCoupon failed',
                     error: error
                 });
-
             } else {
                 console.log(results);
                 for (var i = 0; i < results.length; i++) {
-                    logger.debug("parsedJSON: ", results[i]);
+                    logger.debug('parsedJSON: ', results[i]);
                     const MaxGebruik = results[i].MaxGebruik;
                     const AantalGebruikt = results[i].AantalGebruikt;
                     if (AantalGebruikt < MaxGebruik) {
                         next();
                     } else {
                         res.status(200).json({
-                            message: 'Coupon is invalid',
-                        })
+                            message: 'Coupon is invalid'
+                        });
                     }
                 }
             }
-
-        })
+        });
     }
 };
 module.exports = controller;

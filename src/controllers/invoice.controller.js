@@ -14,8 +14,10 @@ let controller = {
             assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
 
             // InvalID values giving errors
-            assert(req.body.GebruikerMail.match(
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+            assert(
+                req.body.GebruikerMail.match(
+                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
                 'Email is invalid!'
             );
 
@@ -108,8 +110,7 @@ let controller = {
         logger.info('checkPayment: ', ID);
 
         let IsBetaald = req.body;
-        let query =
-            `SELECT IsBetaald FROM Factuur WHERE ID = '` + ID + `';`;
+        let query = `SELECT IsBetaald FROM Factuur WHERE ID = '` + ID + `';`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -118,18 +119,17 @@ let controller = {
                     message: 'Invoice does not exist!'
                 });
             } else {
-                if(results === true) {
+                if (results === true) {
                     res.status(200).json({
                         Invoice: 'Is betaald.'
                     });
                 } else {
                     res.status(200).json({
                         Invoice: 'Is niet betaald!'
-                    })
+                    });
                 }
-                
             }
-        });    
+        });
     },
 
     checkDatabase(req, res, next) {

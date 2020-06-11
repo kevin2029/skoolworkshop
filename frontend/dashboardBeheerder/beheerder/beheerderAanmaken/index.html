@@ -41,7 +41,7 @@
     <form
             class="needs-validation"
             id="beheerderAanmakenForm"
-            onsubmit="sendForm();return false;"
+            onsubmit="sendForm(); return false;"
             novalidate
         >
       <!-- code pagina invoeren-->
@@ -49,37 +49,36 @@
         <h1>Toevoegen van bedrijf</h1>
         <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
         <hr />
-        <label for="naamBeheerder"><b>Naam van de beheerder</b></label>
+        <label for="Naam"><b>Naam van de beheerder</b></label>
         <input
           type="text"
           placeholder="Vul naam in"
-          name="naamBeheerder"
-          id="naamBeheerder"
+          name="Naam"
+          id="Naam"
           required
         />
-        <label for="naamOrganisatie"><b>Naam van de Organisatie</b></label>
-        <input
-          type="text"
-          placeholder="Vul naam in"
-          name="naamOrganisatie"
-          id="naamOrganisatie"
-          required
-        />
-        <label for="email"><b>Email</b></label>
+        <label for="Email"><b>Email</b></label>
         <input
           type="text"
           placeholder="Vul email in"
-          name="email"
-          id="email"
+          name="Email"
+          id="Email"
           required
         />
-
-        <label for="Adress"><b>Adres</b></label>
+        <label for="Wachtwoord"><b>Wachtwoord</b></label>
         <input
-          type="text"
-          placeholder="Vul adres in"
-          name="Adress"
-          id="Adress"
+          type="password"
+          placeholder="Vul wachtwoord in"
+          name="Wachtwoord"
+          id="Wachtwoord"
+          required
+        />
+        <label for="herhaalWachtwoord"><b>Herhaal wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Vul wachtwoord in"
+          name="herhaalWachtwoord"
+          id="herhaalWachtwoord"
           required
         />
         <hr />
@@ -96,10 +95,32 @@
       checkAdminCookie();
 
       function sendForm(){
-        let formData = new FormData(
+        const Wachtwoord = document.getElementById('Wachtwoord').value;
+        const herhaalWachtwoord = document.getElementById('herhaalWachtwoord').value;
+        
+        if(Wachtwoord != herhaalWachtwoord) {
+           alert('Wachtwoord is niet gelijk')
+         } else {
+          let formData = new FormData(
           document.querySelector('#beheerderAanmakenForm')
           );
-      }
+
+          sendPostRequest(apiUrl + '/api/register/admin', formData)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            alert(data.message)
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error creating user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+      }}
     </script>
   </body>
 </html>
