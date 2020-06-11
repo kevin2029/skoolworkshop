@@ -14,8 +14,10 @@ router.post('/getall', workshopcontroller.getAll);
 router.post(
     '/update',
     workshopcontroller.checkDatabase,
-    workshopcontroller.validateUpdateUser,
+    workshopcontroller.validateWorkshop,
     workshopcontroller.updateWorkshop
 );
+
+router.get('/getWorkshopUser/:Email', workshopcontroller.getAll)
 
 module.exports = router;

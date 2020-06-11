@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="opmaak.css" />
+    </head>
+    <body>
+        <ul class="topnav">
+            <li><a class="active" href="#home">Gebruiker aanmaken</a></li>
+            <li><a href="#4">2</a></li>
+            <li><a href="#4">3</a></li>
+            <li class="right"><a href="#about">4</a></li>
+        </ul>
+
+        <form
+            class="needs-validation"
+            id="createStudenthomeForm"
+            onsubmit="sendForm();return false;"
+            novalidate
+        >
+            <!-- code pagina invoeren-->
+            <div class="container">
+                <h1 class="text-center">Inloggen Skool Workshop</h1>
+                <label for="Email"><b>Email</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul email in"
+                    name="Email"
+                    id="Email"
+                    required
+                />
+
+                <label for="Wachtwoord"><b>Wachtwoord</b></label>
+                <input
+                    type="password"
+                    placeholder="Vul wachtwoord in"
+                    name="Wachtwoord"
+                    id="Wachtwoord"
+                    required
+                />
+
+                <button type="submit" class="registerbtn">
+                    Log in
+                </button>
+            </div>
+        </form>
+
+        <button onclick="deleteCookie()">delete cookies</button>
+
+        <script src="/scripts/requests.js"></script>
+        <script src="/scripts/cookie.js"></script>
+
+        <script>
+            checkLoginCookie();
+
+            function sendForm() {
+                let formData = new FormData(
+                    document.querySelector('#createStudenthomeForm')
+                ); // ingevulde gegevens uit form worden opgehaald
+
+                // API call uitvoeren om data op te halen
+                sendPostRequest(apiUrl + '/api/login', formData)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(
+                                'De gebruikers-mail en/of wachtwoord is/zijn niet correct.'
+                            );
+                        } else {
+                            if (data.IsAdmin === 1) {
+                                setCookie('admintoken', data.token);
+                                window.location.href = 'test.html';
+                                // window.location.href = '' [admindashboard].html
+                            } else {
+                                setCookie('usertoken', data.token);
+                                // window.location.href = '' [gebruikersdashboard].html
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error logging in!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+    </body>
+</html>

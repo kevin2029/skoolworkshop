@@ -4,12 +4,16 @@ const usercontroller = require('../controllers/user.controller');
 const userEditController = require('../controllers/user.edit.controller');
 const authenticationcontroller = require('../controllers/authenication.controller');
 
-router.post('/user', usercontroller.validateUser, usercontroller.createUser);
-router.post('/user', usercontroller.checkDatabase, usercontroller.deleteUser);
-router.post('/user', usercontroller.getOne);
-router.post('/user', usercontroller.getAll);
-router.post(
-    '/user',
+router.post('/create', usercontroller.validateUser, usercontroller.createUser);
+router.delete(
+    '/delete',
+    usercontroller.checkDatabase,
+    usercontroller.deleteUser
+);
+router.get('/getone', usercontroller.getOne);
+router.get('/getall', usercontroller.getAll);
+router.put(
+    '/update',
     usercontroller.checkDatabase,
     usercontroller.validateUpdateUser,
     usercontroller.updateUser

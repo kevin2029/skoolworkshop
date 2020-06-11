@@ -41,7 +41,7 @@
         <li class="right"><a href="#about">Google drive</a></li>
     </ul>
 
-    <form id="workshopverwijderen" onsubmit="verstuur();return false">
+    <form id="workshopverwijderen" onsubmit="sendForm();return false">
         <!-- code pagina invoeren-->
         <div class="container">
             <h1>Verwijderen van een workshop</h1>
@@ -52,18 +52,34 @@
            
             <hr />
             
-            <button type="submit" class="registerbtn" onclick="myFunction()">
+            <button type="submit" class="registerbtn">
                 Verwijderen
-            </button>
-
-           <script>
-             function myFunction() {
-             confirm("Wilt u het verwijderen?!");
-             }
-        </script>
-            
+            </button>            
         </div>
     </form>
+
+    <script src="../scripts/requests.js"></script>
+
+    <script>
+        function sendForm() {
+          let formData = new FormData(document.querySelector("#workshopverwijderen")); // ingevulde gegevens uit form worden opgehaald
+      
+          // API call uitvoeren om data op te halen
+          sendDeleteRequest(apiUrl + "/api/user/delete", formData)
+            .then((data) => {
+              alert("User deleted!");
+              console.log(data.result);
+            })
+            .catch((error) => {
+              alert("Error deleting user!");
+              console.error(
+                "There has been a problem with your fetch operation:",
+                error
+              );
+            });
+        }
+      </script>
+      
 </body>
 
 </html>

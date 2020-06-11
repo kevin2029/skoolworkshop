@@ -1,3 +1,4 @@
+// Example POST method implementation:
 async function postData(url = '', data = {}) {
     const response = await fetch(url, {
         method: 'POST',
@@ -15,14 +16,17 @@ async function postData(url = '', data = {}) {
 }
 
 function verstuur() {
-    const form = new FormData(document.getElementById('workshopverwijderen'));
+    const form = new FormData(document.getElementById('gebruikerAanmaken'));
 
     console.log(form);
 
-    postData('http://localhost:3000/api/deleteworkshop', form)
+    postData('http://localhost:3000/api/user/create', form)
+        .then((response) => {
+            console.log('response.json()', response.json());
+            alert('The form was submitted');
+        })
         .then((data) => {
-            console.log(data);
-            alert('The workshop has been deleted!');
+            console.log('data', data);
         })
         .catch((err) => {
             console.log(err);
