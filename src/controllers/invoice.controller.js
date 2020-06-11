@@ -14,8 +14,10 @@ let controller = {
             assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
 
             // InvalID values giving errors
-            assert(req.body.GebruikerMail.match(
-                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+            assert(
+                req.body.GebruikerMail.match(
+                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
                 'Email is invalid!'
             );
 
@@ -62,7 +64,7 @@ let controller = {
         const ID = req.params.ID;
 
         const query =
-            `SELECT GebruikerMail, Path, IsBetaald FROM Factuur WHERE ID = '` +
+            `SELECT GebruikerEmail, Path, IsBetaald FROM Factuur WHERE ID = '` +
             ID +
             `';`;
 
@@ -83,7 +85,7 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = 'SELECT GebruikerMail, Path, IsBetaald FROM Invoice;';
+        const query = 'SELECT GebruikerEmail, Path, IsBetaald FROM factuur;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -108,8 +110,7 @@ let controller = {
         logger.info('checkPayment: ', ID);
 
         let IsBetaald = req.body;
-        let query =
-            `SELECT IsBetaald FROM Factuur WHERE ID = '` + ID + `';`;
+        let query = `SELECT IsBetaald FROM Factuur WHERE ID = '` + ID + `';`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -118,18 +119,17 @@ let controller = {
                     message: 'Invoice does not exist!'
                 });
             } else {
-                if(results === true) {
+                if (results === true) {
                     res.status(200).json({
                         Invoice: 'Is betaald.'
                     });
                 } else {
                     res.status(200).json({
                         Invoice: 'Is niet betaald!'
-                    })
+                    });
                 }
-                
             }
-        });    
+        });
     },
 
     checkDatabase(req, res, next) {
@@ -202,6 +202,50 @@ let controller = {
             });
         }
     },
+    getAllPaid(req, res, next) {
+        const ID = req.params.ID;
+        logger = ('GetAllPaid', ID);
+        const query = `SELECT GebruikerEmail, Path, IsBetaald FROM factuur WHERE IsBetaald = 'TRUE' ;`;
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug('invoice getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(200).json({
+                    message: 'There are no invoices!'
+                });
+            } else {
+                res.status(200).json({
+                    Invoices: results
+                });
+            }
+        });
+    },
+    getAllNonePaid(req, res, next) {
+        const ID = req.params.ID;
+        logger = ('getAllNonPaid', ID);
+        const query = `SELECT GebruikerEmail, Path, IsBetaald FROM factuur WHERE IsBetaald = 'FALSE' ;`;
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug('invoice getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(200).json({
+                    message: 'There are no invoices!'
+                });
+            } else {
+                res.status(200).json({
+                    Invoices: results
+                });
+            }
+        });
+    },
 
     updateInvoice(req, res, next) {
         const ID = req.params.ID;
@@ -209,7 +253,7 @@ let controller = {
 
         let { GebruikerMail, Path, IsBetaald } = req.body;
         let query =
-            `UPDATE Factuur SET GebruikerMail = ?, Path = ?, IsBetaald = ? WHERE Email = '` +
+            `UPDATE Factuur SET GebruikerEmail = ?, Path = ?, IsBetaald = ? WHERE Email = '` +
             ID +
             `';`;
 

@@ -14,6 +14,8 @@ router.delete(
     invoicecontroller.deleteInvoice
 );
 router.get('/invoice/:ID', invoicecontroller.getOne);
+router.get('/invoice/AllPaid', invoicecontroller.getAllPaid);
+router.get('/invoice/NotPaid', invoicecontroller.getAllNonePaid);
 router.get('/invoice', invoicecontroller.getAll);
 router.get(
     '/invoice/CheckPayment/:ID', 
