@@ -40,18 +40,14 @@ app.use((req, res, next) => {
 });
 
 // Url redirect
-// app.get('/', function (request, response) {
-//     response.sendFile(__dirname + '/frontend/index.html');
-// });
 app.get('/', function (request, response) {
-    response.sendFile(__dirname + '/frontend/dashboardBeheerder/index.html');
-});
-app.get('/opmaak.css', function (request, response) {
-    response.sendFile(__dirname + '/frontend/opmaak/opmaak.css');
+    response.sendFile(__dirname + '/frontend/login/index.html');
 });
 
-// // Serve files from the ./static folder
+// // Serve files from the ./frontend folder
 app.use('/', express.static(__dirname + '/frontend'));
+app.use('/', express.static(__dirname + '/frontend/opmaak'));
+app.use('/', express.static(__dirname + '/frontend/scripts'));
 
 // Routes
 app.use('/api', authenticationRoutes);
