@@ -7,7 +7,6 @@
             type="text/css"
             href="../../../opmaak/opmaak.css"
         />
-        <script src="workshopaanmaken.js"></script>
     </head>
     <body>
         <ul class="topnav">
@@ -64,36 +63,34 @@
             <li class="right"><a href="#">Uitloggen</a></li>
         </ul>
 
-        <form id="gebruikerAanmaken" onsubmit="verstuur();return false">
+        <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
             <!-- code pagina invoeren-->
             <div class="container">
                 <h1>Toevoegen van gebruiker</h1>
                 <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
                 <hr />
-                <label for="naamBeheerder"><b>Naam van de beheerder</b></label>
+                <label for="Naam"><b>Naam van de gebruiker</b></label>
                 <input
                     type="text"
                     placeholder="Vul naam in"
-                    name="naamBeheerder"
-                    id="naamBeheerder"
+                    name="Naam"
+                    id="Naam"
                     required
                 />
-                <label for="naamOrganisatie"
-                    ><b>Naam van de Organisatie</b></label
-                >
+                <label for="Organisatie"><b>Naam van de Organisatie</b></label>
                 <input
                     type="text"
                     placeholder="Vul naam in"
-                    name="naamOrganisatie"
-                    id="naamOrganisatie"
+                    name="Organisatie"
+                    id="Organisatie"
                     required
                 />
-                <label for="email"><b>Email</b></label>
+                <label for="Email"><b>Email</b></label>
                 <input
                     type="text"
                     placeholder="Vul email in"
-                    name="email"
-                    id="email"
+                    name="Email"
+                    id="Email"
                     required
                 />
 
@@ -105,27 +102,6 @@
                     id="Adress"
                     required
                 />
-
-                <!--  <label for="foto"><b>Foto van organisatie</b></label>
-        <input type="file" name="foto" id="foto" required /> -->
-
-                <label for="wachtwoord"><b>Wachtwoord</b></label>
-                <input
-                    type="password"
-                    placeholder="Vul wachtwoord in"
-                    name="wachtwoord"
-                    id="wachtwoord"
-                    required
-                />
-
-                <label for="wachtwoordHerhaal"><b>Herhaal wachtwoord</b></label>
-                <input
-                    type="password"
-                    placeholder="Herhaal wachtwoord"
-                    name="wachtwoordHerhaal"
-                    id="wachtwoordHerhaal"
-                    required
-                />
                 <hr />
                 <button type="submit" class="registerbtn">
                     Toevoegen
@@ -133,4 +109,33 @@
             </div>
         </form>
     </body>
+
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+
+    <script>
+        checkAdminCookie();
+
+        function sendForm() {
+            let formData = new FormData(
+                document.querySelector('#gebruikerAanmaken')
+            );
+
+            sendPostRequest(apiUrl + '/api/user/create', formData)
+                .then((data) => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    alert('Error creating user!');
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    );
+                });
+        }
+    </script>
 </html>
