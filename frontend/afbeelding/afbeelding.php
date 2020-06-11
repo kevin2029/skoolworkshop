@@ -1,12 +1,5 @@
 <?php
-$target_dir = "..\\..\\..\\upload\\facturen\\";
-
-// IsBetaald == true  -> 1
-// IsBetaald == false -> 0
-$isBetaald = 0;
-if($_POST['IsBetaald'] == 'true') {
-  $isBetaald = 1;
-}
+$target_dir = "..\\..\\..\\upload\\afbeeldingen\\";
 
 // Check ofdat een bestand is geslecteerd.
 if (($_FILES['fileToUpload']['name'] != "")) {
@@ -15,37 +8,33 @@ if (($_FILES['fileToUpload']['name'] != "")) {
   $file = $_FILES['fileToUpload']['name'];
   $path = pathinfo($file);
   $filename = $path['filename'];
-  $ext = $path['extension'];
+  $ext = strtolower($path['extension']);
   
   // Check ofdat bestand PDF is.
-  if(strtolower($ext) != 'pdf') {
-    echo "Sorry, file is not PDF.";
-    exit();
-  }
+  // if($ext != 'png' || $ext != 'jpg' || $ext != 'jpeg' || $ext != 'bmp' || $ext != 'webp') {
+  //   echo "Sorry, file is not an image.";
+  //   exit();
+  // }
 
-  // Tijdelijke bestand.
-  $temp_file = $_FILES['fileToUpload']['tmp_name'];
-
-  // Permanente bestand.
-  $perm_file = $target_dir . $filename . "." . $ext;
+  $temp_name = $_FILES['fileToUpload']['tmp_name'];
+  $path_filename_ext = $target_dir . $filename . "." . $ext;
 
   // Check ofdat bestand al bestaad.
-  if (file_exists($perm_file)) {
+  if (file_exists($path_filename_ext)) {
     echo "Sorry, file already exists.";
     exit();
 
   } else {
-    move_uploaded_file($temp_file, $perm_file);
+    move_uploaded_file($temp_name, $path_filename_ext);
     echo "File uploaded successfully.";
 
-    // Registreer bestand in API.
-    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext, 'IsBetaald' => $isBetaald]);
+     // Registreer bestand in API.
+    post('localhost:3000/api/invoice', ['GebruikerMail' => $_POST['GebruikerMail'], 'Path' => $filename . "." . $ext]);
 
     exit();
   }
 }
 
-// Executeerd een post request.
 function post($url, $data)
 {
     $curl = curl_init($url);

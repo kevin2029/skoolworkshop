@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Organisatie` VARCHAR(50) NOT NULL,
     `Adress` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
-	`Path` VARCHAR(100),
-	`UrlFoto` VARCHAR(50),
+	`PathLogo` VARCHAR(100),
+	`UrlFoto` VARCHAR(100),
 	PRIMARY KEY (`Email`)
 ) 
 ENGINE = InnoDB;
