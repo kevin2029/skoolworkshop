@@ -184,21 +184,30 @@ let controller = {
     updateCoupon(req, res, next) {
         logger.info("updateCoupon called");
         const couponCode = req.body.Code;
-    },
 
-    workshopCouponHandler(req, res, next) {
+        let getOneResults;
+        controller.getOne(couponCode, (results) => {
+            logger.debug("results: ", results);
+            getOneResults = results[0];
+            const couponAantalGebruikt = getOneResults.AantalGebruikt;
+            logger.debug(couponValue);
 
-    },
+            couponAantalGebruikt += 1;
+            
+            const query = 
+                `UPDATE Cadeaubon SET AantalGebruikt = '` + couponAantalGebruikt
+                 + `' WHERE Code = '` + couponCode + `';`;
 
-    updateCoupon(req, res, next) {
-        logger.info("updateCoupon called");
-        const couponCode = req.body.Code;
+            res.status(200).json({
+            result: results[0]
+            });
+
+
     },
 
     workshopCouponHandler(req, res, next) {
 
     }
-
 };
 
 module.exports = controller;
