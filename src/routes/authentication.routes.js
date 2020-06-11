@@ -10,13 +10,11 @@ router.post(
 
 router.post(
     '/register/admin',
-    AuthController.validateAdmin,
+    // AuthController.validateAdmin,
     AuthController.validateRegister,
     AuthController.register
 );
 
 router.post('/login', AuthController.validateLogin, AuthController.login);
-
-router.post('/adminlogin', AuthController.validateAdmin);
 
 module.exports = router;
