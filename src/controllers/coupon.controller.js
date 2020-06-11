@@ -167,18 +167,31 @@ let controller = {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug(couponValue);
+            req.coupon = getOneResults;
             const cMOR = couponValue.substring(couponValue.length - 1);
             logger.debug("Substring check: ", cMOR);
+            let valueString;
 
-            if (couponValue.endsWith(Number)) {
-                router.get('/coupon/money/' + couponCode, controller.useCoupon(), controller.moneyCouponHandler());
+            if (couponValue.charAt(couponValue.length-1) == 0 || couponValue.charAt(couponValue.length-1) == 1 ||
+            couponValue.charAt(couponValue.length-1) == 2 || couponValue.charAt(couponValue.length-1) == 3 ||
+            couponValue.charAt(couponValue.length-1) == 4 || couponValue.charAt(couponValue.length-1) == 5 || 
+            couponValue.charAt(couponValue.length-1) == 6 || couponValue.charAt(couponValue.length-1) == 7 || 
+            couponValue.charAt(couponValue.length-1) == 8 || couponValue.charAt(couponValue.length-1) == 9) {
+                valueString = "Number";
+                req.valueString = valueString;
+                next();
             } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
-                logger.debug("couponCode: ", couponCode);
-                router.get(`/coupon/percentage/` + couponCode, controller.useCoupon(), controller.percentageCouponHandler());
-            } else if (cMOR == "%" && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
-                router.get('/coupon/percentageMax/' + couponCode);
+                valueString = "Percentage";
+                req.valueString = valueString;
+                next();
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
+                valueString = "PercentageMax";
+                req.valueString = valueString;
+                next();
             } else if (couponValue == "workshop") {
-                router.get('/coupon/workshop/' + couponCode);
+                valueString = "Workshop";
+                req.valueString = valueString;
+                next();
             } else {
                 logger.debug("Error, invalid type");
                 res.status(400).json({
@@ -208,15 +221,14 @@ let controller = {
 
     useCoupon(req, res, next) {
         logger.info("useCoupon called");
-        const couponCode = req.params.Code;
+        // const couponCode = req.params.Code;
         logger.debug("Couponcode: ", couponCode);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug(couponValue);
-            req.coupon = getOneResults;
-            next();
+            
         });
     },
 
@@ -254,42 +266,62 @@ let controller = {
 
     workshopCouponHandler(req, res, next) {
         logger.info("workshopCouponHandler called");
-        const coupon = req.coupon;
-
-        res.status(200).json({
+        const valueString = req.valueString;
+        if (valueString != "Workshop") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
             message: 'Coupon succesfully sent!',
             result: coupon
-        });
+            });
+        }
     },
 
     moneyCouponHandler(req, res, next) {
         logger.info("moneyCouponHandler called");
-        const coupon = req.coupon;
-
-        res.status(200).json({
+        const valueString = req.valueString;
+        if (valueString != "Number") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
             message: 'Coupon succesfully sent!',
             result: coupon
-        });
+            });
+        }
+
+        
     },
 
     percentageCouponHandler(req, res, next) {
         logger.info("percentageCouponHandler called");
-        const coupon = req.coupon;
-
-        res.status(200).json({
+        const valueString = req.valueString;
+        if (valueString != "Percentage") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
             message: 'Coupon succesfully sent!',
             result: coupon
-        });
+            });
+        }
     },
 
     percentageMaxCouponHandler(req, res, next) {
         logger.info("percentageMaxCouponHandler called");
-        const coupon = req.coupon;
-
-        res.status(200).json({
+        const valueString = req.valueString;
+        if (valueString != "PercentageMax") {
+            res.status(400).json({
+                message: "Error, invalid coupon type"
+            })
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
             message: 'Coupon succesfully sent!',
             result: coupon
-        });
+            });
+        }
     }
 };
 
