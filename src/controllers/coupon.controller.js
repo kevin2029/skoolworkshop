@@ -131,24 +131,6 @@ let controller = {
             }
 
         })
-    },
-
-    useCoupon(req, res, next) {
-        logger.info("useCoupon called");
-        const couponCode = req.params.Code;
-
-        
-    },
-
-    updateCoupon(req, res, next) {
-        logger.info("updateCoupon called");
-        const couponCode = req.body.Code;
-    },
-
-    workshopCouponHandler(req, res, next) {
-
     }
-
 };
-
 module.exports = controller;

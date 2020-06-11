@@ -39,22 +39,25 @@
       <li class="right"><a href="#about">Google drive</a></li>
     </ul>
 
+    <form id="gebruikerVerwijderen" onsubmit="verstuur();return false"></form>
       <!-- code pagina invoeren-->
       <div class="container">
-        <h1>Lijst van gebruikers</h1>
+        <h1>Verwijderen van gebruiker</h1>
+        <p>Vul dit hele formulier in om een gebruiker te verwijderen</p>
         <hr />
-        <table class="table table-striped table-hover">
-          <thead>
-            <th>Naam</th>
-            <th>Email</th>
-            <th>Organisatie</th>
-            <th>Adress</th>
-            <th>Wachtwoord</th>
-            <th>CadeaubonId</th>
-          </thead>
-          <!-- id gelijk zetten aan id in script-->
-          <tbody id="tableUserVerwijderen"></tbody>
-        </table>
+        <label for="email"><b>Email van de gebruiker</b></label>
+        <input
+          type="text"
+          placeholder="Vul email in"
+          name="email"
+          id="email"
+          required
+        />
+        <hr />
+        <button type="submit" class="registerbtn">
+          Verwijderen
+        </button>
       </div>
+    </form>
   </body>
 </html>
