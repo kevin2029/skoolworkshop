@@ -89,7 +89,7 @@ let controller = {
 
     deleteWorkshop(req, res, next) {
         logger.info('deleteWorkshop called');
-        const workshopNaam = req.body.workshopNaam;
+        const workshopNaam = req.params.Naam;
 
         let sqlQuery =
             `DELETE FROM Workshop WHERE Naam = '` + workshopNaam + `'`;
@@ -140,7 +140,7 @@ let controller = {
         console.log('urls:', req.url);
         if (req.url !== '/getall') {
             query =
-                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.GebruikerID = '" +
+                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.GebruikersID = '" +
                 req.params.ID +
                 "';";
         } else {

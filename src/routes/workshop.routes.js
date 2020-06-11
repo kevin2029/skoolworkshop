@@ -8,9 +8,9 @@ router.post(
     workshopcontroller.validateWorkshop,
     workshopcontroller.createWorkshop
 );
-router.post('/delete', workshopcontroller.deleteWorkshop);
-router.post('/getone', workshopcontroller.getOne);
-router.post('/getall', workshopcontroller.getAll);
+router.post('/delete/:Naam', workshopcontroller.deleteWorkshop);
+router.get('/getone/:Id', workshopcontroller.getOne);
+router.get('/getall', workshopcontroller.getAll);
 router.post(
     '/update',
     workshopcontroller.checkDatabase,
@@ -18,6 +18,6 @@ router.post(
     workshopcontroller.updateWorkshop
 );
 
-router.get('/getWorkshopUser/:Email', workshopcontroller.getAll)
+router.get('/getWorkshopUser/:Email', workshopcontroller.getAll);
 
 module.exports = router;
