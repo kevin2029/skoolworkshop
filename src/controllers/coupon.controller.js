@@ -133,11 +133,48 @@ let controller = {
         })
     },
 
+    getOne(req, res, next) {
+        logger.info("getOne called");
+        const couponCode = req.params.Code;
+
+        const query =
+            `SELECT Code, Value, MaxBedrag, MaxGebruik, AantalGebruikt, Organisatie FROM Cadeaubon WHERE Code = '` +
+            couponCode +
+            `';`;
+
+        logger.info('getOne:', couponCode);
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug(userMail, query, error);
+                res.status(400).json({
+                    message: 'User does not exist!'
+                });
+            } else {
+                res.status(200).json({
+                    User: results[0]
+                });
+            }
+        });
+    },
+
     useCoupon(req, res, next) {
         logger.info("useCoupon called");
         const couponCode = req.params.Code;
 
-        
+        switch (couponCode){
+            case x:
+        }
+
+    },
+
+    updateCoupon(req, res, next) {
+        logger.info("updateCoupon called");
+        const couponCode = req.body.Code;
+    },
+
+    workshopCouponHandler(req, res, next) {
+
     },
 
     updateCoupon(req, res, next) {
