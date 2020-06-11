@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="opmaak.css" />
+  </head>
+  <body>
+<ul class="topnav">
+    <li class="dropdown">
+      <a href="../gebruiker/index.html">Gebruikers</a>
+      <div class="dropdown-content">
+        <a href="../gebruiker/aanmaken.html">Aanmaken</a>
+        <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href="../workshop/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="../workshop/aanmaken.html">Aanmaken</a>
+        <a href="../workshop/analysiek.html">Analysiek</a>
+      </div>
+    </li>
+  </li>
+  <li class="dropdown">
+    <a class="active" href="../factuur/index.html">Facturen</a>
+    <div class="dropdown-content">
+      <a class="active" href="../factuur/aanmaken.html">Aanmaken</a>
+    </div>
+  </li>
+  <li class="dropdown">
+      <a href="../coupon/index.html">Coupon</a>
+      <div class="dropdown-content">
+        <a href="../coupon/aanmaken.html">Aanmaken</a>
+      </div>
+    </li>
+
+    <li class="right"><a href="#about">Google drive</a></li>
+  </ul>
+
+  <form id="factuurUploaden"  method="POST" action="factuur.php" enctype="multipart/form-data">
+    <!-- code pagina invoeren-->
+    <div class="container">
+      <h1>Uploaden van factuur</h1>
+      <p>Vul dit hele formulier in om een factuur te uploaden.</p>
+      <hr />
+      <label for="GebruikerMail"><b>E-mailadres</b></label>
+      <input
+        type="text"
+        placeholder="Vul gebruiker's e-mailadres in"
+        name="GebruikerMail"
+        id="GebruikerMail"
+        required
+      />
+      <label for="IsBetaald"><b>Betaald?</b></label>
+      <input
+        type="radio"
+        name="IsBetaald"
+        id="true"
+        value="true"
+        checked
+      />
+      <label for="IsBetaald">Ja</label>
+      <input
+        type="radio"
+        name="IsBetaald"
+        id="false"
+        value="false"
+      />
+      <label for="IsBetaald">Nee</label><br>
+      <label for="file"><b>Selecteer een bestand</b></label>
+      <input
+        id="fileToUpload"
+        name="fileToUpload"
+        type="file"
+        name="factuur"
+      />
+      <hr />
+      <button type="submit" class="registerbtn">
+        Toevoegen
+      </button>
+    </div>
+  </form>
+
+</body>
+  </html>
