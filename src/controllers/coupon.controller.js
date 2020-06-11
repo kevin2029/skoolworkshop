@@ -190,15 +190,6 @@ let controller = {
 
     },
 
-    updateCoupon(req, res, next) {
-        logger.info("updateCoupon called");
-        const couponCode = req.body.Code;
-    },
-
-    workshopCouponHandler(req, res, next) {
-
-    }
-
 };
 
 module.exports = controller;
