@@ -1,27 +1,16 @@
-// Example POST method implementation:
-async function postData(url = '', data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: data // body data type must match "Content-Type" header
-    });
-    return response; //.json(); // parses JSON response into native JavaScript objects
-}
-
 function verstuur() {
-    const form = new FormData(document.getElementById('gebruikerAanmaken'));
+    if (
+        $('input[name="Wachtwoord]').val() !==
+        $('input[name="wachtwoord-herhaal]').val()
+    ) {
+        return false;
+    }
+
+    const form = new FormData(document.getElementById('gebruikerEdit'));
 
     console.log(form);
 
-    postData('http://localhost:3000/api/user', form)
+    sendPostRequestWithAuth('http://localhost:3000/api/user/edit', form)
         .then((response) => {
             console.log(response.json());
         })
@@ -33,3 +22,36 @@ function verstuur() {
             console.log(err);
         });
 }
+
+$(window).ready(() => {
+    //let data = sendGetRequestWithAuth('http://localhost:3000/user/user', {}, getCookie('usertoken'));
+
+    let data = {
+        User: {
+            Naam: 'Pietje Huizema',
+            Email: 'test@gmail.com',
+            Organisatie: 'Avans Hogeschool',
+            Adress: 'Hogeschoollaan 1'
+        }
+    };
+
+    $('input[name="Naam"]').val(data.User.Naam);
+    $('input[name="Organisatie"]').val(data.User.Organisatie);
+    $('input[name="Adress"]').val(data.User.Adress);
+    $('input[name="Email"]').val(data.User.Email);
+
+    $('.editInput').each((i, element) => {
+        let input = $(element).find('input');
+        let button = $(element).find('button');
+
+        button.click((e) => {
+            let pressedButton = $(e.target);
+            let targetInput = pressedButton.parent().find('input');
+
+            targetInput.attr('disabled', false);
+            targetInput.focus();
+        });
+
+        input.attr('disabled', true);
+    });
+});
