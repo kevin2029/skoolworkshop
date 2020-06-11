@@ -86,14 +86,15 @@
           required
         />
 
-        <label for="wachtwoord-herhaal"><b>Herhaal wachtwoord</b></label>
+        <label for="wachtwoordHerhaal"><b>Herhaal wachtwoord</b></label>
         <input
           type="password"
           placeholder="Herhaal wachtwoord"
           name="wachtwoord-herhaal"
-          id="wachtwoord-herhaal"
+          id="wachtwoordHerhaal"
           required
         />
+
         <hr />
         <button type="submit" class="registerbtn">
           Toevoegen
@@ -102,3 +103,12 @@
     </form>
   </body>
 </html>
+
+
+<script>
+  if(document.getElementById(wachtwoord) === document.getElementById(wachtwoordHerhaal)) {
+    alert('wachtwoord is gelijk')
+  } else {
+    alert('wachtwoord is niet gelijk')
+  }
+</script>
