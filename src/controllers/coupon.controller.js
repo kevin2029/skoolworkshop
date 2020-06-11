@@ -168,8 +168,6 @@ let controller = {
             const couponValue = getOneResults.Value;
             logger.debug(couponValue);
             req.coupon = getOneResults;
-            const cMOR = couponValue.substring(couponValue.length - 1);
-            logger.debug("Substring check: ", cMOR);
             let valueString;
 
             if (couponValue.charAt(couponValue.length-1) == 0 || couponValue.charAt(couponValue.length-1) == 1 ||
@@ -290,7 +288,6 @@ let controller = {
             result: coupon
             });
         }
-
         
     },
 
