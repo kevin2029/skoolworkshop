@@ -104,7 +104,7 @@
           let formData = new FormData(
           document.querySelector('#beheerderAanmakenForm')
           );
-        console.log(formData)
+
           sendPostRequest(apiUrl + '/api/register/admin', formData)
                     .then((data) => {
                         if (data.error) {

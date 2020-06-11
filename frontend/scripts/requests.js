@@ -25,6 +25,7 @@ async function sendGetRequest(url = '', data = {}, token = '') {
 }
 
 async function sendPostRequest(url = '', data = {}, token = '') {
+    console.log(getCookie('admintoken'));
     const response = await fetch(url, {
         ...options,
         method: 'POST',

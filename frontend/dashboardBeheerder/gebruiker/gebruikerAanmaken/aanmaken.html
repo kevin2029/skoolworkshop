@@ -124,7 +124,7 @@
                 document.querySelector('#gebruikerAanmaken')
             );
 
-            sendPostRequest(apiUrl + '/api/user/create', formData, getCookie())
+            sendPostRequest(apiUrl + '/api/user/create', formData)
                 .then((data) => {
                     if (data.error) {
                         alert(data.error);
