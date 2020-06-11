@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
-  <script src="couponaanmaken.js"></script>
-</head>
-
-<body>
-  <ul class="topnav">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+    <script src="workshopaanmaken.js"></script>
+  </head>
+  <body>
+    <ul class="topnav">
+      <li class="dropdown">
+        <a href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+        <div class="dropdown-content">
+          <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
+          <a href="../../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
+        </div>
+      </li>
+      <li class="dropdown">
+        <a href="../../workshop/workshopStatistiek/index.html">Workshops</a>
+        <div class="dropdown-content">
+          <a href="../../workshop/workshopaanmaken/index.html">Aanmaken</a>
+          <a href="../../workshop/workshopStatistiek/index.html">Statistieken</a>
+          <a href="../../workshop/workshopdelete/index.html">Verwijderen</a>
+        </div>
+      </li>
+    </li>
     <li class="dropdown">
-      <a href="../gebruiker/index.html">Gebruikers</a>
+      <a href="../../factuur/index.html">Facturen</a>
       <div class="dropdown-content">
-        <a href="../gebruiker/aanmaken.html">Aanmaken</a>
-        <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+        <a href="../../factuur/facturenaanmaken/index.html">Uploaden</a>
       </div>
     </li>
     <li class="dropdown">
-      <a href="../workshop/index.html">Workshops</a>
-      <div class="dropdown-content">
-        <a href="../workshop/aanmaken.html">Aanmaken</a>
-        <a href="../workshop/analysiek.html">Statistiek</a>
-      </div>
-    </li>
-    </li>
-    <li class="dropdown">
-      <a href="../factuur/index.html">Facturen</a>
-      <div class="dropdown-content">
-        <a href="../factuur/aanmaken.html">Aanmaken</a>
-      </div>
-    </li>
-    <li class="dropdown">
-      <a class="active" href="../index.html">Coupon</a>
-      <div class="dropdown-content">
-        <a class="active" href="../couponAanmaken/index.html">Aanmaken</a>
-      </div>
-    </li>
-
-    <li class="right"><a href="#about">Google Drive</a></li>
-  </ul>
+        <a class="active" href="../../coupon/index.html">Coupon</a>
+        <div class="dropdown-content">
+          <a class="active" href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
+        </div>
+      </li>
+  
+      <li class="right"><a href="#">Uitloggen</a></li>
+    </ul>
 
   <form id="couponAanmaken" onsubmit="verstuur();return false">
       <!-- code pagina invoeren-->
