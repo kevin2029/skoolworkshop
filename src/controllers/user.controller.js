@@ -62,7 +62,7 @@ let controller = {
     },
 
     getOne(req, res, next) {
-        const userMail = req.params.userMail;
+        const userMail = req.params.userMail || req.email;
 
         const query =
             `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE Email = '` +

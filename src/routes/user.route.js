@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usercontroller = require('../controllers/user.controller');
+const userEditController = require('../controllers/user.edit.controller');
 const authenticationcontroller = require('../controllers/authenication.controller');
 
 router.post('/create', usercontroller.validateUser, usercontroller.createUser);
@@ -14,5 +15,12 @@ router.post(
     usercontroller.updateUser
 );
 router.post('/uploadimage', usercontroller.uploadImage);
+
+router.post(
+    '/edit',
+    authenticationcontroller.validateToken,
+    userEditController.validateEdit,
+    userEditController.editUser
+);
 
 module.exports = router;
