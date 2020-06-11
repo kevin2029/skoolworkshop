@@ -392,3 +392,17 @@ th {
   background-color: #f49700;
   color: white;
 }
+
+.button {
+  background-color: #f49700;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 5px 20px;
+  font-size: 1rem;
+  border: none;
+  color: white;
+}
+
+.button:hover {
+  background-color: #ffa81c;
+}
