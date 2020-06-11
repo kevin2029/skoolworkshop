@@ -13,6 +13,7 @@ GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admi
 
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
+	`ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
 	`Naam` VARCHAR(50) NOT NULL,
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Organisatie` VARCHAR(50) NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	`PathLogo` VARCHAR(100),
 	`UrlFoto` VARCHAR(100),
-	PRIMARY KEY (`Email`)
+	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
 
@@ -49,10 +50,10 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `GebruikerWorkshop`;
 CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
-    `Gebruikersemail` VARCHAR(50) NOT NULL,
+    `GebruikerID` INT NOT NULL,
     `Workshopnaam` VARCHAR(32) NOT NULL,
     `SingedUpOn` DATE NOT NULL,
-    PRIMARY KEY (`Gebruikersemail`, `Workshopnaam`)
+    PRIMARY KEY (`GebruikerID`, `Workshopnaam`)
 )   
 ENGINE= InnoDB;
 
@@ -75,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `Evaluatie` (
 	`Titel` VARCHAR(32) NOT NULL,
     `Beschrijving` VARCHAR(100),
     `Naam` VARCHAR(50) DEFAULT 'ANON',
-	`GebruikerEmail` VARCHAR(50),
+	`GebruikerID` INT,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -83,7 +84,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Factuur` ;
 CREATE TABLE IF NOT EXISTS `Factuur` (
 	`ID` INT AUTO_INCREMENT,
-    `GebruikerEmail` VARCHAR(50) NOT NULL,
+    `GebruikerID` INT NOT NULL,
 	`Path` VARCHAR(90) NOT NULL UNIQUE,
 	`IsBetaald` BOOLEAN NOT NULL,
 	PRIMARY KEY (`ID`)
@@ -92,11 +93,11 @@ ENGINE = InnoDB;
 
 ALTER TABLE `Factuur` 
 ADD CONSTRAINT `fk_gebruiker_factuur`
-FOREIGN KEY (`GebruikerEmail`) REFERENCES `Gebruiker` (`Email`)
+FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
 ;
 ALTER TABLE `GebruikerWorkshop` 
 ADD CONSTRAINT `fk_gebruiker_gebruikerworkshop`
-FOREIGN KEY (`Gebruikersemail`) REFERENCES `Gebruiker` (`Email`)
+FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
 ;
 
 ALTER TABLE `GebruikerWorkshop`
@@ -106,5 +107,5 @@ FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 
 ALTER TABLE `Evaluatie`
 ADD CONSTRAINT `fk_Evaluatie_gebruiker`
-FOREIGN KEY (`GebruikerEmail`) REFERENCES `Gebruiker` (`Email`)
+FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
 ;
