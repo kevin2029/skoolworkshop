@@ -166,19 +166,9 @@ let controller = {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug(couponValue);
-
-
-
-            res.status(200).json({
-            result: results[0]
-            });
+            req.coupon = getOneResults;
+            next();
         });
-        
-
-        // switch (getoneResults){
-        //     case undefined:
-        // }
-
     },
 
     updateCoupon(req, res, next) {
