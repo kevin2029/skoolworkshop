@@ -27,8 +27,11 @@ function checkAdminCookie() {
         alert(
             'You are not authorised to visit this page! \n You will be sent back to the user dashboard!'
         );
-        // window.location.href = '' [gebruikersdashboard].html
+        window.location.href = 'dashboardGebruiker';
     } else {
+        alert(
+            'Je moet ingelogd zijn als administrator om deze pagina te bezoeken!'
+        );
         window.location.href = '/';
     }
 }
@@ -37,20 +40,24 @@ function checkUserCookie() {
     if (getCookie('usertoken') || getCookie('admintoken')) {
         console.log('ok');
     } else {
+        alert('Je moet ingelogd zijn om deze pagina te bezoeken!');
         window.location.href = '/'; // loginpagina
     }
 }
 
 function checkLoginCookie() {
     if (getCookie('usertoken')) {
-        // window.location.href = '' [gebruikersdashboard].html
+        window.location.href = 'dashboardGebruiker';
     } else if (getCookie('admintoken')) {
-        // window.location.href = '' [admindashboard].html
+        window.location.href = 'dashboardBeheerder';
     }
 }
 
 function logout() {
-    document.cookie = 'usertoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-    document.cookie = 'admintoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-    document.cookie = 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie =
+        'usertoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    document.cookie =
+        'admintoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    document.cookie = 'userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+    window.location.href = '/';
 }

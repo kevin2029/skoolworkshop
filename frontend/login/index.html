@@ -38,14 +38,10 @@
             </div>
         </form>
 
-        <button onclick="logout()">delete cookies</button>
-
         <script src="/scripts/requests.js"></script>
         <script src="/scripts/cookie.js"></script>
 
         <script>
-            checkLoginCookie();
-
             function sendForm() {
                 let formData = new FormData(
                     document.querySelector('#loginForm')
@@ -62,8 +58,7 @@
                             setCookie('userID', data.payload.ID);
                             if (data.payload.IsAdmin === 1) {
                                 setCookie('admintoken', data.token);
-                                window.location.href =
-                                    'dashboardBeheerder/index.html';
+                                window.location.href = 'dashboardBeheerder';
                             } else {
                                 setCookie('usertoken', data.token);
                                 // window.location.href = '' [gebruikersdashboard].html
