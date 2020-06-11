@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+    <script src="gebruikeraanmaken.js"></script>
   </head>
   <body>
     <ul class="topnav">
@@ -41,7 +42,7 @@
     <form id="gebruikerAanmaken" onsubmit="verstuur();return false">
       <!-- code pagina invoeren-->
       <div class="container">
-        <h1>Toevoegen van bedrijf</h1>
+        <h1>Toevoegen van gebruiker</h1>
         <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
         <hr />
         <label for="naamBeheerder"><b>Naam van de beheerder</b></label>
@@ -75,6 +76,27 @@
           placeholder="Vul adres in"
           name="Adress"
           id="Adress"
+          required
+        />
+
+        <!--  <label for="foto"><b>Foto van organisatie</b></label>
+        <input type="file" name="foto" id="foto" required /> -->
+
+        <label for="wachtwoord"><b>Wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Vul wachtwoord in"
+          name="wachtwoord"
+          id="wachtwoord"
+          required
+        />
+
+        <label for="wachtwoordHerhaal"><b>Herhaal wachtwoord</b></label>
+        <input
+          type="password"
+          placeholder="Herhaal wachtwoord"
+          name="wachtwoordHerhaal"
+          id="wachtwoordHerhaal"
           required
         />
         <hr />
