@@ -2,57 +2,150 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
-        <script src="workshopaanmaken.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
     </head>
     <body>
         <ul class="topnav">
             <li class="dropdown">
-                <a class="active" href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+                <a
+                    class="active"
+                    href="../../gebruiker/gebruikerLijst/index.html"
+                    >Gebruikers</a
+                >
                 <div class="dropdown-content">
-                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-                    <a href="../../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
+                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html"
+                        >Aanmaken</a
+                    >
+                    <a href="../../gebruiker/gebruikerLijst/index.html"
+                        >Deelnemers</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
-                <a href="../../workshop/workshopStatistiek/index.html">Workshops</a>
+                <a href="../../workshop/workshopStatistiek/index.html"
+                    >Workshops</a
+                >
                 <div class="dropdown-content">
-                    <a href="../../workshop/workshopaanmaken/index.html">Aanmaken</a>
-                    <a class="active" href="../../workshop/workshopStatistiek/index.html">Statistieken</a>
-                    <a href="../../workshop/workshopdelete/index.html">Verwijderen</a>
+                    <a href="../../workshop/workshopaanmaken/index.html"
+                        >Aanmaken</a
+                    >
+                    <a
+                        class="active"
+                        href="../../workshop/workshopStatistiek/index.html"
+                        >Statistieken</a
+                    >
+                    <a href="../../workshop/workshopdelete/index.html"
+                        >Verwijderen</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../factuur/index.html">Facturen</a>
                 <div class="dropdown-content">
-                    <a href="../../factuur/facturenaanmaken/index.html">Uploaden</a>
+                    <a href="../../factuur/facturenaanmaken/index.html"
+                        >Uploaden</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../coupon/index.html">Coupon</a>
                 <div class="dropdown-content">
-                    <a href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
+                    <a href="../../coupon/couponaanmaken/index.html"
+                        >Aanmaken</a
+                    >
                 </div>
             </li>
 
             <li class="right"><a href="#">Uitloggen</a></li>
         </ul>
 
-      <!-- code pagina invoeren-->
-      <div class="container">
-        <h1>Lijst van gebruikers</h1>
-        <table class="table table-striped table-hover">
-            <thead>
-              <th>Naam</th>
-              <th>Email</th>
-              <th>Organisatie</th>
-              <th>Adress</th>
-              <th>Wachtwoord</th>
-              <th>CadeaubonId</th>
-            </thead>
-            <!-- id gelijk zetten aan id in script-->
-            <tbody id="tableUserList"></tbody>
-          </table>
-      </div>
-  </body>
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <h1>Lijst van gebruikers</h1>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Naam</th>
+                    <th>Email</th>
+                    <th>Organisatie</th>
+                    <th>Adress</th>
+                    <th></th>
+                </thead>
+                <!-- id gelijk zetten aan id in script-->
+                <tbody id="tableUserList"></tbody>
+            </table>
+        </div>
+
+        <script src="/scripts/requests.js"></script>
+        <script src="/scripts/cookie.js"></script>
+
+        <script>
+            checkAdminCookie();
+            getUser();
+            function getUser() {
+                sendGetRequest(apiUrl + '/api/user/getall')
+                    .then((data) => {
+                        console.log(data.Users);
+                        let tableBody = document.getElementById(
+                            'tableUserList'
+                        );
+
+                        let rows = '';
+                        if (data.Users) {
+                            data.Users.forEach((item) => {
+                                console.log(item);
+                                rows += // Column namen van de data die je opvraagt
+                                    `<tr><td>${item.Naam}</td>` + //
+                                    `<td>${item.Email}</td>` +
+                                    `<td>${item.Organisatie}</td>` +
+                                    `<td>${item.Adress}</td>` +
+                                    `<td><button onclick="deleteUser(` +
+                                    item.ID +
+                                    `)"> Delete </button> </td></tr>`;
+
+                                console.log(item.ID);
+                            });
+
+                            tableBody.innerHTML = rows; // Stop de aangemaakte tablerows in de body van de eerder gemaakt table
+                        } else {
+                            let niks = '';
+                            tableBody.innerHTML = niks;
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error fetching users!');
+                        console.log(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+
+        <script>
+            function deleteUser(Id) {
+                checkAdminCookie();
+
+                sendPostRequest(apiUrl + '/api/user/delete/' + Id)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            alert(data.message);
+                            getUser();
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error deleting user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+    </body>
 </html>

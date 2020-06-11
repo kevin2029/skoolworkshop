@@ -2,107 +2,143 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
-        <script src="workshopaanmaken.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
     </head>
     <body>
         <ul class="topnav">
             <li class="dropdown">
-                <a class="active" href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+                <a
+                    class="active"
+                    href="../../gebruiker/gebruikerLijst/index.html"
+                    >Gebruikers</a
+                >
                 <div class="dropdown-content">
-                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-                    <a href="../../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
+                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html"
+                        >Aanmaken</a
+                    >
+                    <a href="../../gebruiker/gebruikerLijst/index.html"
+                        >Deelnemers</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
-                <a href="../../workshop/workshopStatistiek/index.html">Workshops</a>
+                <a href="../../workshop/workshopStatistiek/index.html"
+                    >Workshops</a
+                >
                 <div class="dropdown-content">
-                    <a href="../../workshop/workshopaanmaken/index.html">Aanmaken</a>
-                    <a class="active" href="../../workshop/workshopStatistiek/index.html">Statistieken</a>
-                    <a href="../../workshop/workshopdelete/index.html">Verwijderen</a>
+                    <a href="../../workshop/workshopaanmaken/index.html"
+                        >Aanmaken</a
+                    >
+                    <a
+                        class="active"
+                        href="../../workshop/workshopStatistiek/index.html"
+                        >Statistieken</a
+                    >
+                    <a href="../../workshop/workshopdelete/index.html"
+                        >Verwijderen</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../factuur/index.html">Facturen</a>
                 <div class="dropdown-content">
-                    <a href="../../factuur/facturenaanmaken/index.html">Uploaden</a>
+                    <a href="../../factuur/facturenaanmaken/index.html"
+                        >Uploaden</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../coupon/index.html">Coupon</a>
                 <div class="dropdown-content">
-                    <a href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
+                    <a href="../../coupon/couponaanmaken/index.html"
+                        >Aanmaken</a
+                    >
                 </div>
             </li>
 
             <li class="right"><a href="#">Uitloggen</a></li>
         </ul>
 
-    <form id="gebruikerAanmaken" onsubmit="verstuur();return false">
-      <!-- code pagina invoeren-->
-      <div class="container">
-        <h1>Toevoegen van gebruiker</h1>
-        <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
-        <hr />
-        <label for="naamBeheerder"><b>Naam van de beheerder</b></label>
-        <input
-          type="text"
-          placeholder="Vul naam in"
-          name="naamBeheerder"
-          id="naamBeheerder"
-          required
-        />
-        <label for="naamOrganisatie"><b>Naam van de Organisatie</b></label>
-        <input
-          type="text"
-          placeholder="Vul naam in"
-          name="naamOrganisatie"
-          id="naamOrganisatie"
-          required
-        />
-        <label for="email"><b>Email</b></label>
-        <input
-          type="text"
-          placeholder="Vul email in"
-          name="email"
-          id="email"
-          required
-        />
+        <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
+            <!-- code pagina invoeren-->
+            <div class="container">
+                <h1>Toevoegen van gebruiker</h1>
+                <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
+                <hr />
+                <label for="Naam"><b>Naam van de beheerder</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul naam in"
+                    name="Naam"
+                    id="Naam"
+                    required
+                />
+                <label for="Organisatie"><b>Naam van de Organisatie</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul naam in"
+                    name="Organisatie"
+                    id="Organisatie"
+                    required
+                />
+                <label for="Email"><b>Email</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul email in"
+                    name="Email"
+                    id="Email"
+                    required
+                />
 
-        <label for="Adress"><b>Adres</b></label>
-        <input
-          type="text"
-          placeholder="Vul adres in"
-          name="Adress"
-          id="Adress"
-          required
-        />
+                <label for="Adress"><b>Adres</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul adres in"
+                    name="Adress"
+                    id="Adress"
+                    required
+                />
 
-        <!--  <label for="foto"><b>Foto van organisatie</b></label>
+                <!--  <label for="foto"><b>Foto van organisatie</b></label>
         <input type="file" name="foto" id="foto" required /> -->
+                <hr />
+                <button type="submit" class="registerbtn">
+                    Toevoegen
+                </button>
+            </div>
+        </form>
+    </body>
 
-        <label for="wachtwoord"><b>Wachtwoord</b></label>
-        <input
-          type="password"
-          placeholder="Vul wachtwoord in"
-          name="wachtwoord"
-          id="wachtwoord"
-          required
-        />
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
 
-        <label for="wachtwoordHerhaal"><b>Herhaal wachtwoord</b></label>
-        <input
-          type="password"
-          placeholder="Herhaal wachtwoord"
-          name="wachtwoordHerhaal"
-          id="wachtwoordHerhaal"
-          required
-        />
-        <hr />
-        <button type="submit" class="registerbtn">
-          Toevoegen
-        </button>
-      </div>
-    </form>
-  </body>
+    <script>
+        checkAdminCookie();
+
+        function sendForm() {
+            let formData = new FormData(
+                document.querySelector('#gebruikerAanmaken')
+            );
+
+            sendPostRequest(apiUrl + '/api/user/create', formData, getCookie())
+                .then((data) => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch((error) => {
+                    alert('Error creating user!');
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    );
+                });
+        }
+    </script>
 </html>
