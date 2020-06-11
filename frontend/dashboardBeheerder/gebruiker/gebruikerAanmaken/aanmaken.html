@@ -60,7 +60,8 @@
                 </div>
             </li>
 
-            <li class="right"><a href="#">Uitloggen</a></li>
+            <li class="right"><a onclick="logout()">Uitloggen</a></li>
+            <!--Active of hover toevoegen-->
         </ul>
 
         <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
@@ -121,7 +122,11 @@
                 document.querySelector('#gebruikerAanmaken')
             );
 
-            sendPostRequest(apiUrl + '/api/user/create', formData)
+            sendPostRequest(
+                apiUrl + '/api/user/create',
+                formData,
+                getCookie('admintoken')
+            )
                 .then((data) => {
                     if (data.error) {
                         alert(data.error);
