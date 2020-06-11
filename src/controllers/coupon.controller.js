@@ -201,7 +201,7 @@ let controller = {
             res.status(200).json({
             result: results[0]
             });
-
+        });
 
     },
 
