@@ -3,12 +3,11 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
-        <script src="gebruikerverwijderen.js"></script>
   </head>
   <body>
     <ul class="topnav">
       <li class="dropdown">
-        <a class="active" href="../gebruiker/index.html">Gebruikers</a>
+        <a href="../gebruiker/index.html">Gebruikers</a>
         <div class="dropdown-content">
           <a href="gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
           <a href="../gebruiker/deelnemers.html">Deelnemers</a>
@@ -36,12 +35,19 @@
         </div>
       </li>
   
-      <li class="right"><a href="#about">Google Drive</a></li>
+      <li class="right"><a onclick="logout()">Log uit</a></li> <!--Active of hover toevoegen-->
     </ul>
 
     <div class="welkomst">
         <a> Welkom op het dashboard! </a>
     </div>
+
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+
+    <script>
+      checkAdminCookie();
+    </script>
 
   </body>
 </html>

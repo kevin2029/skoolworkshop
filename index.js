@@ -46,6 +46,9 @@ app.get('/', function (request, response) {
 
 // // Serve files from the ./frontend folder
 app.use('/', express.static(__dirname + '/frontend'));
+app.use('/', express.static(__dirname + '/frontend/login'));
+app.use('/', express.static(__dirname + '/frontend/dashboardBeheer'));
+app.use('/', express.static(__dirname + '/frontend/dashboardGebruiker'));
 app.use('/', express.static(__dirname + '/frontend/opmaak'));
 app.use('/', express.static(__dirname + '/frontend/scripts'));
 

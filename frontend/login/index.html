@@ -38,7 +38,7 @@
             </div>
         </form>
 
-        <button onclick="deleteCookie()">delete cookies</button>
+        <button onclick="logout()">delete cookies</button>
 
         <script src="/scripts/requests.js"></script>
         <script src="/scripts/cookie.js"></script>
@@ -60,10 +60,10 @@
                             );
                         } else {
                             setCookie('userID', data.payload.ID);
-                            if (data.IsAdmin === 1) {
+                            if (data.payload.IsAdmin === 1) {
                                 setCookie('admintoken', data.token);
-                                window.location.href = 'test.html';
-                                // window.location.href = '' [admindashboard].html
+                                window.location.href =
+                                    'dashboardBeheerder/index.html';
                             } else {
                                 setCookie('usertoken', data.token);
                                 // window.location.href = '' [gebruikersdashboard].html
