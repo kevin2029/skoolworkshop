@@ -1,8 +1,6 @@
 const logger = require('../config/config').logger;
 const assert = require('assert');
 const connection = require('../config/database.connection');
-const express = require('express');
-const router = express.Router();
 
 let controller = {
     validateCoupon(req, res, next) {
@@ -118,7 +116,7 @@ let controller = {
 
             } else {
                 console.log(results);
-                for (var i = 0; i < results.length; i++) {
+                for (var i = 0; i < 1; i++) {
                     logger.debug("parsedJSON: ", results[i]);
                     const MaxGebruik = results[i].MaxGebruik;
                     const AantalGebruikt = results[i].AantalGebruikt;
@@ -163,23 +161,21 @@ let controller = {
         logger.debug("Couponcode: ", couponCode);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
-            logger.debug("results: ", results);
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug("couponValue: ", couponValue);
             req.coupon = getOneResults;
             let valueString;
 
-            if (couponValue.charAt(couponValue.length-1) == 0 || couponValue.charAt(couponValue.length-1) == 1 ||
-            couponValue.charAt(couponValue.length-1) == 2 || couponValue.charAt(couponValue.length-1) == 3 ||
-            couponValue.charAt(couponValue.length-1) == 4 || couponValue.charAt(couponValue.length-1) == 5 || 
-            couponValue.charAt(couponValue.length-1) == 6 || couponValue.charAt(couponValue.length-1) == 7 || 
-            couponValue.charAt(couponValue.length-1) == 8 || couponValue.charAt(couponValue.length-1) == 9) {
-                valueString = "Number";
+            if (couponValue.charAt(couponValue.length - 1) == 0 || couponValue.charAt(couponValue.length - 1) == 1 ||
+            couponValue.charAt(couponValue.length - 1) == 2 || couponValue.charAt(couponValue.length - 1) == 3 ||
+            couponValue.charAt(couponValue.length - 1) == 4 || couponValue.charAt(couponValue.length - 1) == 5 || 
+            couponValue.charAt(couponValue.length - 1) == 6 || couponValue.charAt(couponValue.length - 1) == 7 || 
+            couponValue.charAt(couponValue.length - 1) == 8 || couponValue.charAt(couponValue.length - 1) == 9) {
+                valueString = "Money";
                 req.valueString = valueString;
-                logger.debug(valueString);
+                logger.debug("req.valueString: ", req.valueString);
                 next();
-               
             } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
                 valueString = "Percentage";
                 req.valueString = valueString;
@@ -195,11 +191,6 @@ let controller = {
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else {
-                logger.debug("Error, invalid type");
-                res.status(400).json({
-                    message: "Error, invalid type"
-                })
             }
 
             // switch (couponValue) {
@@ -258,7 +249,7 @@ let controller = {
     workshopCouponHandler(req, res, next) {
         logger.info("workshopCouponHandler called");
         const valueString = req.valueString;
-        if (valueString != "Workshop") {
+        if (valueString !== "Workshop") {
             next();
         } else {
             const coupon = req.coupon;
@@ -272,7 +263,7 @@ let controller = {
     moneyCouponHandler(req, res, next) {
         logger.info("moneyCouponHandler called");
         const valueString = req.valueString;
-        if (valueString != "Number") {
+        if (valueString != "Money") {
             next();
         } else {
             const coupon = req.coupon;
@@ -287,7 +278,7 @@ let controller = {
     percentageCouponHandler(req, res, next) {
         logger.info("percentageCouponHandler called");
         const valueString = req.valueString;
-        if (valueString != "Percentage") {
+        if (valueString !== "Percentage") {
             next();
         } else {
             const coupon = req.coupon;
@@ -301,7 +292,7 @@ let controller = {
     percentageMaxCouponHandler(req, res, next) {
         logger.info("percentageMaxCouponHandler called");
         const valueString = req.valueString;
-        if (valueString != "PercentageMax") {
+        if (valueString !== "PercentageMax") {
             res.status(400).json({
                 message: "Error, invalid coupon type"
             })
