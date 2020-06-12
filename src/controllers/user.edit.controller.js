@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt');
 let controller = {
     validateEdit(req, res, next) {
         let { Naam, Organisatie, Adress, Wachtwoord } = req.body;
-        let Email = req.email;
+        let Email = req.body.Email;
+        logger.debug("Email: ",Email);
 
         let edits = 0;
 
@@ -44,7 +45,7 @@ let controller = {
 
     editUser(req, res, next) {
         let { Naam, Organisatie, Adress, Wachtwoord } = req.body;
-        let Email = req.email;
+        let Email = req.body.Email;
 
         let query = 'UPDATE `Gebruiker` SET';
         let values = [];
