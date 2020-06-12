@@ -24,6 +24,51 @@ let controller = {
         }
     },
 
+    getOne(req, res, next) {
+        const id = req.params.Id;
+
+        const query = `SELECT * FROM Cadeaubon WHERE ID = '` + id + `';`;
+
+        logger.info('getOne:', id);
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug(id, query, error);
+                res.status(400).json({
+                    message: 'User does not exist!'
+                });
+            } else {
+                res.status(200).json({
+                    Coupon: results[0]
+                });
+            }
+        });
+    },
+
+    getAll(req, res, next) {
+        logger.info('getall called', req.body);
+
+        let query = 'SELECT * FROM Cadeaubon';
+        let values = [];
+
+        connection.connectDatabase(query, values, (error, results, fields) => {
+            if (error) {
+                logger.debug('getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(404).json({
+                    message: 'There are no coupons!'
+                });
+            } else {
+                res.status(200).json({
+                    Coupons: results
+                });
+            }
+        });
+    },
+
     createCoupon(req, res, next) {
         logger.info('createcoupon called');
         const coupon = req.body;
