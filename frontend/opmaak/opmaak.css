@@ -254,6 +254,10 @@ ul.topnav li.right {
   float: right;
 }
 
+.right {
+  display: block;
+}
+
 .row:after {
   content: "";
   display: table;
