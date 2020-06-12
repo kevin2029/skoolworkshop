@@ -2,7 +2,11 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
     </head>
 
     <style>
@@ -35,7 +39,8 @@
             <li><a class="active" href="#home">Gebruiker wijzigen</a></li>
             <li><a href="#4">2</a></li>
             <li><a href="#4">3</a></li>
-            <li class="right"><a href="#about">4</a></li>
+            <li class="right"><a onclick="logout()">Uitloggen</a></li>
+            <!--Active of hover toevoegen-->
         </ul>
 
         <form id="gebruikerEdit" onsubmit="verstuur();return false">

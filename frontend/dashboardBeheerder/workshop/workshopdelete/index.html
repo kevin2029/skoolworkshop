@@ -2,81 +2,106 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
         <script src="workshopaanmaken.js"></script>
     </head>
     <body>
         <ul class="topnav">
             <li class="dropdown">
-                <a href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+                <a href="../../gebruiker/gebruikerLijst/index.html"
+                    >Gebruikers</a
+                >
                 <div class="dropdown-content">
-                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-                    <a href="../../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
+                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html"
+                        >Aanmaken</a
+                    >
+                    <a href="../../gebruiker/gebruikerLijst/index.html"
+                        >Deelnemers</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
-                <a class="active" href="../workshopStatistiek/index.html">Workshops</a>
+                <a class="active" href="../workshopStatistiek/index.html"
+                    >Workshops</a
+                >
                 <div class="dropdown-content">
                     <a href="../workshopaanmaken/index.html">Aanmaken</a>
                     <a href="../workshopStatistiek/index.html">Statistieken</a>
-                    <a class="active" href="../workshopdelete/index.html">Verwijderen</a>
+                    <a class="active" href="../workshopdelete/index.html"
+                        >Verwijderen</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../factuur/index.html">Facturen</a>
                 <div class="dropdown-content">
-                    <a href="../../factuur/facturenaanmaken/index.html">Uploaden</a>
+                    <a href="../../factuur/facturenaanmaken/index.html"
+                        >Uploaden</a
+                    >
                 </div>
             </li>
             <li class="dropdown">
                 <a href="../../coupon/index.html">Coupon</a>
                 <div class="dropdown-content">
-                    <a href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
+                    <a href="../../coupon/couponaanmaken/index.html"
+                        >Aanmaken</a
+                    >
                 </div>
             </li>
 
-            <li class="right"><a href="#">Uitloggen</a></li>
+            <li class="right"><a onclick="logout()">Uitloggen</a></li>
+            <!--Active of hover toevoegen-->
         </ul>
 
-    <form id="workshopverwijderen" onsubmit="sendForm();return false">
-        <!-- code pagina invoeren-->
-        <div class="container">
-            <h1>Verwijderen van een workshop</h1>
-            <p>Vul dit hele formulier in om een workshop te verwijdren</p>
-            <hr />
-            <label for="workshopNaam"><b>Naam van de workshop</b></label>
-            <input type="text" placeholder="Vul naam in" name="workshopNaam" id="workshopNaam" required />
-           
-            <hr />
-            
-            <button type="submit" class="registerbtn">
-                Verwijderen
-            </button>            
-        </div>
-    </form>
+        <form id="workshopverwijderen" onsubmit="sendForm();return false">
+            <!-- code pagina invoeren-->
+            <div class="container">
+                <h1>Verwijderen van een workshop</h1>
+                <p>Vul dit hele formulier in om een workshop te verwijdren</p>
+                <hr />
+                <label for="workshopNaam"><b>Naam van de workshop</b></label>
+                <input
+                    type="text"
+                    placeholder="Vul naam in"
+                    name="workshopNaam"
+                    id="workshopNaam"
+                    required
+                />
 
-    <script src="../scripts/requests.js"></script>
+                <hr />
 
-    <script>
-        function sendForm() {
-          let formData = new FormData(document.querySelector("#workshopverwijderen")); // ingevulde gegevens uit form worden opgehaald
-      
-          // API call uitvoeren om data op te halen
-          sendDeleteRequest(apiUrl + "/api/user/delete", formData)
-            .then((data) => {
-              alert("User deleted!");
-              console.log(data.result);
-            })
-            .catch((error) => {
-              alert("Error deleting user!");
-              console.error(
-                "There has been a problem with your fetch operation:",
-                error
-              );
-            });
-        }
-      </script>
-      
-</body>
+                <button type="submit" class="registerbtn">
+                    Verwijderen
+                </button>
+            </div>
+        </form>
 
+        <script src="../scripts/requests.js"></script>
+
+        <script>
+            function sendForm() {
+                let formData = new FormData(
+                    document.querySelector('#workshopverwijderen')
+                ); // ingevulde gegevens uit form worden opgehaald
+
+                // API call uitvoeren om data op te halen
+                sendDeleteRequest(apiUrl + '/api/user/delete', formData)
+                    .then((data) => {
+                        alert('User deleted!');
+                        console.log(data.result);
+                    })
+                    .catch((error) => {
+                        alert('Error deleting user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+    </body>
 </html>
