@@ -166,7 +166,7 @@ let controller = {
             logger.debug("results: ", results);
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
-            logger.debug(couponValue);
+            logger.debug("couponValue: ", couponValue);
             req.coupon = getOneResults;
             let valueString;
 
@@ -177,18 +177,23 @@ let controller = {
             couponValue.charAt(couponValue.length-1) == 8 || couponValue.charAt(couponValue.length-1) == 9) {
                 valueString = "Number";
                 req.valueString = valueString;
+                logger.debug(valueString);
                 next();
+               
             } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
                 valueString = "Percentage";
                 req.valueString = valueString;
+                logger.debug(valueString);
                 next();
             } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
                 valueString = "PercentageMax";
                 req.valueString = valueString;
+                logger.debug(valueString);
                 next();
             } else if (couponValue == "workshop") {
                 valueString = "Workshop";
                 req.valueString = valueString;
+                logger.debug(valueString);
                 next();
             } else {
                 logger.debug("Error, invalid type");
@@ -217,19 +222,6 @@ let controller = {
 
     },
 
-    useCoupon(req, res, next) {
-        logger.info("useCoupon called");
-        // const couponCode = req.params.Code;
-        logger.debug("Couponcode: ", couponCode);
-        let getOneResults;
-        controller.getOne(couponCode, (results) => {
-            getOneResults = results[0];
-            const couponValue = getOneResults.Value;
-            logger.debug(couponValue);
-            
-        });
-    },
-
     updateCoupon(couponCode) {
         logger.info("updateCoupon called");
 
@@ -252,12 +244,13 @@ let controller = {
                     
                 } else {
                     logger.debug("results: ", results[0]);
+                    res.status(200).json({
+                    result: results[0]
+            });
                 }
             });
 
-            res.status(200).json({
-            result: results[0]
-            });
+            
         });
 
     },
