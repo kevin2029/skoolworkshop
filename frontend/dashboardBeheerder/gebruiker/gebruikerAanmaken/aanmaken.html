@@ -60,8 +60,7 @@
                 </div>
             </li>
 
-            <li class="right"><a onclick="logout()">Uitloggen</a></li>
-            <!--Active of hover toevoegen-->
+            <li class="right"><a href="#">Uitloggen</a></li>
         </ul>
 
         <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
@@ -70,11 +69,7 @@
                 <h1>Toevoegen van gebruiker</h1>
                 <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
                 <hr />
-                <<<<<<< HEAD
-                <label for="Naam"><b>Naam van de gebruiker</b></label>
-                =======
                 <label for="Naam"><b>Naam van de beheerder</b></label>
-                >>>>>>> koppel
                 <input
                     type="text"
                     placeholder="Vul naam in"
@@ -107,6 +102,9 @@
                     id="Adress"
                     required
                 />
+
+                <!--  <label for="foto"><b>Foto van organisatie</b></label>
+        <input type="file" name="foto" id="foto" required /> -->
                 <hr />
                 <button type="submit" class="registerbtn">
                     Toevoegen
@@ -126,11 +124,7 @@
                 document.querySelector('#gebruikerAanmaken')
             );
 
-            sendPostRequest(
-                apiUrl + '/api/user/create',
-                formData,
-                getCookie('admintoken')
-            )
+            sendPostRequest(apiUrl + '/api/user/create', formData)
                 .then((data) => {
                     if (data.error) {
                         alert(data.error);

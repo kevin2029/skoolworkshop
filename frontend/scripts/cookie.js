@@ -28,11 +28,8 @@ function checkAdminCookie() {
         alert(
             'You are not authorised to visit this page! \n You will be sent back to the user dashboard!'
         );
-        window.location.href = 'dashboardGebruiker';
+        window.location.href = '../dashboardGebruiker';
     } else {
-        alert(
-            'Je moet ingelogd zijn als administrator om deze pagina te bezoeken!'
-        );
         window.location.href = '/';
     }
 }
@@ -41,7 +38,6 @@ function checkUserCookie() {
     if (getCookie('usertoken') || getCookie('admintoken')) {
         console.log('ok');
     } else {
-        alert('Je moet ingelogd zijn om deze pagina te bezoeken!');
         window.location.href = '/'; // loginpagina
     }
 }

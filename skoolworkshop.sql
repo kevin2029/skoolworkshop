@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
     `Adress` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	`PathLogo` VARCHAR(100),
-	`UrlFoto` VARCHAR(100),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -88,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `Factuur` (
     `GebruikerID` INT NOT NULL,
 	`Path` VARCHAR(90) NOT NULL UNIQUE,
 	`IsBetaald` BOOLEAN NOT NULL,
+	`UrlFoto` VARCHAR(100),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;

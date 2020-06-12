@@ -30,6 +30,7 @@ async function sendPostRequest(url = '', data = {}, token = '') {
         ...options,
         method: 'POST',
         body: data,
+        mode: 'no-cors',
         headers: {
             Authorization: 'Bearer ' + token
         }

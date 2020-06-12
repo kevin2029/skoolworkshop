@@ -42,6 +42,8 @@
         <script src="/scripts/cookie.js"></script>
 
         <script>
+            checkLoginCookie();
+
             function sendForm() {
                 let formData = new FormData(
                     document.querySelector('#loginForm')
@@ -65,7 +67,7 @@
                                 window.location.href = 'dashboardBeheerder';
                             } else {
                                 setCookie('usertoken', data.token);
-                                // window.location.href = '' [gebruikersdashboard].html
+                                window.location.href = 'dashboardGebruiker';
                             }
                         }
                     })
