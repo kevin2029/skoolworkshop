@@ -167,10 +167,10 @@ let controller = {
         });
     },
 
-    validateUpdateUser(req, res, next) {
+    validateUpdateWorkshop(req, res, next) {
         let { Naam, Email, Organisatie, Adress } = req.body;
 
-        logger.info('validateUpdateUser:', req.body);
+        logger.info('validateUpdateWorkshop:', req.body);
         try {
             assert(typeof naam === 'string', 'name is missing.');
             assert(typeof beschrijving === 'string', 'description is missing.');
