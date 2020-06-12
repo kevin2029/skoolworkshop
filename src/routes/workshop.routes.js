@@ -10,7 +10,7 @@ router.post(
 );
 router.post('/delete/:Naam', workshopcontroller.deleteWorkshop);
 router.get('/getone/:Id', workshopcontroller.getOne);
-router.get('/getall', workshopcontroller.getAll);
+router.get('/getall/:Id', workshopcontroller.getAll);
 router.post(
     '/update',
     workshopcontroller.checkDatabase,

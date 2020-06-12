@@ -89,7 +89,7 @@
             checkAdminCookie();
             getUser();
             function getUser() {
-                sendGetRequest(apiUrl + '/api/user/getall')
+                sendGetRequest(apiUrl + '/api/user/getall/' + Id)
                     .then((data) => {
                         console.log(data.Users);
                         let tableBody = document.getElementById(
@@ -121,29 +121,6 @@
                     .catch((error) => {
                         alert('Error fetching users!');
                         console.log(
-                            'There has been a problem with your fetch operation:',
-                            error
-                        );
-                    });
-            }
-        </script>
-
-        <script>
-            function deleteUser(Id) {
-                checkAdminCookie();
-
-                sendPostRequest(apiUrl + '/api/user/delete/' + Id)
-                    .then((data) => {
-                        if (data.error) {
-                            alert(data.error);
-                        } else {
-                            alert(data.message);
-                            getUser();
-                        }
-                    })
-                    .catch((error) => {
-                        alert('Error deleting user!');
-                        console.error(
                             'There has been a problem with your fetch operation:',
                             error
                         );
