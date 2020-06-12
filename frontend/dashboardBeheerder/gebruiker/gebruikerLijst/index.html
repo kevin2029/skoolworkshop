@@ -67,7 +67,7 @@
         </ul>
 
         <!-- code pagina invoeren-->
-        <div class="container">
+        <div class="containermid">
             <h1>Lijst van gebruikers</h1>
             <table class="table table-striped table-hover">
                 <thead>
@@ -75,18 +75,13 @@
                     <th>Email</th>
                     <th>Organisatie</th>
                     <th>Adress</th>
-                    <<<<<<< HEAD
                     <th>Wachtwoord</th>
                     <th>CadeaubonId</th>
-                    =======
-                    <th></th>
-                    >>>>>>> koppel
                 </thead>
                 <!-- id gelijk zetten aan id in script-->
                 <tbody id="tableUserList"></tbody>
             </table>
         </div>
-        <<<<<<< HEAD =======
 
         <script src="/scripts/requests.js"></script>
         <script src="/scripts/cookie.js"></script>
@@ -111,7 +106,7 @@
                                     `<td>${item.Email}</td>` +
                                     `<td>${item.Organisatie}</td>` +
                                     `<td>${item.Adress}</td>` +
-                                    `<td><button onclick="deleteUser(` +
+                                    `<td><button class="button" onclick="deleteUser(` +
                                     item.ID +
                                     `)"> Delete </button> </td></tr>`;
 
@@ -156,6 +151,5 @@
                     });
             }
         </script>
-        >>>>>>> koppel
     </body>
 </html>
