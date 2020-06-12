@@ -246,7 +246,7 @@ let controller = {
                     logger.debug("results: ", results[0]);
                     res.status(200).json({
                     result: results[0]
-            });
+                    });
                 }
             });
 
