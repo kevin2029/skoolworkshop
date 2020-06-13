@@ -144,7 +144,7 @@ let controller = {
                 req.params.ID +
                 "';";
         } else {
-            query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop GROUP BY Categorie;`;
+            query = `SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop ORDER BY Categorie;`;
         }
 
         logger.debug('sql query: ', query);
