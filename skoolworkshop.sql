@@ -5,11 +5,11 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
 -- DROP USER  'skoolworkshop_admin'@'%';
 -- DROP USER  'skoolworkshop_admin'@'localhost';
 -- flush privileges; 
-CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
-CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
+-- CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
+-- CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
--- -- geef rechten aan deze user
-GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
+-- -- -- geef rechten aan deze user
+-- GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
@@ -17,10 +17,18 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Naam` VARCHAR(50) NOT NULL,
 	`Email` VARCHAR(50) NOT NULL UNIQUE,
 	`Organisatie` VARCHAR(50) NOT NULL,
-    `Adress` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	`PathLogo` VARCHAR(100),
 	PRIMARY KEY (`ID`)
+) 
+ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `Organisatie` ;
+CREATE TABLE IF NOT EXISTS `Organisatie` (
+	`Naam` VARCHAR(50) NOT NULL,
+	`Adres` VARCHAR(50) NOT NULL UNIQUE,
+	`CadeaubonID` INT,
+	PRIMARY KEY (`Naam`)
 ) 
 ENGINE = InnoDB;
 
@@ -39,7 +47,6 @@ DROP TABLE IF EXISTS `Workshop` ;
 CREATE TABLE IF NOT EXISTS `Workshop` (
 	`Naam` VARCHAR(50) NOT NULL UNIQUE,
 	`Beschrijving` VARCHAR(1000) NOT NULL,
-    `CadeaubonId` INT,
 	`Kosten` INT NOT NULL ,
 	`VervolgKosten` INT NOT NULL,
 	`Categorie` VARCHAR(64)NOT NULL,
@@ -53,6 +60,7 @@ CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
     `GebruikerID` INT NOT NULL,
     `Workshopnaam` VARCHAR(32) NOT NULL,
     `SingedUpOn` DATE NOT NULL,
+	`BookedDate` DATE NOT NULL,
     PRIMARY KEY (`GebruikerID`, `Workshopnaam`)
 )   
 ENGINE= InnoDB;
@@ -65,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `Cadeaubon` (
 	`MaxBedrag` INT,
 	`MaxGebruik` INT NOT NULL,
 	`AantalGebruikt` INT,
-	`Organisatie` VARCHAR(50),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -75,7 +82,6 @@ CREATE TABLE IF NOT EXISTS `Evaluatie` (
 	`ID` INT NOT NULL UNIQUE,
 	`Titel` VARCHAR(32) NOT NULL,
     `Beschrijving` VARCHAR(100),
-    `Naam` VARCHAR(50) DEFAULT 'ANON',
 	`GebruikerID` INT,
 	PRIMARY KEY (`ID`)
 ) 
@@ -109,4 +115,14 @@ FOREIGN KEY (`Workshopnaam`) REFERENCES `Workshop` (`Naam`)
 ALTER TABLE `Evaluatie`
 ADD CONSTRAINT `fk_Evaluatie_gebruiker`
 FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
+;
+
+ALTER TABLE `Gebruiker`
+ADD CONSTRAINT `fk_Gebruiker_organisatie`
+FOREIGN KEY (`Organisatie`) REFERENCES `Organisatie` (`Naam`)
+;
+
+ALTER TABLE `Organisatie`
+ADD CONSTRAINT `fk_Organisatie_Cadeaubon`
+FOREIGN KEY (`CadeaubonID`) REFERENCES `Cadeaubon` (`ID`)
 ;

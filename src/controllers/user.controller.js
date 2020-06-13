@@ -13,7 +13,6 @@ let controller = {
             assert(typeof Naam === 'string', 'Name is missing!');
             assert(typeof Email === 'string', 'Email is missing!');
             assert(typeof Organisatie === 'string', 'Organisation is missing!');
-            assert(typeof Adress === 'string', 'Address is missing!');
 
             // Invalid values giving errors
             assert.match(
@@ -35,21 +34,21 @@ let controller = {
     createUser(req, res, next) {
         logger.info('createUser:', req.body);
 
-        let { Naam, Email, Organisatie, Adress } = req.body;
+        let { Naam, Email, Organisatie } = req.body;
 
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash('Welkom01', salt, function (err, hash) {
-                let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Adress, Wachtwoord) VALUES (?, ?, ?, ?, ?);`;
+                let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Wachtwoord) VALUES (?, ?, ?, ?);`;
 
                 connection.connectDatabase(
                     query,
-                    [Naam, Email, Organisatie, Adress, hash],
+                    [Naam, Email, Organisatie, hash],
                     (error, results, fields) => {
                         if (error) {
                             logger.debug('createUser:', req.body, error);
                             res.status(400).json({
                                 message:
-                                    'A user with this email already exists!'
+                                    'A user with this email already exists! or put in a existing organisation'
                             });
                         } else {
                             logger.info('User added:', req.body);
@@ -70,7 +69,7 @@ let controller = {
         const userMail = req.params.userID;
 
         const query =
-            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE ID = '` +
+            `SELECT Naam, Email, Organisatie FROM gebruiker WHERE ID = '` +
             userMail +
             `';`;
 
@@ -91,8 +90,7 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query =
-            'SELECT ID, Naam, Email, Organisatie, Adress FROM gebruiker;';
+        const query = 'SELECT ID, Naam, Email, Organisatie FROM gebruiker;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -155,12 +153,12 @@ let controller = {
         const userID = req.params.userID;
         logger.info('updateUser:', userID);
 
-        let { Naam, Email, Organisatie, Adress } = req.body;
-        let query = `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?, Adress = ? WHERE ID = ?;`;
+        let { Naam, Email, Organisatie } = req.body;
+        let query = `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?  WHERE ID = ?;`;
 
         connection.connectDatabase(
             query,
-            [Naam, Email, Organisatie, Adress, userID],
+            [Naam, Email, Organisatie, userID],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('updateUser:', userID, req.body, error);

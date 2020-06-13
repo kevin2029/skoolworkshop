@@ -8,6 +8,7 @@
             href="../../../opmaak/opmaak.css"
         />
     </head>
+
     <body>
         <ul class="topnav">
             <li class="dropdown">
@@ -64,13 +65,15 @@
             <!--Active of hover toevoegen-->
         </ul>
 
-        <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
+        <form id="organisatieAanmaken" onsubmit="sendForm();return false">
             <!-- code pagina invoeren-->
             <div class="container">
-                <h1>Toevoegen van gebruiker</h1>
-                <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
+                <h1>Toevoegen van organisatie</h1>
+                <p>
+                    Vul dit hele formulier in om een organisatie toe te voegen
+                </p>
                 <hr />
-                <label for="Naam"><b>Naam van de beheerder</b></label>
+                <label for="Naam"><b>Naam van de organisatie</b></label>
                 <input
                     type="text"
                     placeholder="Vul naam in"
@@ -78,25 +81,16 @@
                     id="Naam"
                     required
                 />
-                <label for="Organisatie"><b>Naam van de Organisatie</b></label>
+
+                <label for="Adres"><b>Adres van de Organisatie</b></label>
                 <input
                     type="text"
-                    placeholder="Vul naam in"
-                    name="Organisatie"
-                    id="Organisatie"
-                    required
-                />
-                <label for="Email"><b>Email</b></label>
-                <input
-                    type="text"
-                    placeholder="Vul email in"
-                    name="Email"
-                    id="Email"
+                    placeholder="Vul Adres in"
+                    name="Adres"
+                    id="Adres"
                     required
                 />
 
-                <!--  <label for="foto"><b>Foto van organisatie</b></label>
-        <input type="file" name="foto" id="foto" required /> -->
                 <hr />
                 <button type="submit" class="registerbtn">
                     Toevoegen
@@ -113,10 +107,10 @@
 
         function sendForm() {
             let formData = new FormData(
-                document.querySelector('#gebruikerAanmaken')
+                document.querySelector('#organisatieAanmaken')
             );
 
-            sendPostRequest(apiUrl + '/api/user/create', formData)
+            sendPostRequest(apiUrl + '/api/organisation/create', formData)
                 .then((data) => {
                     if (data.error) {
                         alert(data.error);
@@ -125,7 +119,7 @@
                     }
                 })
                 .catch((error) => {
-                    alert('Error creating user!');
+                    alert('Error creating organisation!');
                     console.error(
                         'There has been a problem with your fetch operation:',
                         error

@@ -8,6 +8,7 @@
             href="../../../opmaak/opmaak.css"
         />
     </head>
+
     <body>
         <ul class="topnav">
             <li class="dropdown">
@@ -69,16 +70,16 @@
 
         <!-- code pagina invoeren-->
         <div class="container">
-            <h1>Lijst van gebruikers</h1>
+            <h1>Lijst van organisaties</h1>
             <table class="table table-striped table-hover">
                 <thead>
-                    <th>Naam</th>
-                    <th>Email</th>
-                    <th>Organisatie</th>
+                    <th>Naam:</th>
+                    <th>Adres:</th>
+
                     <th></th>
                 </thead>
                 <!-- id gelijk zetten aan id in script-->
-                <tbody id="tableUserList"></tbody>
+                <tbody id="tableOrganisationList"></tbody>
             </table>
         </div>
 
@@ -87,28 +88,27 @@
 
         <script>
             checkAdminCookie();
-            getUser();
-            function getUser() {
-                sendGetRequest(apiUrl + '/api/user/getall')
+            getOrganisation();
+            function getOrganisation() {
+                sendGetRequest(apiUrl + '/api/organisation/getall')
                     .then((data) => {
-                        console.log(data.Users);
+                        console.log(data.result);
                         let tableBody = document.getElementById(
-                            'tableUserList'
+                            'tableOrganisationList'
                         );
 
                         let rows = '';
-                        if (data.Users) {
-                            data.Users.forEach((item) => {
+                        if (data.result) {
+                            data.result.forEach((item) => {
                                 console.log(item);
                                 rows += // Column namen van de data die je opvraagt
                                     `<tr><td>${item.Naam}</td>` + //
-                                    `<td>${item.Email}</td>` +
-                                    `<td>${item.Organisatie}</td>` +
-                                    `<td><button onclick="deleteUser(` +
-                                    item.ID +
-                                    `)"> Delete </button> </td></tr>`;
+                                    `<td>${item.Adres}</td>` +
+                                    `<td><button onclick="deleteOrganisation('` +
+                                    item.Naam +
+                                    `')"> Delete </button> </td></tr>`;
 
-                                console.log(item.ID);
+                                console.log(item.Naam);
                             });
 
                             tableBody.innerHTML = rows; // Stop de aangemaakte tablerows in de body van de eerder gemaakt table
@@ -128,21 +128,22 @@
         </script>
 
         <script>
-            function deleteUser(Id) {
+            function deleteOrganisation(OrganisatieNaam) {
                 checkAdminCookie();
 
-                console.log(Id);
-                sendPostRequest(apiUrl + '/api/user/delete/' + Id)
+                sendPostRequest(
+                    apiUrl + '/api/organisation/delete/' + OrganisatieNaam
+                )
                     .then((data) => {
                         if (data.error) {
                             alert(data.error);
                         } else {
                             alert(data.message);
-                            getUser();
+                            getOrganisation();
                         }
                     })
                     .catch((error) => {
-                        alert('Error deleting user!');
+                        alert('Error deleting organisation!');
                         console.error(
                             'There has been a problem with your fetch operation:',
                             error
