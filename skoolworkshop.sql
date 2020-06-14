@@ -11,6 +11,8 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
 -- -- -- geef rechten aan deze user
 -- GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
+SET DATEFORMAT dmy;
+
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
