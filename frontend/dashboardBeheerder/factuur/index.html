@@ -52,11 +52,6 @@
         </button>
     </div>
 
-
-    <div class="amountworkshops">
-        <a>24 workshops</a>
-    </div>
-
     <div id="factuurOpenstaand">
         <div class="containerleft">
             <h2>Openstaand</h2>
@@ -130,17 +125,22 @@
                     let tableBody = document.getElementById('Paid')
 
                     let rows = ''
-                    data.Result.forEach((item) => {
-                        console.log(item)
-                        rows +=
-                            `<tr><td>${item.Naam}</td>` +
-                            `<td>${item.Path}</td>` +
-                            `<td><button onclick="deleteInvoice('` +
-                            item.ID +
-                            `')"> Delete </button> </td></tr>`
-                    });
+                    if (data.Result) {
+                        data.Result.forEach((item) => {
+                            console.log(item)
+                            rows +=
+                                `<tr><td>${item.Naam}</td>` +
+                                `<td>${item.Path}</td>` +
+                                `<td><button onclick="deleteInvoice('` +
+                                item.ID +
+                                `')"> Delete </button> </td></tr>`
+                        });
 
-                    tableBody.innerHTML = rows;
+                        tableBody.innerHTML = rows
+                    } else {
+                        let niks = '';
+                        tableBody.innerHTML = niks;
+                    }
                 })
                 .catch((error) => {
                     console.error(
