@@ -11,6 +11,8 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
 -- -- -- geef rechten aan deze user
 -- GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
+SET DATEFORMAT dmy;
+
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`ID` INT NOT NULL UNIQUE AUTO_INCREMENT,
@@ -120,9 +122,11 @@ FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
 ALTER TABLE `Gebruiker`
 ADD CONSTRAINT `fk_Gebruiker_organisatie`
 FOREIGN KEY (`Organisatie`) REFERENCES `Organisatie` (`Naam`)
+ON DELETE CASCADE
 ;
 
 ALTER TABLE `Organisatie`
 ADD CONSTRAINT `fk_Organisatie_Cadeaubon`
 FOREIGN KEY (`CadeaubonID`) REFERENCES `Cadeaubon` (`ID`)
+ON DELETE CASCADE
 ;
