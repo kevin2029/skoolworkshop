@@ -4,18 +4,18 @@ const invoicecontroller = require('../controllers/invoice.controller');
 const authcontroller = require('../controllers/authenication.controller');
 
 router.post(
-    '/invoice',
-    authcontroller.validateAdmin,
+    '/create',
     invoicecontroller.validateInvoice,
     invoicecontroller.createInvoice
 );
-router.delete(
-    '/invoice/:ID',
+router.post(
+    '/delete/:ID',
     invoicecontroller.checkDatabase,
     invoicecontroller.deleteInvoice
 );
-router.get('/invoice/:ID', invoicecontroller.getOne);
-router.get('/invoice', invoicecontroller.getAll);
+router.get('/getone/:ID', invoicecontroller.getOne);
+router.get('/getallpaid', invoicecontroller.getAllPaid);
+router.get('/getallunpaid', invoicecontroller.getAllUnpaid);
 router.get(
     '/invoice/CheckPayment/:ID',
     invoicecontroller.checkDatabase,

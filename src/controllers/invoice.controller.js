@@ -4,22 +4,14 @@ const connection = require('../config/database.connection');
 
 let controller = {
     validateInvoice(req, res, next) {
-        let { GebruikerMail, Path, IsBetaald } = req.body;
+        let { GebruikerID, Path, IsBetaald } = req.body;
 
         logger.info('validateInvoice:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof GebruikerMail === 'string', 'Email is missing!');
+            assert(typeof GebruikerID === 'number', 'ID is missing!');
             assert(typeof Path === 'string', 'Path is missing!');
-            assert(typeof IsBetaald === 'string', 'IsBetaald is missing!');
-
-            // InvalID values giving errors
-            assert(
-                req.body.GebruikerMail.match(
-                    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                ),
-                'Email is invalid!'
-            );
+            assert(typeof IsBetaald === 'boolean', 'IsBetaald is missing!');
 
             next();
         } catch (err) {
@@ -34,13 +26,12 @@ let controller = {
     createInvoice(req, res, next) {
         logger.info('createInvoice:', req.body);
 
-        let { GebruikerMail, Path, IsBetaald } = req.body;
+        let { GebruikerID, Path, IsBetaald } = req.body;
         let query =
-            'INSERT INTO Factuur (GebruikerEmail, Path, IsBetaald) VALUES (?, ?, ?);';
+            'INSERT INTO Factuur (GebruikerID, Path, IsBetaald) VALUES (?, ?, ?);';
 
         connection.connectDatabase(
-            query,
-            [GebruikerMail, Path, IsBetaald],
+            query, [GebruikerID, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('createInvoice:', req.body, error);
@@ -84,8 +75,8 @@ let controller = {
         });
     },
 
-    getAll(req, res, next) {
-        const query = 'SELECT GebruikerMail, Path, IsBetaald FROM Invoice;';
+    getAllPaid(req, res, next) {
+        const query = `SELECT Factuur.ID, Gebruiker.Naam, Factuur.Path FROM Factuur JOIN Gebruiker ON Factuur.GebruikerID = Gebruiker.ID WHERE Factuur.IsBetaald = true;`;
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -99,7 +90,28 @@ let controller = {
                 });
             } else {
                 res.status(200).json({
-                    Invoices: results
+                    Result: results
+                });
+            }
+        });
+    },
+
+    getAllUnpaid(req, res, next) {
+        const query = `SELECT Factuur.ID, Gebruiker.Naam, Factuur.Path FROM Factuur JOIN Gebruiker ON Factuur.GebruikerID = Gebruiker.ID WHERE Factuur.IsBetaald = false;`;
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug('invoice getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(200).json({
+                    message: 'There are no invoices!'
+                });
+            } else {
+                res.status(200).json({
+                    Result: results
                 });
             }
         });
@@ -214,8 +226,7 @@ let controller = {
             `';`;
 
         connection.connectDatabase(
-            query,
-            [GebruikerMail, Path, IsBetaald],
+            query, [GebruikerMail, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('updateInvoice:', ID, req.body, error);

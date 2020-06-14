@@ -1,115 +1,181 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../opmaak/opmaak.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <ul class="topnav">
-      <li class="dropdown">
-        <a href="../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
-        <div class="dropdown-content">
-          <a href="../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-          <a href="../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
-        </div>
-      </li>
-      <li class="dropdown">
-        <a href="../workshop/workshopStatistiek/index.html">Workshops</a>
-        <div class="dropdown-content">
-          <a href="../workshop/workshopaanmaken/index.html">Aanmaken</a>
-          <a href="../workshop/workshopStatistiek/index.html">Statistieken</a>
-          <a href="../workshop/workshopdelete/index.html">Verwijderen</a>
-        </div>
-      </li>
-    </li>
-    <li class="dropdown">
-      <a class="active" href="../factuur/index.html">Facturen</a>
-      <div class="dropdown-content">
-        <a href="facturenaanmaken/index.html">Uploaden</a>
-      </div>
-    </li>
-    <li class="dropdown">
-        <a href="../coupon/index.html">Coupon</a>
-        <div class="dropdown-content">
-          <a href="../coupon/couponaanmaken/index.html">Aanmaken</a>
-        </div>
-      </li>
-  
-      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+        <li class="dropdown">
+            <a href="../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+            <div class="dropdown-content">
+                <a href="../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
+                <a href="../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../workshop/workshopStatistiek/index.html">Workshops</a>
+            <div class="dropdown-content">
+                <a href="../workshop/workshopaanmaken/index.html">Aanmaken</a>
+                <a href="../workshop/workshopStatistiek/index.html">Statistieken</a>
+                <a href="../workshop/workshopdelete/index.html">Verwijderen</a>
+            </div>
+        </li>
+        </li>
+        <li class="dropdown">
+            <a class="active" href="../factuur/index.html">Facturen</a>
+            <div class="dropdown-content">
+                <a href="facturenaanmaken/index.html">Uploaden</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../coupon/index.html">Coupon</a>
+            <div class="dropdown-content">
+                <a href="../coupon/couponaanmaken/index.html">Aanmaken</a>
+            </div>
+        </li>
+
+        <li class="right"><a onclick="logout()">Uitloggen</a></li>
+        <!--Active of hover toevoegen-->
     </ul>
 
     <div class="titlepage">
-      <h1>Facturen</h1>
+        <h1>Facturen</h1>
     </div>
-     
-      <div class="search">
-         <input type="text" class="searchTerm" placeholder="Zoeken">
-         <button type="submit" class="searchButton">
+
+    <div class="search">
+        <input type="text" class="searchTerm" placeholder="Zoeken">
+        <button type="submit" class="searchButton">
            <i class="fa fa-search"></i>
         </button>
-      </div>
+    </div>
 
-      
+
     <div class="amountworkshops">
-      <a>24 workshops</a>
+        <a>24 workshops</a>
     </div>
 
     <div id="factuurOpenstaand">
-      <div class="containerleft">
-        <h2>Openstaand</h2>
-        <table>
-          <thead>
-            <th>Naam</th>
-            <th>E-mailadres</th>
-            <th>Datum</th>
-            <th>Download</th>
-          </thead>
-        
-          <tbody id="Facturen"></tbody>
-        </table>
-      </div>
+        <div class="containerleft">
+            <h2>Openstaand</h2>
+            <table>
+                <thead>
+                    <th>Naam</th>
+                    <th>Path</th>
+                    <th></th>
+                </thead>
+
+                <tbody id="Unpaid"></tbody>
+            </table>
+        </div>
     </div>
 
-    <div id="factuurGesloten">
-      <div class="containerright">
-        <h2>Gesloten</h2>
-        <table>
-          <tr>
-            <td>E-mailadres</td>
-            <td>Betaald</td>
-            <td>Download</td>
-          </tr>
-        </table>
-      </div>
+    <div id="factuurBetaald">
+        <div class="containerright">
+            <h2>Betaald</h2>
+            <table>
+                <thead>
+                    <th>Naam</th>
+                    <th>Path</th>
+                    <th></th>
+                </thead>
+
+                <tbody id="Paid"></tbody>
+            </table>
+        </div>
     </div>
-  
+
     <script src="/scripts/requests.js"></script>
     <script src="/scripts/cookie.js"></script>
 
     <script>
-      function getOpenFacturen() {
-        sendGetRequest(apiUrl + '/api/skoolworkshop')
-          .then((data) => {
-            console.log(data.result)
-            let tableBody = document.getElementById('Facturen')
+        function getUnpaidFacturen() {
+            sendGetRequest(apiUrl + '/api/invoice/getallunpaid')
+                .then((data) => {
+                    console.log(data.Result)
+                    let tableBody = document.getElementById('Unpaid')
 
-            let rows = ''
-            data.result.forEach((item) => {
-              console.log(item)
-              rows +=
-                `<tr><td>${item.GebruikerEmail}</td>` +
-                `<td>${item.IsBetaald}</td></tr>`
-            })
+                    let rows = ''
+                    if (data.Result) {
+                        data.Result.forEach((item) => {
+                            console.log(item)
+                            rows +=
+                                `<tr><td>${item.Naam}</td>` +
+                                `<td>${item.Path}</td>` +
+                                `<td><button onclick="deleteInvoice('` +
+                                item.ID +
+                                `')"> Delete </button> </td></tr>`
+                        });
 
-            tableBody.innerHTML = rows
-          })
-          .catch((error) => {
-            console.error(
-              'There has been a problem with your fetch operation:',
-              error
-            )
-          })
-      }
+                        tableBody.innerHTML = rows
+                    } else {
+                        let niks = '';
+                        tableBody.innerHTML = niks;
+                    }
+                })
+                .catch((error) => {
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    )
+                })
+        }
+
+        function getPaidFacturen() {
+            sendGetRequest(apiUrl + '/api/invoice/getallpaid')
+                .then((data) => {
+                    console.log(data.Result)
+                    let tableBody = document.getElementById('Paid')
+
+                    let rows = ''
+                    data.Result.forEach((item) => {
+                        console.log(item)
+                        rows +=
+                            `<tr><td>${item.Naam}</td>` +
+                            `<td>${item.Path}</td>` +
+                            `<td><button onclick="deleteInvoice('` +
+                            item.ID +
+                            `')"> Delete </button> </td></tr>`
+                    });
+
+                    tableBody.innerHTML = rows;
+                })
+                .catch((error) => {
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    )
+                })
+        }
+
+        function deleteInvoice(ID) {
+            sendPostRequest(apiUrl + '/api/invoice/delete/' + ID)
+                .then((data) => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+                        getPaidFacturen();
+                        getUnpaidFacturen();
+                    }
+                })
+                .catch((error) => {
+                    alert('Error deleting invoice!');
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    );
+                });
+        }
     </script>
-  </body>
+
+    <script>
+        checkAdminCookie();
+        getUnpaidFacturen();
+        getPaidFacturen();
+    </script>
+</body>
+
 </html>

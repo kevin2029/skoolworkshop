@@ -10,7 +10,7 @@ router.post(
 
 router.post(
     '/register/admin',
-    AuthController.validateAdmin,
+    // AuthController.validateAdmin,
     AuthController.validateRegister,
     AuthController.register
 );
