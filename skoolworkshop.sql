@@ -122,9 +122,11 @@ FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
 ALTER TABLE `Gebruiker`
 ADD CONSTRAINT `fk_Gebruiker_organisatie`
 FOREIGN KEY (`Organisatie`) REFERENCES `Organisatie` (`Naam`)
+ON DELETE CASCADE
 ;
 
 ALTER TABLE `Organisatie`
 ADD CONSTRAINT `fk_Organisatie_Cadeaubon`
 FOREIGN KEY (`CadeaubonID`) REFERENCES `Cadeaubon` (`ID`)
+ON DELETE CASCADE
 ;
