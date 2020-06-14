@@ -11,7 +11,7 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
 -- -- -- geef rechten aan deze user
 -- GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
-SET DATEFORMAT dmy;
+-- SET DATEFORMAT dmy;
 
 DROP TABLE IF EXISTS `gebruiker` ;
 CREATE TABLE IF NOT EXISTS `gebruiker` (
@@ -29,7 +29,6 @@ DROP TABLE IF EXISTS `Organisatie` ;
 CREATE TABLE IF NOT EXISTS `Organisatie` (
 	`Naam` VARCHAR(50) NOT NULL,
 	`Adres` VARCHAR(50) NOT NULL UNIQUE,
-	`CadeaubonID` INT,
 	PRIMARY KEY (`Naam`)
 ) 
 ENGINE = InnoDB;
@@ -75,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `Cadeaubon` (
 	`MaxBedrag` INT,
 	`MaxGebruik` INT NOT NULL,
 	`AantalGebruikt` INT,
+	`OrganisatieNaam` VARCHAR(50),
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
@@ -125,8 +125,8 @@ FOREIGN KEY (`Organisatie`) REFERENCES `Organisatie` (`Naam`)
 ON DELETE CASCADE
 ;
 
-ALTER TABLE `Organisatie`
+ALTER TABLE `Cadeaubon`
 ADD CONSTRAINT `fk_Organisatie_Cadeaubon`
-FOREIGN KEY (`CadeaubonID`) REFERENCES `Cadeaubon` (`ID`)
+FOREIGN KEY (`OrganisatieNaam`) REFERENCES `Organisatie` (`Naam`)
 ON DELETE CASCADE
 ;
