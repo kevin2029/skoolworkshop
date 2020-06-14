@@ -192,23 +192,6 @@ let controller = {
                 logger.debug(valueString);
                 next();
             }
-
-            // switch (couponValue) {
-            //     case checkMoneyOrPercentage == 0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9:
-            //         route.use('/coupon/money/' + couponCode);
-            //     case checkMoneyOrPercentage == "%" && getOneResults.maxBedragCoupon == undefined:
-            //         route.use('/coupon/percentage/' + couponCode);
-            //     case checkMoneyOrPercentage == "%" && getOneResults.maxBedragCoupon != undefined:
-            //         route.use('/coupon/percentageMax/' + couponCode);
-            //     case "workshop":
-            //         route.use('/coupon/workshop/' + couponCode);
-            //     default:
-            //         logger.debug("Error, default reached");
-            //         res.status(400).json({
-            //             message: "Error, default reached"
-            //         })
-            // }
-
         });
 
     },
@@ -236,7 +219,8 @@ let controller = {
                 } else {
                     logger.debug("results: ", results[0]);
                     res.status(200).json({
-                    result: results[0]
+                        message: "Coupon gebruikt en ge-update",
+                        result: results[0]
                     });
                 }
             });
