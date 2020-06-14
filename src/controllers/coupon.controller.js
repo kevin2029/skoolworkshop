@@ -125,8 +125,8 @@ let controller = {
                 });
             } else {
                 console.log(results);
-                for (var i = 0; i < results.length; i++) {
-                    logger.debug('parsedJSON: ', results[i]);
+                for (var i = 0; i < 1; i++) {
+                    logger.debug("parsedJSON: ", results[i]);
                     const MaxGebruik = results[i].MaxGebruik;
                     const AantalGebruikt = results[i].AantalGebruikt;
                     if (AantalGebruikt < MaxGebruik) {
@@ -138,7 +138,165 @@ let controller = {
                     }
                 }
             }
+
+        })
+    },
+
+    getOne(couponCode, callback) {
+        logger.info("getOne called");
+
+        const query =
+            `SELECT Code, Value, MaxBedrag, MaxGebruik, AantalGebruikt FROM Cadeaubon WHERE Code = '` +
+            couponCode +
+            `';`;
+
+        logger.info('getOne:', couponCode);
+
+        connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug(couponCode, query, error);
+                return 'coupon does not exist!';
+            } else {
+                logger.debug("results: ", results[0]);
+                callback(results);
+            }
         });
+        
+    },
+
+    checkValue(req, res, next) {
+        logger.info("checkValue called");
+        const couponCode = req.params.Code;
+        logger.debug("Couponcode: ", couponCode);
+        let getOneResults;
+        controller.getOne(couponCode, (results) => {
+            getOneResults = results[0];
+            const couponValue = getOneResults.Value;
+            logger.debug("couponValue: ", couponValue);
+            req.coupon = getOneResults;
+            let valueString;
+
+            if (couponValue.charAt(couponValue.length - 1) == 0 || couponValue.charAt(couponValue.length - 1) == 1 ||
+            couponValue.charAt(couponValue.length - 1) == 2 || couponValue.charAt(couponValue.length - 1) == 3 ||
+            couponValue.charAt(couponValue.length - 1) == 4 || couponValue.charAt(couponValue.length - 1) == 5 || 
+            couponValue.charAt(couponValue.length - 1) == 6 || couponValue.charAt(couponValue.length - 1) == 7 || 
+            couponValue.charAt(couponValue.length - 1) == 8 || couponValue.charAt(couponValue.length - 1) == 9) {
+                valueString = "Money";
+                req.valueString = valueString;
+                logger.debug("req.valueString: ", req.valueString);
+                next();
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
+                valueString = "Percentage";
+                req.valueString = valueString;
+                logger.debug(valueString);
+                next();
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
+                valueString = "PercentageMax";
+                req.valueString = valueString;
+                logger.debug(valueString);
+                next();
+            } else if (couponValue == "workshop") {
+                valueString = "Workshop";
+                req.valueString = valueString;
+                logger.debug(valueString);
+                next();
+            }
+        });
+
+    },
+
+    updateCoupon(couponCode) {
+        logger.info("updateCoupon called");
+
+        let getOneResults;
+        controller.getOne(couponCode, (results) => {
+            logger.debug("results: ", results);
+            getOneResults = results[0];
+            let couponAantalGebruikt = getOneResults.AantalGebruikt;
+            logger.debug(couponValue);
+
+            couponAantalGebruikt += 1;
+            
+            const query = 
+                `UPDATE Cadeaubon SET AantalGebruikt = '` + couponAantalGebruikt
+                 + `' WHERE Code = '` + couponCode + `';`;
+
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    
+                } else {
+                    logger.debug("results: ", results[0]);
+                    res.status(200).json({
+                        message: "Coupon gebruikt en ge-update",
+                        result: results[0]
+                    });
+                }
+            });
+
+            
+        });
+
+    },
+
+    workshopCouponHandler(req, res, next) {
+        logger.info("workshopCouponHandler called");
+        const valueString = req.valueString;
+        if (valueString !== "Workshop") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+            });
+        }
+    },
+
+    moneyCouponHandler(req, res, next) {
+        logger.info("moneyCouponHandler called");
+        const valueString = req.valueString;
+        if (valueString != "Money") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+            });
+        }
+        
+    },
+
+    percentageCouponHandler(req, res, next) {
+        logger.info("percentageCouponHandler called");
+        const valueString = req.valueString;
+        if (valueString !== "Percentage") {
+            next();
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+            });
+        }
+    },
+
+    percentageMaxCouponHandler(req, res, next) {
+        logger.info("percentageMaxCouponHandler called");
+        const valueString = req.valueString;
+        if (valueString !== "PercentageMax") {
+            res.status(400).json({
+                message: "Error, invalid coupon type"
+            })
+        } else {
+            const coupon = req.coupon;
+            res.status(200).json({
+            message: 'Coupon succesfully sent!',
+            result: coupon
+            });
+        }
     }
 };
+
 module.exports = controller;

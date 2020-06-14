@@ -15,6 +15,11 @@ let controller = {
             assert(typeof Naam === 'string', 'Name is missing.');
             assert(typeof Beschrijving === 'string', 'Description is missing.');
             assert(typeof Categorie === 'string', 'Categorie is missing.');
+            assert(typeof Kosten === 'number', 'Price is missing.');
+            assert(
+                typeof VervolgKosten === 'number',
+                'Follow-up price is missing.'
+            );
 
             next();
         } catch (err) {
