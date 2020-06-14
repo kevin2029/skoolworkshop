@@ -118,7 +118,7 @@ let controller = {
                     message: 'Invoice does not exist!'
                 });
             } else {
-                if(results === true) {
+                if(results[0].IsBetaald == true) {
                     res.status(200).json({
                         Invoice: 'Is betaald.'
                     });
