@@ -39,7 +39,7 @@
       <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
     </ul>
 
-  <form id="couponAanmaken" onsubmit="verstuur();return false">
+  <form id="couponAanmaken" onsubmit="sendForm();return false">
       <!-- code pagina invoeren-->
       <div class="container">
         <a class="link" href="../index.html">< Terug naar overzicht </a>
@@ -81,6 +81,17 @@
           id="maxGebruikCoupon"
           required
         />
+        <br />
+
+        <label for="OrganisatieNaam"><b>Vul een organisatienaam in</b></label>
+        <br />
+        <input
+          type="text"
+          placeholder="Vul een organisatienaam in"
+          name="OrganisatieNaam"
+          id="OrganisatieNaam"
+          required
+        />
 
         <hr />
         <button type="submit" class="registerbtn">
@@ -88,6 +99,37 @@
         </button>
       </div>
     </form>
+
+    <script src="/scripts/requests.js"></script>
+        <script src="/scripts/cookie.js"></script>
+
+        <script>
+            checkAdminCookie();
+
+            function sendForm() {
+                let formData = new FormData(
+                    document.querySelector('#couponAanmaken')
+                ); // ingevulde gegevens uit form worden opgehaald
+
+      
+                    // API call uitvoeren om data op te halen
+                    sendPostRequest(apiUrl + '/api/coupon/create', formData)
+                        .then((data) => {
+                            if (data.message) {
+                                alert('Error creating coupon! \n', data.message);
+                            } else {
+                                alert('Coupon succesvol aangemaakt!');
+                            }
+                        })
+                        .catch((error) => {
+                            alert('Error creating coupon!');
+                            console.error(
+                                'There has been a problem with your fetch operation:',
+                                error
+                            );
+                        });
+            }
+        </script>
 
 </body>
 

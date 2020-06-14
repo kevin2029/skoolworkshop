@@ -1,338 +1,159 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="../../opmaak/opmaak.css" />
-    <script src="workshopaanmaken.js"></script>
-  </head>
-  <body>
-    <ul class="topnav">
-      <li class="dropdown">
-        <a href="../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
-        <div class="dropdown-content">
-          <a href="../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-          <a href="../gebruiker/gebruikerLijst/index.html">Deelnemers</a>
-        </div>
-      </li>
-      <li class="dropdown">
-        <a href="../workshop/workshopStatistiek/index.html">Workshops</a>
-        <div class="dropdown-content">
-          <a href="../workshop/workshopaanmaken/index.html">Aanmaken</a>
-          <a href="../workshop/workshopStatistiek/index.html">Statistieken</a>
-          <a href="../workshop/workshopdelete/index.html">Verwijderen</a>
-        </div>
-      </li>
-    </li>
-    <li class="dropdown">
-      <a href="../factuur/index.html">Facturen</a>
-      <div class="dropdown-content">
-        <a href="../factuur/facturenaanmaken/index.html">Uploaden</a>
-      </div>
-    </li>
-    <li class="dropdown">
-        <a class="active" href="../coupon/index.html">Coupon</a>
-        <div class="dropdown-content">
-          <a href="../coupon/couponaanmaken/index.html">Aanmaken</a>
-        </div>
-      </li>
-  
-      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
-    </ul>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
+    </head>
 
-      <div class="containermid">
-        <h1>Overzicht coupons</h1>
-        <p>Een overzicht van alle coupons. Klik op een coupon om details te zien, <a class="link" href="couponAanmaken/index.html">of maak een nieuwe coupon aan</a>.</p>
-        <hr>
+    <body>
+        <ul class="topnav">
+            <li class="dropdown">
+                <a
+                    class="active"
+                    href="../../gebruiker/gebruikerLijst/index.html"
+                    >Gebruikers</a
+                >
+                <div class="dropdown-content">
+                    <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html"
+                        >Aanmaken</a
+                    >
+                    <a href="../../gebruiker/gebruikerLijst/index.html"
+                        >Deelnemers</a
+                    >
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="../../workshop/workshopStatistiek/index.html"
+                    >Workshops</a
+                >
+                <div class="dropdown-content">
+                    <a href="../../workshop/workshopaanmaken/index.html"
+                        >Aanmaken</a
+                    >
+                    <a
+                        class="active"
+                        href="../../workshop/workshopStatistiek/index.html"
+                        >Statistieken</a
+                    >
+                    <a href="../../workshop/workshopdelete/index.html"
+                        >Verwijderen</a
+                    >
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="../../factuur/index.html">Facturen</a>
+                <div class="dropdown-content">
+                    <a href="../../factuur/facturenaanmaken/index.html"
+                        >Uploaden</a
+                    >
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="../../coupon/index.html">Coupon</a>
+                <div class="dropdown-content">
+                    <a href="../coupon/couponAanmaken/">Aanmaken</a>
+                </div>
+            </li>
 
-          <table>
-              <tr>
-                  <th>Code</th>
-                  <th>Waarde</th>
-                  <th>Max. bedrag</th>
-                  <th>Aantal gebruikt</th>
-                  <th>Organisatie</th>
-              </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                  <td>AHG-200</td>
-                  <td>€200,00</td>
-                  <td>€500,00</td>
-                  <td>3 / 20</td>
-                  <td>Avans Hogeschool</td>
-              </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-                <td>230-KLM</td>
-                <td>€230,00</td>
-                <td>€1.000,00</td>
-                <td>0 / 1</td>
-                <td>KLM</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>TestCoupon</td>
-                <td>€415,00</td>
-                <td>€670,00</td>
-                <td>15 / 15</td>
-                <td>Test bedrijf</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>ABC21</td>
-                <td>€0,21</td>
-                <td>€6,00</td>
-                <td>5 / 25</td>
-                <td>Brood & Co.</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>689AK</td>
-                <td>€600,00</td>
-                <td>€800,00</td>
-                <td>1 / 2</td>
-                <td>Basischool de Lange Poot</td>
-            </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                  <td>AHG-200</td>
-                  <td>€200,00</td>
-                  <td>€500,00</td>
-                  <td>3 / 20</td>
-                  <td>Avans Hogeschool</td>
-              </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-                <td>230-KLM</td>
-                <td>€230,00</td>
-                <td>€1.000,00</td>
-                <td>0 / 1</td>
-                <td>KLM</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>TestCoupon</td>
-                <td>€415,00</td>
-                <td>€670,00</td>
-                <td>15 / 15</td>
-                <td>Test bedrijf</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>ABC21</td>
-                <td>€0,21</td>
-                <td>€6,00</td>
-                <td>5 / 25</td>
-                <td>Brood & Co.</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>689AK</td>
-                <td>€600,00</td>
-                <td>€800,00</td>
-                <td>1 / 2</td>
-                <td>Basischool de Lange Poot</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                <td>AHG-200</td>
-                <td>€200,00</td>
-                <td>€500,00</td>
-                <td>3 / 20</td>
-                <td>Avans Hogeschool</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-              <td>230-KLM</td>
-              <td>€230,00</td>
-              <td>€1.000,00</td>
-              <td>0 / 1</td>
-              <td>KLM</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>TestCoupon</td>
-              <td>€415,00</td>
-              <td>€670,00</td>
-              <td>15 / 15</td>
-              <td>Test bedrijf</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>ABC21</td>
-              <td>€0,21</td>
-              <td>€6,00</td>
-              <td>5 / 25</td>
-              <td>Brood & Co.</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>689AK</td>
-              <td>€600,00</td>
-              <td>€800,00</td>
-              <td>1 / 2</td>
-              <td>Basischool de Lange Poot</td>
-          </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                <td>AHG-200</td>
-                <td>€200,00</td>
-                <td>€500,00</td>
-                <td>3 / 20</td>
-                <td>Avans Hogeschool</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-              <td>230-KLM</td>
-              <td>€230,00</td>
-              <td>€1.000,00</td>
-              <td>0 / 1</td>
-              <td>KLM</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>TestCoupon</td>
-              <td>€415,00</td>
-              <td>€670,00</td>
-              <td>15 / 15</td>
-              <td>Test bedrijf</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>ABC21</td>
-              <td>€0,21</td>
-              <td>€6,00</td>
-              <td>5 / 25</td>
-              <td>Brood & Co.</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-              <td>689AK</td>
-              <td>€600,00</td>
-              <td>€800,00</td>
-              <td>1 / 2</td>
-              <td>Basischool de Lange Poot</td>
-          </tr>
-          <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-            <td>AHG-200</td>
-            <td>€200,00</td>
-            <td>€500,00</td>
-            <td>3 / 20</td>
-            <td>Avans Hogeschool</td>
-        </tr>
-        <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-          <td>230-KLM</td>
-          <td>€230,00</td>
-          <td>€1.000,00</td>
-          <td>0 / 1</td>
-          <td>KLM</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>TestCoupon</td>
-          <td>€415,00</td>
-          <td>€670,00</td>
-          <td>15 / 15</td>
-          <td>Test bedrijf</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>ABC21</td>
-          <td>€0,21</td>
-          <td>€6,00</td>
-          <td>5 / 25</td>
-          <td>Brood & Co.</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>689AK</td>
-          <td>€600,00</td>
-          <td>€800,00</td>
-          <td>1 / 2</td>
-          <td>Basischool de Lange Poot</td>
-      </tr>
-        <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-            <td>AHG-200</td>
-            <td>€200,00</td>
-            <td>€500,00</td>
-            <td>3 / 20</td>
-            <td>Avans Hogeschool</td>
-        </tr>
-        <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-          <td>230-KLM</td>
-          <td>€230,00</td>
-          <td>€1.000,00</td>
-          <td>0 / 1</td>
-          <td>KLM</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>TestCoupon</td>
-          <td>€415,00</td>
-          <td>€670,00</td>
-          <td>15 / 15</td>
-          <td>Test bedrijf</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>ABC21</td>
-          <td>€0,21</td>
-          <td>€6,00</td>
-          <td>5 / 25</td>
-          <td>Brood & Co.</td>
-      </tr>
-      <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-          <td>689AK</td>
-          <td>€600,00</td>
-          <td>€800,00</td>
-          <td>1 / 2</td>
-          <td>Basischool de Lange Poot</td>
-      </tr>
-       <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                  <td>AHG-200</td>
-                  <td>€200,00</td>
-                  <td>€500,00</td>
-                  <td>3 / 20</td>
-                  <td>Avans Hogeschool</td>
-              </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-                <td>230-KLM</td>
-                <td>€230,00</td>
-                <td>€1.000,00</td>
-                <td>0 / 1</td>
-                <td>KLM</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>TestCoupon</td>
-                <td>€415,00</td>
-                <td>€670,00</td>
-                <td>15 / 15</td>
-                <td>Test bedrijf</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>ABC21</td>
-                <td>€0,21</td>
-                <td>€6,00</td>
-                <td>5 / 25</td>
-                <td>Brood & Co.</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>689AK</td>
-                <td>€600,00</td>
-                <td>€800,00</td>
-                <td>1 / 2</td>
-                <td>Basischool de Lange Poot</td>
-            </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=1"'>
-                  <td>AHG-200</td>
-                  <td>€200,00</td>
-                  <td>€500,00</td>
-                  <td>3 / 20</td>
-                  <td>Avans Hogeschool</td>
-              </tr>
-              <tr onclick='window.location.href = "./couponDetails/index.html?id=2"'>
-                <td>230-KLM</td>
-                <td>€230,00</td>
-                <td>€1.000,00</td>
-                <td>0 / 1</td>
-                <td>KLM</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>TestCoupon</td>
-                <td>€415,00</td>
-                <td>€670,00</td>
-                <td>15 / 15</td>
-                <td>Test bedrijf</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>ABC21</td>
-                <td>€0,21</td>
-                <td>€6,00</td>
-                <td>5 / 25</td>
-                <td>Brood & Co.</td>
-            </tr>
-            <tr onclick='window.location.href = "./couponDetails/index.html?id=3"'>
-                <td>689AK</td>
-                <td>€600,00</td>
-                <td>€800,00</td>
-                <td>1 / 2</td>
-                <td>Basischool de Lange Poot</td>
-            </tr>
-          </table>
-      </div>
-</body>
+            <li class="right"><a onclick="logout()">Uitloggen</a></li>
+            <!--Active of hover toevoegen-->
+        </ul>
+
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <h1>Lijst van alle coupons</h1>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Code</th>
+                    <th>Waarde</th>
+                    <th>Max. bedrag</th>
+                    <th>Max. gebruik</th>
+                    <th>Aantal gebruikt</th>
+                    <th>Organisatie</th>
+                    <th></th>
+                </thead>
+                <!-- id gelijk zetten aan id in script-->
+                <tbody id="tableUserList"></tbody>
+            </table>
+        </div>
+
+        <script src="/scripts/requests.js"></script>
+        <script src="/scripts/cookie.js"></script>
+
+        <script>
+            checkAdminCookie();
+            getUser();
+            function getUser() {
+                sendGetRequest(apiUrl + '/api/coupon/getall')
+                    .then((data) => {
+                        console.log(data.result);
+                        let tableBody = document.getElementById(
+                            'tableUserList'
+                        );
+
+                        let rows = '';
+                        if (data.Result) {
+                            data.Result.forEach((item) => {
+                                let temp = '';
+                                console.log('item number: ', item);
+                                if (item.OrganisatieNaam == null) {
+                                    temp += '-';
+                                } else {
+                                    temp += item.OrganisatieNaam;
+                                }
+                                rows += // Column namen van de data die je opvraagt
+                                    `<tr><td>${item.Code}</td>` + //
+                                    `<td>${item.Value}</td>` +
+                                    `<td>${item.MaxBedrag}</td>` +
+                                    `<td>${item.MaxGebruik}</td>` +
+                                    `<td>${item.AantalGebruikt}</td>` +
+                                    `<td>${temp}</td>` +
+                                    `<td><button onclick="deleteCoupon('` +
+                                    item.ID +
+                                    `')"> Delete </button> </td></tr>`;
+
+                                console.log(item.ID);
+                            });
+
+                            tableBody.innerHTML = rows; // Stop de aangemaakte tablerows in de body van de eerder gemaakt table
+                        } else {
+                            let niks = '';
+                            tableBody.innerHTML = niks;
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error fetching coupons!');
+                        console.log(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+
+        <script>
+            function deleteCoupon(ID) {
+                sendPostRequest(apiUrl + '/api/coupon/delete/' + ID)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            alert(data.message);
+                            getUser();
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error deleting user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        </script>
+    </body>
 </html>
