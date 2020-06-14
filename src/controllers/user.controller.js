@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 let controller = {
     validateUser(req, res, next) {
-        let { Naam, Email, Organisatie, Adress, Wachtwoord } = req.body;
+        let { Naam, Email, Organisatie } = req.body;
 
         logger.info('validateUser:', req.body);
         try {

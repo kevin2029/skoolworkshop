@@ -187,12 +187,11 @@ module.exports = {
 
                                         if (req.url !== '/register/admin') {
                                             sqlQuery =
-                                                'INSERT INTO `Gebruiker` (`Naam`, `Email`, `Organisatie`, `Adress`, `Wachtwoord`) VALUES (?, ?, ?, ?, ?)';
+                                                'INSERT INTO `Gebruiker` (`Naam`, `Email`, `Organisatie`, `Wachtwoord`) VALUES (?, ?, ?, ?)';
                                             parameter = [
                                                 req.body.Naam,
                                                 req.body.Email,
                                                 req.body.Organisatie,
-                                                req.body.Adress,
                                                 hash
                                             ];
 
@@ -265,10 +264,6 @@ module.exports = {
                 assert(
                     typeof req.body.Organisatie === 'string',
                     'lastname must be a string.'
-                );
-                assert(
-                    typeof req.body.Adress === 'string',
-                    'Adress must be a string.'
                 );
             }
 
