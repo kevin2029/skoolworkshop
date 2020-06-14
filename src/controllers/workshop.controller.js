@@ -145,7 +145,7 @@ let controller = {
         console.log('urls:', req.url);
         if (req.url !== '/getall') {
             query =
-                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.GebruikersID = '" +
+                "SELECT Naam, Beschrijving, Kosten, VervolgKosten, Categorie FROM Workshop JOIN GebruikerWorkshop ON Workshop.Naam = GebruikerWorkshop.Workshopnaam WHERE GebruikerWorkshop.GebruikerID = '" +
                 req.params.ID +
                 "';";
         } else {
