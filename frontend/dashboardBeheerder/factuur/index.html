@@ -35,10 +35,10 @@
             </div>
         </li>
         <li class="dropdown">
-          <a href="../organisatie/organisatieLijst/index.html">Organisatie</a>
-          <div class="dropdown-content">
-            <a href="../organisatie/organisatieAanmaken/index.html">Aanmaken</a>
-          </div>
+            <a href="../organisatie/organisatieLijst/index.html">Organisatie</a>
+            <div class="dropdown-content">
+                <a href="../organisatie/organisatieAanmaken/index.html">Aanmaken</a>
+            </div>
         </li>
 
         <li class="right"><a onclick="logout()">Uitloggen</a></li>
@@ -63,7 +63,6 @@
                 <thead>
                     <th>Naam</th>
                     <th>Path</th>
-                    <th></th>
                 </thead>
 
                 <tbody id="Unpaid"></tbody>
@@ -78,7 +77,6 @@
                 <thead>
                     <th>Naam</th>
                     <th>Path</th>
-                    <th></th>
                 </thead>
 
                 <tbody id="Paid"></tbody>
@@ -102,10 +100,7 @@
                             console.log(item)
                             rows +=
                                 `<tr><td>${item.Naam}</td>` +
-                                `<td>${item.Path}</td>` +
-                                `<td><button onclick="deleteInvoice('` +
-                                item.ID +
-                                `')"> Delete </button> </td></tr>`
+                                `<td>${item.Path}</td></tr>`
                         });
 
                         tableBody.innerHTML = rows
@@ -134,10 +129,7 @@
                             console.log(item)
                             rows +=
                                 `<tr><td>${item.Naam}</td>` +
-                                `<td>${item.Path}</td>` +
-                                `<td><button onclick="deleteInvoice('` +
-                                item.ID +
-                                `')"> Delete </button> </td></tr>`
+                                `<td>${item.Path}</td></tr>`
                         });
 
                         tableBody.innerHTML = rows
