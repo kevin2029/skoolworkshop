@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+    <script src="workshopdeleten.js"></script>
+</head>
+
+<body>
+    <ul class="topnav">
+        <li class="dropdown">
+            <a href="../gebruiker/index.html">Gebruikers</a>
+            <div class="dropdown-content">
+                <a href="../gebruiker/aanmaken.html">Aanmaken</a>
+                <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="active" href="../workshop/index.html">Workshops</a>
+            <div class="dropdown-content">
+                <a href="../workshop/aanmaken.html">Aanmaken</a>
+                <a href="../workshop/analysiek.html">Analysiek</a>
+                <a class="active" href="../workshop/delete.html">Verwijderen</a>
+            </div>
+        </li>
+        </li>
+        <li class="dropdown">
+            <a href="../factuur/index.html">Facturen</a>
+            <div class="dropdown-content">
+                <a href="../factuur/aanmaken.html">Aanmaken</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../coupon/index.html">Coupon</a>
+            <div class="dropdown-content">
+                <a href="../coupon/aanmaken.html">Aanmaken</a>
+            </div>
+        </li>
+
+        <li class="right"><a href="#about">Google Drive</a></li>
+    </ul>
+
+    <form id="workshopverwijderen" onsubmit="verstuur();return false">
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <h1>Verwijderen van een workshop</h1>
+            <p>Vul dit hele formulier in om een workshop te verwijdren</p>
+            <hr />
+            <label for="naam-workshop"><b>Naam van de workshop</b></label>
+            <input type="text" placeholder="Vul naam in" name="naam-workshop" id="naam-workshop" required />
+           
+            <hr />
+            
+            <button type="submit" class="registerbtn" onclick="myFunction()">
+                Verwijderen
+            </button>
+
+           <script>
+             function myFunction() {
+             confirm("Wilt u het verwijderen?!");
+             }
+        </script>
+            
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+  <script src="couponaanmaken.js"></script>
+</head>
+
+<body>
+  <ul class="topnav">
+    <li class="dropdown">
+      <a href="../gebruiker/index.html">Gebruikers</a>
+      <div class="dropdown-content">
+        <a href="../gebruiker/aanmaken.html">Aanmaken</a>
+        <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href="../workshop/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="../workshop/aanmaken.html">Aanmaken</a>
+        <a href="../workshop/analysiek.html">Analysiek</a>
+      </div>
+    </li>
+    </li>
+    <li class="dropdown">
+      <a href="../factuur/index.html">Facturen</a>
+      <div class="dropdown-content">
+        <a href="../factuur/aanmaken.html">Aanmaken</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a class="active" href="../coupon/index.html">Coupon</a>
+      <div class="dropdown-content">
+        <a class="active" href="../coupon/aanmaken.html">Aanmaken</a>
+      </div>
+    </li>
+
+    <li class="right"><a href="#about">Google Drive</a></li>
+  </ul>
+
+  <form id="couponAanmaken" onsubmit="verstuur();return false">
+      <!-- code pagina invoeren-->
+      <div class="container">
+        <h1>Toevoegen van coupon</h1>
+        <p>Vul dit hele formulier in om een coupon toe te voegen</p>
+        <hr />
+        <label for="codeCoupon"><b>Code van de coupon</b></label>
+        <input
+          type="text"
+          placeholder="Vul code in"
+          name="codeCoupon"
+          id="codeCoupon"
+          required
+        />
+
+        <label for="valueCoupon"><b>Vul hier een geldbedrag, percentage, of voor workshop naar keuze "Workshop" in</b></label>
+        <input
+          type="text"
+          placeholder="Vul een waarde in"
+          name="valueCoupon"
+          id="valueCoupon"
+          required
+        />
+        <label for="maxBedragCoupon"><b>Maximaal geldbedrag (vul dit alleen bij een percentage in)</b></label>
+        <input
+          type="text"
+          placeholder="Vul maximaal geldbedrag in"
+          name="maxBedragCoupon"
+          id="maxBedragCoupon"
+        />
+
+        <label for="maxGebruikCoupon"><b>Vul in hoevaak de coupon gebruikt kan worden</b></label>
+        <br />
+        <input
+          type="number"
+          min="1"
+          placeholder="Vul maximaal gebruik in"
+          name="maxGebruikCoupon"
+          id="maxGebruikCoupon"
+          required
+        />
+
+        <hr />
+        <button type="submit" class="registerbtn">
+          Toevoegen
+        </button>
+      </div>
+    </form>
+
+</body>
+
+</html>
