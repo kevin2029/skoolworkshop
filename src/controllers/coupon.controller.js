@@ -315,13 +315,13 @@ let controller = {
                         error: error
                     });
                 } else {
-                    let workshopPrice = results.Kosten
+                    let workshopPrice = results[0].Kosten
                     let getOneResults;
 
                     controller.getOne(couponCode, (results) => {
                         logger.debug("results: ", results);
                         getOneResults = results[0];
-                        let Korting = getOneResults.Value
+                        let Korting = getOneResults[0].Value
 
                         totaalKorting = workshopPrice / 100 * Korting
         
@@ -363,13 +363,13 @@ let controller = {
                         error: error
                     });
                 } else {
-                    let workshopPrice = results.Kosten
+                    let workshopPrice = results[0].Kosten
                     let getOneResults;
 
                     controller.getOne(couponCode, (results) => {
                         logger.debug("results: ", results);
                         getOneResults = results[0];
-                        let Korting = getOneResults.Value
+                        let Korting = getOneResults[0].Value
 
                         totaalKorting = workshopPrice / 100 * Korting
         
