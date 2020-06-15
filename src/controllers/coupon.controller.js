@@ -178,17 +178,17 @@ let controller = {
                 req.valueString = valueString;
                 logger.debug("req.valueString: ", req.valueString);
                 next();
-            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null) {
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined) {
                 valueString = "Percentage";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null) {
+            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined) {
                 valueString = "PercentageMax";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else if (couponValue == "workshop") {
+            } else if (couponValue == "workshop" || couponValue == "Workshop") {
                 valueString = "Workshop";
                 req.valueString = valueString;
                 logger.debug(valueString);
@@ -238,7 +238,9 @@ let controller = {
         } else {
             const coupon = req.coupon;
             const price = req.price;
+            logger.debug("coupon: ", coupon,"Price: ", price);
             
+
 
             
 
