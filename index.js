@@ -11,6 +11,7 @@ const workshoproutes = require('./src/routes/workshop.routes');
 const couponroutes = require('./src/routes/coupon.route');
 const invoiceroutes = require('./src/routes/invoice.route');
 const organisationroutes = require('./src/routes/organisation.route');
+const bookingroutes = require('./src/routes/booking.routes');
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use('/api/workshop', workshoproutes);
 app.use('/api/invoice', invoiceroutes);
 app.use('/api/coupon', couponroutes);
 app.use('/api/organisation', organisationroutes);
+app.use('/api/booking', bookingroutes);
 
 app.all('*', (req, res, next) => {
     res.status(404).json({

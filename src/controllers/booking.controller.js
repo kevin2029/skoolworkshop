@@ -22,7 +22,7 @@ let controller = {
             });
         }
     },
-    
+
     createBooking(req, res, next) {
         logger.info('createcoupon called');
         const ID = req.params.ID;
@@ -35,7 +35,7 @@ let controller = {
         logger.debug('booking =', booking);
 
         let sqlQuery =
-            'INSERT INTO `Cadeaubon` (`GebruikerID`, `Workshopnaam`, `SingedUpOn`, `BookedDate`, `Korting`) VALUES (?, ?, CURDATE(), ?, ?)';
+            'INSERT INTO `GebruikerWorkshop` (`GebruikerID`, `Workshopnaam`, `SingedUpOn`, `BookedDate`, `Korting`) VALUES (?, ?, CURDATE(), ?, ?)';
         logger.debug('createbooking', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
