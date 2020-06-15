@@ -362,18 +362,27 @@ let controller = {
                     let workshopPrice = results[0].Kosten
 
                         let Korting = coupon.Value.substring(0, coupon.Value.length - 1);
+                        const maxBedrag = coupon.MaxBedrag;
+                        logger.debug("maxBedrag: ", maxBedrag);
                         logger.debug("Korting: ", Korting);
 
-                        totaalKorting = workshopPrice / 100 * Korting
+                        totaalKorting = workshopPrice / 100 * Korting;
                         logger.debug("Totaalkorting: ", totaalKorting);
-        
-                        controller.updateCoupon(couponCode, (results) => {
-                        })
-        
-                        res.status(200).json({
+                        
+                        controller.updateCoupon(couponCode, (results) => {})
+                        if(totaalKorting > maxBedrag) {
+                            res.status(200).json({
+                                message: 'Coupon succesfully used!',
+                                Korting: maxBedrag
+                            });
+                        } else {
+                            res.status(200).json({
                             message: 'Coupon succesfully used!',
                             Korting: totaalKorting
                             });
+                        }
+
+                        
                 }
             });
         }
