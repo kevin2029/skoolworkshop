@@ -208,6 +208,35 @@ let controller = {
                 }
             }
         );
+    },
+
+    getFollowedWorkshop(req, res, next) {
+        let userID = req.params.userID;
+        logger.info('userid: ', userID);
+
+        let query =
+            'SELECT Naam, Beschrijving, Kosten, Vervolgkosten, Categorie FROM `gebruikerworkshop` JOIN workshop on gebruikerworkshop.Workshopnaam = workshop.Naam WHERE GebruikerID = ?';
+        let values = [userID];
+
+        connection.connectDatabase(query, values, (error, results, fields) => {
+            if (error) {
+                logger.debug(
+                    'getFollowedWorkshop:',
+                    workshopName,
+                    req.body,
+                    error
+                );
+                res.status(400).json({
+                    message: 'Could not get followed workshops!',
+                    error: error
+                });
+            } else {
+                logger.info('getFollowedWorkshop:', req.body);
+                res.status(200).json({
+                    result: results
+                });
+            }
+        });
     }
 };
 
