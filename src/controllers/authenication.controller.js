@@ -303,7 +303,9 @@ module.exports = {
         logger.trace(req.headers);
         // The headers should contain the authorization-field with value 'Bearer [token]'
         const authHeader = req.headers.authorization;
+
         if (!authHeader) {
+            logger.warn('No auth header!');
             res.status(401).json({
                 error: 'Authorization header missing!',
                 datetime: new Date().toISOString()

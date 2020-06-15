@@ -69,7 +69,7 @@ let controller = {
         const userMail = req.params.userID;
 
         const query =
-            `SELECT Naam, Email, Organisatie FROM gebruiker WHERE ID = '` +
+            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE ID = '` +
             userMail +
             `';`;
 
@@ -90,7 +90,8 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = 'SELECT ID, Naam, Email, Organisatie FROM gebruiker;';
+        const query =
+            'SELECT ID, Naam, Email, Organisatie, Adress FROM gebruiker;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {

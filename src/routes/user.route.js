@@ -27,8 +27,7 @@ router.post(
 router.post('/uploadimage', usercontroller.uploadImage);
 
 router.post(
-    '/edit',
-    authenticationcontroller.validateToken,
+    '/edit/:userID',
     userEditController.validateEdit,
     userEditController.editUser
 );

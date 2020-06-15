@@ -2,12 +2,20 @@ const assert = require('assert');
 const connection = require('../config/database.connection');
 const logger = require('../config/config').logger;
 const bcrypt = require('bcrypt');
+const { exit } = require('process');
 
 let controller = {
     validateEdit(req, res, next) {
-        let { Naam, Organisatie, Adress, Wachtwoord } = req.body;
-        let Email = req.body.Email;
-        logger.debug("Email: ",Email);
+        let {
+            Naam,
+            Organisatie,
+            Adress,
+            Wachtwoord,
+            WachtwoordHerhaal,
+            Email
+        } = req.body;
+        let ID = req.params.userID;
+        logger.debug('ID: ', ID);
 
         let edits = 0;
 
@@ -25,12 +33,32 @@ let controller = {
 
         if (typeof Wachtwoord === 'string') {
             edits++;
+
+            if (!typeof WachtwoordHerhaal === 'string') {
+                res.status(400).json({
+                    message: 'WachtwoordHerhaal was not passed',
+                    error: err.message
+                });
+                return;
+            }
+
+            if (Wachtwoord !== WachtwoordHerhaal) {
+                res.status(400).json({
+                    message: 'Wachtwoorden komen niet overheen',
+                    error: err.message
+                });
+                return;
+            }
+        }
+
+        if (typeof Email === 'string') {
+            edits++;
         }
 
         logger.info('validateUserEdit:', req.body);
         try {
             // Missing values giving errors
-            assert(typeof Email === 'string', 'Email is missing!');
+            assert(typeof ID === 'string', 'Id is missing!');
             assert(edits > 0, 'No edits were passed!');
 
             next();
@@ -44,8 +72,16 @@ let controller = {
     },
 
     editUser(req, res, next) {
-        let { Naam, Organisatie, Adress, Wachtwoord } = req.body;
-        let Email = req.body.Email;
+        let {
+            Naam,
+            Organisatie,
+            Adress,
+            Wachtwoord,
+            WachtwoordHerhaal,
+            Email
+        } = req.body;
+        let ID = req.params.userID;
+        logger.debug('ID: ', ID);
 
         let query = 'UPDATE `Gebruiker` SET';
         let values = [];
@@ -65,6 +101,11 @@ let controller = {
             values.push(Adress);
         }
 
+        if (typeof Email === 'string') {
+            query += ' `Email` = ?';
+            values.push(Email);
+        }
+
         if (typeof Wachtwoord === 'string') {
             query += ' `Wachtwoord` = ?';
 
@@ -72,15 +113,15 @@ let controller = {
                 bcrypt.hash(req.body.Wachtwoord, salt, function (err, hash) {
                     values.push(hash);
 
-                    query += ' WHERE `Email` = ?';
-                    values.push(Email);
+                    query += ' WHERE `ID` = ?';
+                    values.push(ID);
 
                     doEdit(req, res, query, values);
                 });
             });
         } else {
-            query += ' WHERE `Email` = ?';
-            values.push(Email);
+            query += ' WHERE `ID` = ?';
+            values.push(ID);
 
             doEdit(req, res, query, values);
         }
@@ -88,7 +129,6 @@ let controller = {
 };
 
 function doEdit(req, res, query, values) {
-
     connection.connectDatabase(query, values, (error, results, fields) => {
         if (error) {
             logger.debug('editUser:', req.body, error);
