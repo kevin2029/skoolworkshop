@@ -264,6 +264,10 @@ let controller = {
                 logger.debug("results: ", results);
                 getOneResults = results[0];
                 let Korting = getOneResults.Value
+
+                controller.updateCoupon(couponCode, (results) => {
+                })
+
                 res.status(200).json({
                     message: 'Coupon succesfully used!',
                     Korting: Korting
