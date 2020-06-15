@@ -255,6 +255,19 @@ let controller = {
             message: 'Coupon succesfully sent!',
             result: coupon
             });
+
+            const query = 
+                `UPDATE GebruikerWorkshop SET Korting = '` + Korting + `' `
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    return 'coupon does not exist!';
+                } else {
+                    logger.debug("results: ", results[0]);
+                    callback(results);
+                }
+            });
+
         }
         
     },
