@@ -81,6 +81,7 @@ input[type="file"]:hover {
   padding: 5%;
   padding-top: 5%;
   box-shadow: 0 8px 16px 0 rgb(0, 0, 0, 0.3), 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+  margin-top: 15%;
 }
 
 /* inputfields */
@@ -116,6 +117,7 @@ hr {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 }
+
 .registerbtn {
   background-color: #f49700;
   color: white;
@@ -143,6 +145,7 @@ hr {
     margin-top: 0;
   }
 }
+
 @media screen and (max-width: 800px) {
   .container {
     float: left;
@@ -161,10 +164,10 @@ hr {
 }
 
 body {
-  background-image: url('https://www.publicdomainpictures.net/pictures/250000/velka/white-rocks-background.jpg');
+  background-image: url('./SkoolworkshopBackground.jpg');
   background-attachment: fixed;
   background-position: fixed;
-  font-family: Helvetica,Verdana,Arial,sans-serif
+  font-family: Helvetica,Verdana,Arial,sans-serif;
 }
 
 /*   Dropdown menu */

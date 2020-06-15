@@ -28,10 +28,7 @@ let controller = {
             'INSERT INTO `Organisatie` (`Naam`, `Adres`) VALUES (?, ?)';
         logger.debug('createOrganisation', 'sqlQuery =', sqlQuery);
 
-        connection.connectDatabase(
-            sqlQuery,
-            [Naam, Adres],
-            (error, results, fields) => {
+        connection.connectDatabase(sqlQuery, [Naam, Adres], (error, results, fields) => {
                 logger.debug('connectDatabase called');
                 if (error) {
                     logger.debug('createOrganisation', error);
