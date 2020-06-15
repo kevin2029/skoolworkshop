@@ -1,85 +1,71 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
-    </head>
-    <body>
-        <form
-            class="needs-validation"
-            id="loginForm"
-            onsubmit="sendForm();return false;"
-            novalidate
-        >
-            <!-- code pagina invoeren-->
-            <div class="container">
-                <h1 class="text-center">Inloggen Skool Workshop</h1>
-                <label for="Email"><b>Email</b></label>
-                <input
-                    type="text"
-                    placeholder="Vul email in"
-                    name="Email"
-                    id="Email"
-                    required
-                />
 
-                <label for="Wachtwoord"><b>Wachtwoord</b></label>
-                <input
-                    type="password"
-                    placeholder="Vul wachtwoord in"
-                    name="Wachtwoord"
-                    id="Wachtwoord"
-                    required
-                />
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+</head>
 
-                <button type="submit" class="registerbtn">
+<body>
+    <form class="needs-validation" id="loginForm" onsubmit="sendForm();return false;" novalidate>
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <img src="../../Skool_Workshop-Logo.png" class="centerImage">
+            <h1 class="text-center">Inloggen:</h1>
+            <label for="Email"><b>Email</b></label>
+            <input type="text" placeholder="Vul email in" name="Email" id="Email" required />
+
+            <label for="Wachtwoord"><b>Wachtwoord</b></label>
+            <input type="password" placeholder="Vul wachtwoord in" name="Wachtwoord" id="Wachtwoord" required />
+
+            <button type="submit" class="registerbtn">
                     Log in
-                </button>
-                Nog geen account? <a href="registreren/">Registreer je hier!</a>
-            </div>
-        </form>
+                </button> Nog geen account? <a href="registreren/">Registreer je hier!</a>
+        </div>
+    </form>
 
-        <script src="/scripts/requests.js"></script>
-        <script src="/scripts/cookie.js"></script>
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
 
-        <script>
-            checkLoginCookie();
+    <script>
+        checkLoginCookie();
 
-            function sendForm() {
-                let formData = new FormData(
-                    document.querySelector('#loginForm')
-                ); // ingevulde gegevens uit form worden opgehaald
+        function sendForm() {
+            let formData = new FormData(
+                document.querySelector('#loginForm')
+            ); // ingevulde gegevens uit form worden opgehaald
 
-                // API call uitvoeren om data op te halen
-                sendPostRequest(
+            // API call uitvoeren om data op te halen
+            sendPostRequest(
                     apiUrl + '/api/login',
                     formData,
                     getCookie('admintoken')
                 )
-                    .then((data) => {
-                        if (data.error) {
-                            alert(
-                                'De gebruikers-mail en/of wachtwoord is/zijn niet correct.'
-                            );
-                        } else {
-                            setCookie('userID', data.payload.ID);
-                            if (data.payload.IsAdmin === 1) {
-                                setCookie('admintoken', data.token);
-                                window.location.href = 'dashboardBeheerder';
-                            } else {
-                                setCookie('usertoken', data.token);
-                                window.location.href = 'dashboardGebruiker';
-                            }
-                        }
-                    })
-                    .catch((error) => {
-                        alert('Error logging in!');
-                        console.error(
-                            'There has been a problem with your fetch operation:',
-                            error
+                .then((data) => {
+                    if (data.error) {
+                        alert(
+                            'De gebruikers-mail en/of wachtwoord is/zijn niet correct.'
                         );
-                    });
-            }
-        </script>
-    </body>
+                    } else {
+                        setCookie('userID', data.payload.ID);
+                        if (data.payload.IsAdmin === 1) {
+                            setCookie('admintoken', data.token);
+                            window.location.href = 'dashboardBeheerder';
+                        } else {
+                            setCookie('usertoken', data.token);
+                            window.location.href = 'dashboardGebruiker';
+                        }
+                    }
+                })
+                .catch((error) => {
+                    alert('Error logging in!');
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    );
+                });
+        }
+    </script>
+</body>
+
 </html>

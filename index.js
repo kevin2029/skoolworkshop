@@ -44,6 +44,9 @@ app.use((req, res, next) => {
 app.get('/', function(request, response) {
     response.sendFile(__dirname + '/frontend/login/index.html');
 });
+// app.get('/favicon.ico', function(request, response) {
+//     response.sendFile(__dirname + '/favicon.ico');
+// });
 
 // // Serve files from the ./frontend folder
 app.use('/', express.static(__dirname + '/frontend'));
@@ -52,7 +55,7 @@ app.use('/', express.static(__dirname + '/frontend/dashboardBeheer'));
 app.use('/', express.static(__dirname + '/frontend/dashboardGebruiker'));
 app.use('/', express.static(__dirname + '/frontend/opmaak'));
 app.use('/', express.static(__dirname + '/frontend/scripts'));
-app.use('/', express.static(__dirname + '/favicon.ico'));
+app.use('/', express.static(__dirname + '/frontend/images'));
 
 // Routes
 app.use('/api', authenticationRoutes);

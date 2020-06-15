@@ -1,423 +1,444 @@
-html, body {
-  margin: 0;
-  height: 100%;
+html,
+body {
+    margin: 0;
+    height: 100%;
 }
-
-
 
 @media screen and (max-width: 600px) {
-  ul.topnav li.right,
-  ul.topnav li {
-    float: none;
-  }
-}
-* {
-  box-sizing: border-box;
+    ul.topnav li.right,
+    ul.topnav li {
+        float: none;
+    }
 }
 
-input[type="text"],
+* {
+    box-sizing: border-box;
+}
+
+input[type='text'],
 select,
 textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 1px;
-  resize: vertical;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 1px;
+    resize: vertical;
 }
 
 label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
+    padding: 12px 12px 12px 0;
+    display: inline-block;
 }
 
-input[type="submit"] {
-  background-color: #f49700;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 1px;
-  cursor: pointer;
-  float: right;
+input[type='submit'] {
+    background-color: #f49700;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    float: right;
 }
 
-input[type="submit"]:hover {
-  background-color: #f49700;
+input[type='submit']:hover {
+    background-color: #f49700;
 }
-input[type="file"] {
-  width: 100%;
+
+input[type='file'] {
+    width: 100%;
 }
-input[type="file"]:hover {
-  cursor: pointer;
+
+input[type='file']:hover {
+    cursor: pointer;
 }
 
 .containermenubar {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 10px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
 }
 
 .col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
+    float: left;
+    width: 25%;
+    margin-top: 6px;
 }
 
 .col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
+    float: left;
+    width: 75%;
+    margin-top: 6px;
 }
 
-
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .container {
-  width: 60%;
-  margin: 20px auto;
-  background-color: white;
-  border-radius: 3px;
-  padding: 5%;
-  padding-top: 5%;
-  box-shadow: 0 8px 16px 0 rgb(0, 0, 0, 0.3), 0 12px 40px 0 rgba(0, 0, 0, 0.3);
-  margin-top: 15%;
+    width: 60%;
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 3px;
+    padding: 5%;
+    padding-top: 5%;
+    box-shadow: 0 8px 16px 0 rgb(0, 0, 0, 0.3), 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+    margin-top: 15%;
 }
+
 
 /* inputfields */
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #ddd;
+
+input[type='text'],
+input[type='password'] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #ddd;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
-  background-color: gray;
-  outline: none;
+input[type='text']:focus,
+input[type='password']:focus {
+    background-color: gray;
+    outline: none;
 }
+
 
 /* andere hr style*/
+
 hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
 }
 
+
 /* style voor verstuur knop */
+
 @keyframes submitFade {
-  from{
-    background-color: #f49700;
-  }
-  to{
-    background-color: black;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+    from {
+        background-color: #f49700;
+    }
+    to {
+        background-color: black;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
 }
 
 .registerbtn {
-  background-color: #f49700;
-  color: white;
-  padding: 16px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
+    background-color: #f49700;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
 }
 
 .registerbtn:hover {
-  animation: submitFade 2s;
-  background-color: black;
-  opacity: inherit;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 19px 0 rgba(0, 0, 0, 0.19);
+    animation: submitFade 2s;
+    background-color: black;
+    opacity: inherit;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 19px 0 rgba(0, 0, 0, 0.19);
 }
 
+
 /* resonpsive layout */
+
 @media screen and (max-width: 600px) {
-  .col-25,
-  .col-75,
-  input[type="submit"] {
-    width: 100%;
-    margin-top: 0;
-  }
+    .col-25,
+    .col-75,
+    input[type='submit'] {
+        width: 100%;
+        margin-top: 0;
+    }
 }
 
 @media screen and (max-width: 800px) {
-  .container {
-    float: left;
-    margin-left: 0;
-    margin-right: 0;
-    padding-top: 4%;
-  }
+    .container {
+        float: left;
+        margin-left: 0;
+        margin-right: 0;
+        padding-top: 4%;
+    }
 }
 
-
 @media screen and (max-width: 375px) {
-  .container {
-    width: 100%;
-    padding-top: 4%;
-  }
+    .container {
+        width: 100%;
+        padding-top: 4%;
+    }
 }
 
 body {
-  background-image: url('./SkoolworkshopBackground.jpg');
-  background-attachment: fixed;
-  background-position: fixed;
-  font-family: Helvetica,Verdana,Arial,sans-serif;
+    background-image: url('/SkoolworkshopBackground.jpg');
+    background-attachment: fixed;
+    background-position: fixed;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
 }
 
+
 /*   Dropdown menu */
+
 @keyframes fadeMenu {
-  0%{
-    background-color: white;
-  }
-  100% {
-    background-color: #f49700;
-  }
+    0% {
+        background-color: white;
+    }
+    100% {
+        background-color: #f49700;
+    }
 }
 
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: white;
-  color: black;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    color: black;
 }
 
 li {
-  float: left;
+    float: left;
 }
 
-li a, .dropbtn {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  color: black;
+li a,
+.dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: black;
 }
 
 li a:hover .dropdown:hover .dropbtn {
-  background-color: #f49700;
-  color: white;
-  overflow: visible;
+    background-color: #f49700;
+    color: white;
+    overflow: visible;
 }
 
-li a:hover:not(.active), .dropdown:hover:not(.active) .dropbtn {
-  background-color: #f49700;
-  color: white;
-  animation: fadeMenu 1s;
-  overflow: visible;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+li a:hover:not(.active),
+.dropdown:hover:not(.active) .dropbtn {
+    background-color: #f49700;
+    color: white;
+    animation: fadeMenu 1s;
+    overflow: visible;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 li.dropdown .active {
-  background-color: #f49700;
-  color: white;
+    background-color: #f49700;
+    color: white;
 }
 
 li.dropdown {
-  display: inline-block;
+    display: inline-block;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: white;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
 }
 
 .dropdown-content a:hover:not(.active) {
-  background-color: #f49700;
-  color: white;
-  animation: fadeMenu 1s;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: #f49700;
+    color: white;
+    animation: fadeMenu 1s;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .dropdown:hover .dropdown-content {
-  display: block;
+    display: block;
 }
 
 ul.topnav li.right {
-  float: right;
+    float: right;
 }
 
 .right {
-  display: block;
+    display: block;
 }
 
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: '';
+    display: table;
+    clear: both;
 }
 
-
 .titlepage {
-  float: left;
-  margin-left: 5%;
-  width: 50%;
-  margin-top: 3%;
+    float: left;
+    margin-left: 5%;
+    width: 50%;
+    margin-top: 3%;
 }
 
 .amountworkshops {
-  float: right;
-  width: 7%;
-  margin-top: 5%;
+    float: right;
+    width: 7%;
+    margin-top: 5%;
 }
 
 .search {
-  float: right;
-  width: 20%;
-  margin-right: 5%;
-  margin-top: 4%;
-  display: flex;
+    float: right;
+    width: 20%;
+    margin-right: 5%;
+    margin-top: 4%;
+    display: flex;
 }
 
 .containerleft {
-  float: left;
-  width: 45%;
-  background-color: white;
-  margin-left: 4%;
-  padding: 5%;
-  border-radius: 5px;
+    float: left;
+    width: 45%;
+    background-color: white;
+    margin-left: 4%;
+    padding: 5%;
+    border-radius: 5px;
 }
 
 .containerright {
-  float: right;
-  width: 45%;
-  background-color: white;
-  margin-right: 4%;
-  padding: 5%;
-  border-radius: 5px;
+    float: right;
+    width: 45%;
+    background-color: white;
+    margin-right: 4%;
+    padding: 5%;
+    border-radius: 5px;
 }
 
 .containermid {
-  margin-left: 5%;
-  margin-right: 5%;
-  width: 90%;
-  background-color: white;
-  margin-top: 10%;
-  padding: 5%;
-  border-radius: 5px;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    background-color: white;
+    margin-top: 10%;
+    padding: 5%;
+    border-radius: 5px;
 }
 
 .searchTerm {
-  width: 100%;
-  border: 3px solid #f49700;
-  border-right: none;
-  padding: 25px;
-  height: 20px;
-  border-radius: 5px 0 0 5px;
-  color: #9DBFAF;
+    width: 100%;
+    border: 3px solid #f49700;
+    border-right: none;
+    padding: 25px;
+    height: 20px;
+    border-radius: 5px 0 0 5px;
+    color: #9dbfaf;
 }
 
-.searchTerm:focus{
-  color: #f49700;
+.searchTerm:focus {
+    color: #f49700;
 }
 
 .searchButton {
-  width: 40px;
-  height: 36px;
-  border: 1px solid #f49700;
-  background: #f49700;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
+    width: 40px;
+    height: 36px;
+    border: 1px solid #f49700;
+    background: #f49700;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 .center {
-  background-color: white;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  justify-content: center;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+}
+
+.centerImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 .center .login {
-  background-color: #f2f2f2;
-  padding: 2rem;
-  border-radius: 10px;
+    background-color: #f2f2f2;
+    padding: 2rem;
+    border-radius: 10px;
 }
 
 .links {
-  display: flex;
-  width: 100%;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 5rem;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5rem;
 }
 
 .links a {
-  text-decoration: none;
-  font-size: 0.8rem;
-  background-color: #f49700;
-  color: white;
-  padding: .25rem 2rem;
-  border-radius: 5px;
-} 
+    text-decoration: none;
+    font-size: 0.8rem;
+    background-color: #f49700;
+    color: white;
+    padding: 0.25rem 2rem;
+    border-radius: 5px;
+}
 
 .welkomst {
-  text-decoration: none;
-  font-size: 4.5rem;
-  color: white;
-  text-align: center;
-  margin-top: 20%;
-  text-shadow: 2px 2px 4px black;
+    text-decoration: none;
+    font-size: 4.5rem;
+    color: white;
+    text-align: center;
+    margin-top: 20%;
+    text-shadow: 2px 2px 4px black;
 }
 
 .link {
-  color: #f49700;
+    color: #f49700;
 }
 
 table {
-  border-collapse: collapse;
-  width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-th, td {
-  text-align: left;
-  padding: 10px;
+th,
+td {
+    text-align: left;
+    padding: 10px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
 tr:hover {
-  background-color:  #d6d6d6;
-  cursor: pointer;
+    background-color: #d6d6d6;
+    cursor: pointer;
 }
 
 th {
-  background-color: #f49700;
-  color: white;
+    background-color: #f49700;
+    color: white;
 }
 
 .button {
-  background-color: #f49700;
-  text-decoration: none;
-  cursor: pointer;
-  padding: 5px 20px;
-  font-size: 1rem;
-  border: none;
-  color: white;
+    background-color: #f49700;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 20px;
+    font-size: 1rem;
+    border: none;
+    color: white;
 }
 
 .button:hover {
-  background-color: #ffa81c;
+    background-color: #ffa81c;
 }
