@@ -31,7 +31,8 @@ let controller = {
             'INSERT INTO Factuur (GebruikerID, Path, IsBetaald) VALUES (?, ?, ?);';
 
         connection.connectDatabase(
-            query, [GebruikerID, Path, IsBetaald],
+            query,
+            [GebruikerID, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('createInvoice:', req.body, error);
@@ -100,6 +101,52 @@ let controller = {
         const query = `SELECT Factuur.ID, Gebruiker.Naam, Factuur.Path FROM Factuur JOIN Gebruiker ON Factuur.GebruikerID = Gebruiker.ID WHERE Factuur.IsBetaald = false;`;
 
         connection.connectDatabase(query, (error, results, fields) => {
+            if (error) {
+                logger.debug('invoice getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(200).json({
+                    message: 'There are no invoices!'
+                });
+            } else {
+                res.status(200).json({
+                    Result: results
+                });
+            }
+        });
+    },
+
+    getAllPaidFromUser(req, res, next) {
+        let userID = req.params.userID;
+
+        const query = `SELECT Factuur.ID, Gebruiker.Naam, Factuur.Path FROM Factuur JOIN Gebruiker ON Factuur.GebruikerID = Gebruiker.ID WHERE Factuur.IsBetaald = true AND Factuur.GebruikerID = ?;`;
+
+        connection.connectDatabase(query, userID, (error, results, fields) => {
+            if (error) {
+                logger.debug('invoice getAll', query);
+                res.status(400).json({
+                    error: error
+                });
+            } else if (results.length == 0) {
+                res.status(200).json({
+                    message: 'There are no invoices!'
+                });
+            } else {
+                res.status(200).json({
+                    Result: results
+                });
+            }
+        });
+    },
+
+    getAllUnpaidFromUser(req, res, next) {
+        let userID = req.params.userID;
+
+        const query = `SELECT Factuur.ID, Gebruiker.Naam, Factuur.Path FROM Factuur JOIN Gebruiker ON Factuur.GebruikerID = Gebruiker.ID WHERE Factuur.IsBetaald = false AND Factuur.GebruikerID = ?;`;
+
+        connection.connectDatabase(query, userID, (error, results, fields) => {
             if (error) {
                 logger.debug('invoice getAll', query);
                 res.status(400).json({
@@ -226,7 +273,8 @@ let controller = {
             `';`;
 
         connection.connectDatabase(
-            query, [GebruikerMail, Path, IsBetaald],
+            query,
+            [GebruikerMail, Path, IsBetaald],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('updateInvoice:', ID, req.body, error);
