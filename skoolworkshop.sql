@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
     `SingedUpOn` DATE NOT NULL,
 	`BookedDate` DATE NOT NULL,
 	`Korting` INT,
-    PRIMARY KEY (`GebruikerID`, `Workshopnaam`)
+    PRIMARY KEY (`GebruikerID`, `Workshopnaam`, `BookedDate`)
 )   
 ENGINE= InnoDB;
 
