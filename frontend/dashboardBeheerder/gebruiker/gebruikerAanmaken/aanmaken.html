@@ -1,118 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="../../../opmaak/opmaak.css"
-        />
-    </head>
-    <body>
-        <ul class="topnav">
-            <li class="dropdown">
-              <a class="active" href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
-              <div class="dropdown-content">
-                <a class ="active" href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="../../workshop/index.html">Workshops</a>
-              <div class="dropdown-content">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+</head>
+
+<body>
+    <ul class="topnav">
+        <li class="dropdown">
+            <a class="active" href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+            <div class="dropdown-content">
+                <a class="active" href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../../workshop/index.html">Workshops</a>
+            <div class="dropdown-content">
                 <a href="../../workshop/workshopaanmaken/index.html">Aanmaken</a>
                 <a href="../../workshop/workshopStatistiek/index.html">Statistieken</a>
-              </div>
-            </li>
-          </li>
-          <li class="dropdown">
+            </div>
+        </li>
+        </li>
+        <li class="dropdown">
             <a href="../../factuur/index.html">Facturen</a>
             <div class="dropdown-content">
-              <a href="../facturenaanmaken/index.html">Uploaden</a>
+                <a href="../facturenaanmaken/index.html">Uploaden</a>
             </div>
-          </li>
-          <li class="dropdown">
-              <a href="../../coupon/index.html">Coupon</a>
-              <div class="dropdown-content">
+        </li>
+        <li class="dropdown">
+            <a href="../../coupon/index.html">Coupon</a>
+            <div class="dropdown-content">
                 <a href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
-              </div>
-            </li>
-            <li class="dropdown">
-              <a href="../../organisatie/organisatieLijst/index.html">Organisatie</a>
-              <div class="dropdown-content">
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../../organisatie/organisatieLijst/index.html">Organisatie</a>
+            <div class="dropdown-content">
                 <a href="../../organisatie/organisatieAanmaken/index.html">Aanmaken</a>
-              </div>
-            </li>
-        
-            <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
-          </ul>
+            </div>
+        </li>
 
-        <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
-            <!-- code pagina invoeren-->
-            <div class="container">
-                <h1>Toevoegen van gebruiker</h1>
-                <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
-                <hr />
-                <label for="Naam"><b>Naam van de gebruiker</b></label>
-                <input
-                    type="text"
-                    placeholder="Vul naam in"
-                    name="Naam"
-                    id="Naam"
-                    required
-                />
-                <label for="Organisatie"><b>Naam van de Organisatie</b></label>
-                <input
-                    type="text"
-                    placeholder="Vul naam in"
-                    name="Organisatie"
-                    id="Organisatie"
-                    required
-                />
-                <label for="Email"><b>Email</b></label>
-                <input
-                    type="text"
-                    placeholder="Vul email in"
-                    name="Email"
-                    id="Email"
-                    required
-                />
+        <li class="right"><a onclick="logout()">Uitloggen</a></li>
+        <!--Active of hover toevoegen-->
+    </ul>
 
-                <!--  <label for="foto"><b>Foto van organisatie</b></label>
+    <form id="gebruikerAanmaken" onsubmit="sendForm();return false">
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <h1>Toevoegen van gebruiker</h1>
+            <p>Vul dit hele formulier in om een gebruiker toe te voegen</p>
+            <hr />
+            <label for="Naam"><b>Naam van de gebruiker</b></label>
+            <input type="text" placeholder="Vul naam in" name="Naam" id="Naam" required />
+            <label for="Organisatie"><b>Organisatie</b></label>
+            <select id="Organisatie" name="Organisatie"></select>
+            <label for="Email"><b>Email</b></label>
+            <input type="text" placeholder="Vul email in" name="Email" id="Email" required />
+
+            <!--  <label for="foto"><b>Foto van organisatie</b></label>
         <input type="file" name="foto" id="foto" required /> -->
-                <hr />
-                <button type="submit" class="registerbtn">
+            <hr />
+            <button type="submit" class="registerbtn">
                     Toevoegen
                 </button>
-            </div>
-        </form>
-    </body>
+        </div>
+    </form>
+</body>
 
-    <script src="/scripts/requests.js"></script>
-    <script src="/scripts/cookie.js"></script>
+<script src="/scripts/requests.js"></script>
+<script src="/scripts/cookie.js"></script>
+<script src="/scripts/dropdownGetter.js"></script>
 
-    <script>
-        checkAdminCookie();
+<script>
+    checkAdminCookie();
+    getOrganisation();
 
-        function sendForm() {
-            let formData = new FormData(
-                document.querySelector('#gebruikerAanmaken')
-            );
+    function sendForm() {
+        let formData = new FormData(
+            document.querySelector('#gebruikerAanmaken')
+        );
 
-            sendPostRequest(apiUrl + '/api/user/create', formData)
-                .then((data) => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch((error) => {
-                    alert('Error creating user!');
-                    console.error(
-                        'There has been a problem with your fetch operation:',
-                        error
-                    );
-                });
-        }
-    </script>
+        sendPostRequest(apiUrl + '/api/user/create', formData)
+            .then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch((error) => {
+                alert('Error creating user!');
+                console.error(
+                    'There has been a problem with your fetch operation:',
+                    error
+                );
+            });
+    }
+</script>
+
 </html>
