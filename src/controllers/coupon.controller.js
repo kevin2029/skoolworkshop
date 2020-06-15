@@ -166,7 +166,7 @@ let controller = {
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
                 logger.debug(couponCode, query, error);
-                return 'coupon does not exist!';
+                callback('coupon does not exist!');
             } else {
                 logger.debug('results: ', results[0]);
                 callback(results);
@@ -198,13 +198,15 @@ let controller = {
     checkValue(req, res, next) {
         logger.info('checkValue called');
         const couponCode = req.params.Code;
-        logger.debug('Couponcode: ', couponCode);
+        const workshop = req.params.Workshop;
+        logger.debug("Couponcode: ", couponCode, "Workshop", workshop);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug('couponValue: ', couponValue);
             req.coupon = getOneResults;
+            req.workshop = workshop;
             let valueString;
 
             if (
@@ -223,26 +225,18 @@ let controller = {
                 req.valueString = valueString;
                 logger.debug('req.valueString: ', req.valueString);
                 next();
-            } else if (
-                (couponValue.endsWith('%') &&
-                    getOneResults.maxBedragCoupon == undefined) ||
-                getOneResults.maxBedragCoupon == null
-            ) {
-                valueString = 'Percentage';
+            } else if (couponValue.endsWith("%") && (getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null || getOneResults.maxBedragCoupon != 0)) {
+                valueString = "PercentageMax";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else if (
-                (couponValue.endsWith('%') &&
-                    getOneResults.maxBedragCoupon != undefined) ||
-                getOneResults.maxBedragCoupon != null
-            ) {
-                valueString = 'PercentageMax';
+            } else if (couponValue.endsWith("%") && (getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null || getOneResults.maxBedragCoupon == 0)) {
+                valueString = "Percentage";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else if (couponValue == 'workshop') {
-                valueString = 'Workshop';
+            }  else if (couponValue == "workshop" || couponValue == "Workshop") {
+                valueString = "Workshop";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
@@ -250,15 +244,14 @@ let controller = {
         });
     },
 
-    updateCoupon(couponCode) {
-        logger.info('updateCoupon called');
+    updateCoupon(couponCode, callback) {
+        logger.info("updateCoupon called");
 
         let getOneResults;
         controller.getOne(couponCode, (results) => {
             logger.debug('results: ', results);
             getOneResults = results[0];
             let couponAantalGebruikt = getOneResults.AantalGebruikt;
-            logger.debug(couponValue);
 
             couponAantalGebruikt += 1;
 
@@ -272,14 +265,12 @@ let controller = {
             connection.connectDatabase(query, (error, results, fields) => {
                 if (error) {
                     logger.debug(couponCode, query, error);
+                    callback("Error: ", error);
                 } else {
-                    logger.debug('results: ', results[0]);
-                    res.status(200).json({
-                        message: 'Coupon gebruikt en ge-update',
-                        result: results[0]
-                    });
+                    logger.debug("results: ", results);
+                    callback("Coupon updated, result: ", results);
                 }
-            });
+            });  
         });
     },
 
@@ -290,10 +281,35 @@ let controller = {
             next();
         } else {
             const coupon = req.coupon;
-            res.status(200).json({
-                message: 'Coupon succesfully sent!',
-                result: coupon
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Korting;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    logger.debug("Result: ", results);
+                    Korting = results[0].Kosten;
+
+                    controller.updateCoupon(couponCode, (results) => {});
+                    res.status(200).json({
+                        korting: Korting,
+                        message: 'Coupon succesfully used!'
+                    });
+                }
             });
+
+
+            
+            
         }
     },
 
@@ -303,24 +319,65 @@ let controller = {
         if (valueString != 'Money') {
             next();
         } else {
-            const coupon = req.coupon;
-            res.status(200).json({
-                message: 'Coupon succesfully sent!',
-                result: coupon
+            const couponCode = req.params.Code
+
+            let getOneResults;
+            controller.getOne(couponCode, (results) => {
+                logger.debug("results: ", results);
+                getOneResults = results[0];
+                let Korting = getOneResults.Value
+
+                controller.updateCoupon(couponCode, (results) => {
+                })
+
+                res.status(200).json({
+                    message: 'Coupon succesfully used!',
+                    Korting: Korting
+                    });
+                
             });
+
         }
     },
 
     percentageCouponHandler(req, res, next) {
         logger.info('percentageCouponHandler called');
         const valueString = req.valueString;
-        if (valueString !== 'Percentage') {
-            next();
+        if (valueString !== "Percentage") {
+            next()
         } else {
             const coupon = req.coupon;
-            res.status(200).json({
-                message: 'Coupon succesfully sent!',
-                result: coupon
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    let workshopPrice = results[0].Kosten;
+
+                        let Korting = coupon.Value.substring(0, coupon.Value.length - 1);
+                        logger.debug("Korting: ", Korting);
+
+                        totaalKorting = workshopPrice / 100 * Korting
+                        logger.debug("Totaalkorting: ", totaalKorting);
+        
+                        controller.updateCoupon(couponCode, (results) => {
+                        })
+        
+                        res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                        });
+                }
             });
         }
     },
@@ -334,9 +391,46 @@ let controller = {
             });
         } else {
             const coupon = req.coupon;
-            res.status(200).json({
-                message: 'Coupon succesfully sent!',
-                result: coupon
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    let workshopPrice = results[0].Kosten
+
+                        let Korting = coupon.Value.substring(0, coupon.Value.length - 1);
+                        const maxBedrag = coupon.MaxBedrag;
+                        logger.debug("maxBedrag: ", maxBedrag);
+                        logger.debug("Korting: ", Korting);
+
+                        totaalKorting = workshopPrice / 100 * Korting;
+                        logger.debug("Totaalkorting: ", totaalKorting);
+                        
+                        controller.updateCoupon(couponCode, (results) => {})
+                        if(totaalKorting > maxBedrag) {
+                            res.status(200).json({
+                                message: 'Coupon succesfully used!',
+                                Korting: maxBedrag
+                            });
+                        } else {
+                            res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                            });
+                        }
+
+                        
+                }
             });
         }
     }
