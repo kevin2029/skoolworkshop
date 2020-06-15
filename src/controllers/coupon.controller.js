@@ -158,13 +158,15 @@ let controller = {
     checkValue(req, res, next) {
         logger.info("checkValue called");
         const couponCode = req.params.Code;
-        logger.debug("Couponcode: ", couponCode);
+        const price = req.params.Price;
+        logger.debug("Couponcode: ", couponCode, "Price: ", price);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug("couponValue: ", couponValue);
             req.coupon = getOneResults;
+            req.price = price;
             let valueString;
 
             if (couponValue.charAt(couponValue.length - 1) == 0 || couponValue.charAt(couponValue.length - 1) == 1 ||
@@ -237,6 +239,8 @@ let controller = {
             next();
         } else {
             const coupon = req.coupon;
+            const price = req.price;
+            
 
             
 
