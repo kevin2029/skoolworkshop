@@ -146,7 +146,7 @@ let controller = {
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
                 logger.debug(couponCode, query, error);
-                return 'coupon does not exist!';
+                callback('coupon does not exist!');
             } else {
                 logger.debug("results: ", results[0]);
                 callback(results);
@@ -158,15 +158,15 @@ let controller = {
     checkValue(req, res, next) {
         logger.info("checkValue called");
         const couponCode = req.params.Code;
-        const price = req.params.Price;
-        logger.debug("Couponcode: ", couponCode, "Price: ", price);
+        const workshop = req.params.Workshop;
+        logger.debug("Couponcode: ", couponCode, "Workshop", workshop);
         let getOneResults;
         controller.getOne(couponCode, (results) => {
             getOneResults = results[0];
             const couponValue = getOneResults.Value;
             logger.debug("couponValue: ", couponValue);
             req.coupon = getOneResults;
-            req.price = price;
+            req.workshop = workshop;
             let valueString;
 
             if (couponValue.charAt(couponValue.length - 1) == 0 || couponValue.charAt(couponValue.length - 1) == 1 ||
@@ -198,7 +198,7 @@ let controller = {
 
     },
 
-    updateCoupon(couponCode) {
+    updateCoupon(couponCode, callback) {
         logger.info("updateCoupon called");
 
         let getOneResults;
@@ -206,7 +206,6 @@ let controller = {
             logger.debug("results: ", results);
             getOneResults = results[0];
             let couponAantalGebruikt = getOneResults.AantalGebruikt;
-            logger.debug(couponValue);
 
             couponAantalGebruikt += 1;
             
@@ -217,13 +216,10 @@ let controller = {
             connection.connectDatabase(query, (error, results, fields) => {
                 if (error) {
                     logger.debug(couponCode, query, error);
-                    
+                    callback("Error: ", error);
                 } else {
-                    logger.debug("results: ", results[0]);
-                    res.status(200).json({
-                        message: "Coupon gebruikt en ge-update",
-                        result: results[0]
-                    });
+                    logger.debug("results: ", results);
+                    callback("Coupon updated, result: ", results);
                 }
             });
 
@@ -239,17 +235,33 @@ let controller = {
             next();
         } else {
             const coupon = req.coupon;
-            const price = req.price;
-            logger.debug("coupon: ", coupon,"Price: ", price);
-            
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
 
-
-            
-
-            res.status(200).json({
-            message: 'Coupon succesfully sent!',
-            result: coupon
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    logger.debug("Result: ", results);
+                    Kosten = results.Kosten;
+                }
             });
+
+
+            controller.updateCoupon(couponCode, (results) => {});
+            res.status(200).json({
+                message: 'Coupon succesfully used!',
+                result: coupon
+            });
+            
         }
     },
 
