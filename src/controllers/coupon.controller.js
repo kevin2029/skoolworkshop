@@ -6,9 +6,16 @@ let controller = {
     validateCoupon(req, res, next) {
         logger.info('validatecoupon called', req.body);
         try {
-            const { codeCoupon, valueCoupon, maxGebruikCoupon } = req.body;
+            const {
+                codeCoupon,
+                valueCoupon,
+                maxGebruikCoupon,
+                Organisatie
+            } = req.body;
             assert(typeof codeCoupon === 'string', 'Code is missing.');
             assert(typeof valueCoupon === 'string', 'Value is missing.');
+            assert(typeof Organisatie === 'string', 'Organisatie is missing.');
+
             assert(
                 typeof maxGebruikCoupon === 'string',
                 'Max uses is missing.'
@@ -32,7 +39,7 @@ let controller = {
             valueCoupon,
             maxBedragCoupon,
             maxGebruikCoupon,
-            OrganisatieNaam
+            Organisatie
         } = coupon;
         logger.debug('coupon =', coupon);
 
@@ -41,13 +48,12 @@ let controller = {
         logger.debug('createcoupon', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
-            sqlQuery,
-            [
+            sqlQuery, [
                 codeCoupon,
                 valueCoupon,
                 maxBedragCoupon,
                 maxGebruikCoupon,
-                OrganisatieNaam
+                Organisatie
             ],
             (error, results, fields) => {
                 if (error) {
