@@ -5,11 +5,11 @@ DROP DATABASE IF EXISTS `skoolworkshop`;
 -- DROP USER  'skoolworkshop_admin'@'%';
 -- DROP USER  'skoolworkshop_admin'@'localhost';
 -- flush privileges; 
-CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
-CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
+-- CREATE USER 'skoolworkshop_admin'@'%' IDENTIFIED BY 'secret';
+-- CREATE USER 'skoolworkshop_admin'@'localhost' IDENTIFIED BY 'secret';
 
 -- -- geef rechten aan deze user
-GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
+-- GRANT SELECT, INSERT, DELETE, UPDATE ON `skoolworkshop`.* TO 'skoolworkshop_admin'@'localhost';
 
 -- SET DATEFORMAT dmy;
 
@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `Admin` (
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;
-
 
 DROP TABLE IF EXISTS `Workshop` ;
 CREATE TABLE IF NOT EXISTS `Workshop` (
@@ -141,3 +140,4 @@ ON DELETE CASCADE
 ALTER TABLE `Workshop`
 ADD CONSTRAINT `fk_Workshop_Categorie`
 FOREIGN KEY (`Categorie`) REFERENCES `Categorie` (`Naam`)
+
