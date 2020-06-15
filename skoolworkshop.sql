@@ -100,6 +100,13 @@ CREATE TABLE IF NOT EXISTS `Factuur` (
 ) 
 ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `Categorie` ;
+CREATE TABLE IF NOT EXISTS `Categorie` (
+	`Naam` VARCHAR(64) NOT NULL UNIQUE,
+	PRIMARY KEY (`Naam`)
+)
+ENGINE = InnoDB;
+
 ALTER TABLE `Factuur` 
 ADD CONSTRAINT `fk_gebruiker_factuur`
 FOREIGN KEY (`GebruikerID`) REFERENCES `Gebruiker` (`ID`)
@@ -130,3 +137,7 @@ ADD CONSTRAINT `fk_Organisatie_Cadeaubon`
 FOREIGN KEY (`OrganisatieNaam`) REFERENCES `Organisatie` (`Naam`)
 ON DELETE CASCADE
 ;
+
+ALTER TABLE `Workshop`
+ADD CONSTRAINT `fk_Workshop_Categorie`
+FOREIGN KEY (`Categorie`) REFERENCES `Categorie` (`Naam`)

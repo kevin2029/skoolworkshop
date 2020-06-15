@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 // Add CORS headers
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 // Url redirect
-app.get('/', function (request, response) {
+app.get('/', function(request, response) {
     response.sendFile(__dirname + '/frontend/login/index.html');
 });
 
@@ -52,6 +52,7 @@ app.use('/', express.static(__dirname + '/frontend/dashboardBeheer'));
 app.use('/', express.static(__dirname + '/frontend/dashboardGebruiker'));
 app.use('/', express.static(__dirname + '/frontend/opmaak'));
 app.use('/', express.static(__dirname + '/frontend/scripts'));
+app.use('/', express.static(__dirname + '/favicon.ico'));
 
 // Routes
 app.use('/api', authenticationRoutes);
@@ -73,7 +74,7 @@ app.listen(port, () =>
 
 function gracefulShutdown() {
     console.log('Server shutting down');
-    pool.end(function (err) {
+    pool.end(function(err) {
         console.log('Database pool pools closed');
     });
 }
