@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
     `Workshopnaam` VARCHAR(32) NOT NULL,
     `SingedUpOn` DATE NOT NULL,
 	`BookedDate` DATE NOT NULL,
+	`Korting` INT,
     PRIMARY KEY (`GebruikerID`, `Workshopnaam`)
 )   
 ENGINE= InnoDB;
@@ -105,6 +106,14 @@ CREATE TABLE IF NOT EXISTS `Categorie` (
 	PRIMARY KEY (`Naam`)
 )
 ENGINE = InnoDB;
+
+INSERT INTO `Categorie`
+VALUES ('Beeldende Kunst'),
+('Dans'),
+('Media'),
+('Muziek'),
+('Sport'),
+('Theater');
 
 ALTER TABLE `Factuur` 
 ADD CONSTRAINT `fk_gebruiker_factuur`
