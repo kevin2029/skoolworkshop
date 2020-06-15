@@ -16,6 +16,8 @@ router.post(
 router.get('/getone/:ID', invoicecontroller.getOne);
 router.get('/getallpaid', invoicecontroller.getAllPaid);
 router.get('/getallunpaid', invoicecontroller.getAllUnpaid);
+router.get('/getallpaid/:userID', invoicecontroller.getAllPaidFromUser);
+router.get('/getallunpaid/:userID', invoicecontroller.getAllUnpaidFromUser);
 router.get(
     '/invoice/CheckPayment/:ID',
     invoicecontroller.checkDatabase,
