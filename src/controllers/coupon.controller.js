@@ -285,7 +285,7 @@ let controller = {
                     Korting: Korting
                     });
                 
-            }
+            });
 
         }
         
@@ -294,19 +294,48 @@ let controller = {
     percentageCouponHandler(req, res, next) {
         logger.info("percentageCouponHandler called");
         const valueString = req.valueString;
-        if (valueString !== "Percentage") {
-            next();
+        if (valueString !== "PercentageMax") {
+            res.status(400).json({
+                message: "Error, invalid coupon type"
+            })
         } else {
-            controller.getOne(couponCode, (results) => {
-                logger.debug("results: ", results);
-                getOneResults = results[0];
-                let Korting = getOneResults.Value
-                res.status(200).json({
-                    message: 'Coupon succesfully used!',
-                    Korting: Korting
+            const coupon = req.coupon;
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
                     });
-                
-            }
+                } else {
+                    let workshopPrice = results.Kosten
+                    let getOneResults;
+
+                    controller.getOne(couponCode, (results) => {
+                        logger.debug("results: ", results);
+                        getOneResults = results[0];
+                        let Korting = getOneResults.Value
+
+                        totaalKorting = workshopPrice / 100 * Korting
+        
+                        controller.updateCoupon(couponCode, (results) => {
+                        })
+        
+                        res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                            });
+                        
+                    });
+                }
+            });
         }
     },
 
@@ -319,9 +348,41 @@ let controller = {
             })
         } else {
             const coupon = req.coupon;
-            res.status(200).json({
-            message: 'Coupon succesfully sent!',
-            result: coupon
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    let workshopPrice = results.Kosten
+                    let getOneResults;
+
+                    controller.getOne(couponCode, (results) => {
+                        logger.debug("results: ", results);
+                        getOneResults = results[0];
+                        let Korting = getOneResults.Value
+
+                        totaalKorting = workshopPrice / 100 * Korting
+        
+                        controller.updateCoupon(couponCode, (results) => {
+                        })
+        
+                        res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                            });
+                        
+                    });
+                }
             });
         }
     }
