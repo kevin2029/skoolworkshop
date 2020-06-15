@@ -235,7 +235,7 @@ let controller = {
             const coupon = req.coupon;
             const couponCode = req.params.Code;
             const workshop = req.workshop;
-            let Kosten;
+            let Korting;
             logger.debug("coupon: ", coupon, "Workshop: ", workshop);
 
             const query = 
@@ -249,16 +249,18 @@ let controller = {
                     });
                 } else {
                     logger.debug("Result: ", results);
-                    Kosten = results.Kosten;
+                    Korting = results[0].Kosten;
+
+                    controller.updateCoupon(couponCode, (results) => {});
+                    res.status(200).json({
+                        korting: Korting,
+                        message: 'Coupon succesfully used!'
+                    });
                 }
             });
 
 
-            controller.updateCoupon(couponCode, (results) => {});
-            res.status(200).json({
-                message: 'Coupon succesfully used!',
-                result: coupon
-            });
+            
             
         }
     },
@@ -285,7 +287,7 @@ let controller = {
                     Korting: Korting
                     });
                 
-            }
+            });
 
         }
         
@@ -306,7 +308,7 @@ let controller = {
                     Korting: Korting
                     });
                 
-            }
+            });
         }
     },
 
