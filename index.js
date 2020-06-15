@@ -12,6 +12,7 @@ const couponroutes = require('./src/routes/coupon.route');
 const invoiceroutes = require('./src/routes/invoice.route');
 const organisationroutes = require('./src/routes/organisation.route');
 const categoryroutes = require('./src/routes/category.route');
+const bookingroutes = require('./src/routes/booking.routes');
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use('/api/invoice', invoiceroutes);
 app.use('/api/coupon', couponroutes);
 app.use('/api/organisation', organisationroutes);
 app.use('/api/category', categoryroutes);
+app.use('/api/booking', bookingroutes);
 
 app.all('*', (req, res, next) => {
     res.status(404).json({
