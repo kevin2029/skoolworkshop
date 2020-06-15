@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `GebruikerWorkshop`(
     `Gebruikersemail` VARCHAR(50) NOT NULL,
     `Workshopnaam` VARCHAR(32) NOT NULL,
     `SingedUpOn` DATE NOT NULL,
+	`Korting` INT
     PRIMARY KEY (`Gebruikersemail`, `Workshopnaam`)
 )   
 ENGINE= InnoDB;

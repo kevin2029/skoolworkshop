@@ -237,6 +237,9 @@ let controller = {
             next();
         } else {
             const coupon = req.coupon;
+
+            
+
             res.status(200).json({
             message: 'Coupon succesfully sent!',
             result: coupon
