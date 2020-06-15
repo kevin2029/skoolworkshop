@@ -18,6 +18,8 @@ router.post(
     workshopcontroller.updateWorkshop
 );
 
+router.get('/getallfollowed/:userID', workshopcontroller.getFollowedWorkshop);
+
 router.get('/getWorkshopUser/:ID', workshopcontroller.getAll);
 
 module.exports = router;

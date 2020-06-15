@@ -3,7 +3,6 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../opmaak/opmaak.css" />
-    <script src="gebruikeraanmaken.js"></script>
   </head>
   <body>
     <ul class="topnav">
@@ -51,71 +50,66 @@
 
     <div id="workshops">
       <div class="containermid">
-        <table>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-          <tr>
-            <td>Naam</td>
-            <td>E-mailadres</td>
-            <td>Datum</td>
-            <td>Download</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+        <table class="table table-striped table-hover">
+          <thead>
+              <th>Naam</th>
+              <th>Beschrijving</th>
+              <th>Kosten</th>
+              <th>Vervolgkosten</th>
+              <th>Categorie</th>
+              <th></th>
+          </thead>
+          <!-- id gelijk zetten aan id in script-->
+          <tbody id="tableUserList"></tbody>
+      </table>
+  </div>
+  </div>
 
-    
+  <script src="/scripts/requests.js"></script>
+  <script src="/scripts/cookie.js"></script>
+
+  <script>
+const euro = new Intl.NumberFormat('nl-NL', {
+  style: 'currency',
+  currency: 'EUR',
+  minimumFractionDigits: 2
+})
+
+          sendGetRequest(apiUrl + '/api/workshop/getall')
+              .then((data) => {
+                  console.log(data.result);
+                  let tableBody = document.getElementById(
+                      'tableUserList'
+                  );
+
+                  let rows = '';
+                  if (data.result) {
+                      data.result.forEach((item) => {
+                          console.log('item number: ', item);
+                          rows += // Column namen van de data die je opvraagt
+                              `<tr><td>${item.Naam}</td>` + //
+                              `<td>${item.Beschrijving}</td>` +
+                              `<td>${euro.format(item.Kosten)}</td>` +
+                              `<td>${euro.format(item.VervolgKosten)}</td>` +
+                              `<td>${item.Categorie}</td>`;
+
+                          console.log(item.Naam);
+                      });
+
+                      tableBody.innerHTML = rows; // Stop de aangemaakte tablerows in de body van de eerder gemaakt table
+                  } else {
+                      let niks = '';
+                      tableBody.innerHTML = niks;
+                  }
+              })
+              .catch((error) => {
+                  alert('Error fetching workshops!');
+                  console.log(
+                      'There has been a problem with your fetch operation:',
+                      error
+                  );
+              });
+      
+  </script>
   </body>
 </html>
