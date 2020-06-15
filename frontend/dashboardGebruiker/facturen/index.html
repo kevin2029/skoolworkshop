@@ -29,5 +29,130 @@
       
       <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
     </ul>
+
+    <div class="titlepage">
+      <h1>Facturen</h1>
+  </div>
+
+  <div class="search">
+      <input type="text" class="searchTerm" placeholder="Zoeken">
+      <button type="submit" class="searchButton">
+         <i class="fa fa-search"></i>
+      </button>
+  </div>
+
+    <div id="factuurOpenstaand">
+      <div class="containerleft">
+          <h2>Openstaand</h2>
+          <table>
+              <thead>
+                  <th>Naam</th>
+                  <th>Download</th>
+              </thead>
+
+              <tbody id="Unpaid"></tbody>
+          </table>
+      </div>
+  </div>
+
+  <div id="factuurBetaald">
+      <div class="containerright">
+          <h2>Betaald</h2>
+          <table>
+              <thead>
+                  <th>Naam</th>
+                  <th>Download</th>
+              </thead>
+
+              <tbody id="Paid"></tbody>
+          </table>
+      </div>
+  </div>
+  <script src="../../scripts/requests.js"></script>
+  <script src="../../scripts/cookie.js"></script>
+  <script>
+  function getUnpaidFacturen() {
+    sendGetRequest(apiUrl + '/api/invoice/getallunpaid/' + getCookie('userID'))
+        .then((data) => {
+            console.log(data.Result)
+            let tableBody = document.getElementById('Unpaid')
+
+            let rows = ''
+            if (data.Result) {
+                data.Result.forEach((item) => {
+                    console.log(item)
+                    rows +=
+                        `<tr><td>${item.Naam}</td>` +
+                          `<td><a class="link" href="#">${item.Path}</a></td></tr>`
+                });
+
+                tableBody.innerHTML = rows
+            } else {
+                let niks = '';
+                tableBody.innerHTML = niks;
+            }
+        })
+        .catch((error) => {
+            console.error(
+                'There has been a problem with your fetch operation:',
+                error
+            )
+        })
+}
+
+function getPaidFacturen() {
+    sendGetRequest(apiUrl + '/api/invoice/getallpaid/' + getCookie('userID'))
+        .then((data) => {
+            console.log(data.Result)
+            let tableBody = document.getElementById('Paid')
+
+            let rows = ''
+            if (data.Result) {
+                data.Result.forEach((item) => {
+                    console.log(item)
+                    rows +=
+                        `<tr><td>${item.Naam}</td>` +
+                        `<td><a class="link" href="#">${item.Path}</a></td></tr>`
+                });
+
+                tableBody.innerHTML = rows
+            } else {
+                let niks = '';
+                tableBody.innerHTML = niks;
+            }
+        })
+        .catch((error) => {
+            console.error(
+                'There has been a problem with your fetch operation:',
+                error
+            )
+        })
+}
+
+function deleteInvoice(ID) {
+    sendPostRequest(apiUrl + '/api/invoice/delete/' + ID)
+        .then((data) => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert(data.message);
+                getPaidFacturen();
+                getUnpaidFacturen();
+            }
+        })
+        .catch((error) => {
+            alert('Error deleting invoice!');
+            console.error(
+                'There has been a problem with your fetch operation:',
+                error
+            );
+        });
+}
+</script>
+
+<script>
+getUnpaidFacturen();
+getPaidFacturen();
+</script>
   </body>
 </html>
