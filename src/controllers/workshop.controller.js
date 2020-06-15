@@ -15,9 +15,9 @@ let controller = {
             assert(typeof Naam === 'string', 'Name is missing.');
             assert(typeof Beschrijving === 'string', 'Description is missing.');
             assert(typeof Categorie === 'string', 'Categorie is missing.');
-            assert(typeof Kosten === 'number', 'Price is missing.');
+            assert(typeof Kosten === 'string', 'Price is missing.');
             assert(
-                typeof VervolgKosten === 'number',
+                typeof VervolgKosten === 'string',
                 'Follow-up price is missing.'
             );
 
@@ -48,8 +48,7 @@ let controller = {
         logger.debug('createWorkshop', 'sqlQuery =', sqlQuery);
 
         connection.connectDatabase(
-            sqlQuery,
-            [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
+            sqlQuery, [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
             (error, results, fields) => {
                 logger.debug('connectDatabase called');
                 if (error) {
@@ -61,7 +60,7 @@ let controller = {
                 if (results) {
                     logger.debug('results: ', results);
                     res.status(200).json({
-                        message: 'workshop added!',
+                        message: 'Workshop toegevoegd!',
                         result: {
                             ...workshop
                         }
@@ -182,8 +181,7 @@ let controller = {
             `';`;
 
         connection.connectDatabase(
-            query,
-            [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
+            query, [Naam, Beschrijving, Kosten, VervolgKosten, Categorie],
             (error, results, fields) => {
                 if (error) {
                     logger.debug(

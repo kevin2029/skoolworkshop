@@ -36,19 +36,17 @@ let controller = {
 
         let { Naam, Email, Organisatie } = req.body;
 
-        bcrypt.genSalt(10, function (err, salt) {
-            bcrypt.hash('Welkom01', salt, function (err, hash) {
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash('Welkom01', salt, function(err, hash) {
                 let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Wachtwoord) VALUES (?, ?, ?, ?);`;
 
                 connection.connectDatabase(
-                    query,
-                    [Naam, Email, Organisatie, hash],
+                    query, [Naam, Email, Organisatie, hash],
                     (error, results, fields) => {
                         if (error) {
                             logger.debug('createUser:', req.body, error);
                             res.status(400).json({
-                                message:
-                                    'A user with this email already exists! or put in a existing organisation'
+                                message: 'A user with this email already exists! or put in a existing organisation'
                             });
                         } else {
                             logger.info('User added:', req.body);
@@ -90,8 +88,7 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query =
-            'SELECT ID, Naam, Email, Organisatie, Adress FROM gebruiker;';
+        const query = 'SELECT ID, Naam, Email, Organisatie FROM gebruiker;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {
@@ -158,8 +155,7 @@ let controller = {
         let query = `UPDATE Gebruiker SET Naam = ?, Email = ?, Organisatie = ?  WHERE ID = ?;`;
 
         connection.connectDatabase(
-            query,
-            [Naam, Email, Organisatie, userID],
+            query, [Naam, Email, Organisatie, userID],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('updateUser:', userID, req.body, error);
@@ -188,8 +184,7 @@ let controller = {
         let query = 'UPDATE Gebruiker SET Path = ? WHERE ID = ?;';
 
         connection.connectDatabase(
-            query,
-            [Path, userID],
+            query, [Path, userID],
             (error, results, fields) => {
                 if (error) {
                     logger.debug('uploadImage', userID, Path);
