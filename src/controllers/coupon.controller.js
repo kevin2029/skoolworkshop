@@ -76,10 +76,10 @@ let controller = {
 
     checkDatabase(req, res, next) {
         logger.info('checkDatabase called');
-        const couponCode = req.params.Code;
+        const couponID = req.params.ID;
 
         let sqlQuery =
-            `SELECT Code FROM Cadeaubon WHERE Code = '` + couponCode + `'`;
+            `SELECT ID FROM Cadeaubon WHERE ID = '` + ID + `'`;
         logger.debug('checkDatabase', 'sqlQuery = ', sqlQuery);
 
         connection.connectDatabase(sqlQuery, (error, results, fields) => {
