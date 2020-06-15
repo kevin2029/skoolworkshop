@@ -221,9 +221,7 @@ let controller = {
                     logger.debug("results: ", results);
                     callback("Coupon updated, result: ", results);
                 }
-            });
-
-            
+            });  
         });
 
     },
@@ -271,23 +269,23 @@ let controller = {
         if (valueString != "Money") {
             next();
         } else {
-            const coupon = req.coupon;
-            res.status(200).json({
-            message: 'Coupon succesfully sent!',
-            result: coupon
-            });
+            const couponCode = req.params.Code
 
-            const query = 
-                `UPDATE GebruikerWorkshop SET Korting = '` + Korting + `' `
-            connection.connectDatabase(query, (error, results, fields) => {
-                if (error) {
-                    logger.debug(couponCode, query, error);
-                    return 'coupon does not exist!';
-                } else {
-                    logger.debug("results: ", results[0]);
-                    callback(results);
-                }
-            });
+            let getOneResults;
+            controller.getOne(couponCode, (results) => {
+                logger.debug("results: ", results);
+                getOneResults = results[0];
+                let Korting = getOneResults.Value
+
+                controller.updateCoupon(couponCode, (results) => {
+                })
+
+                res.status(200).json({
+                    message: 'Coupon succesfully used!',
+                    Korting: Korting
+                    });
+                
+            }
 
         }
         
@@ -299,11 +297,16 @@ let controller = {
         if (valueString !== "Percentage") {
             next();
         } else {
-            const coupon = req.coupon;
-            res.status(200).json({
-            message: 'Coupon succesfully sent!',
-            result: coupon
-            });
+            controller.getOne(couponCode, (results) => {
+                logger.debug("results: ", results);
+                getOneResults = results[0];
+                let Korting = getOneResults.Value
+                res.status(200).json({
+                    message: 'Coupon succesfully used!',
+                    Korting: Korting
+                    });
+                
+            }
         }
     },
 
