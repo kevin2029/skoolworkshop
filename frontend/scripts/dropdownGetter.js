@@ -65,13 +65,13 @@ function getUserName() {
 function getCategory() {
     sendGetRequest(apiUrl + '/api/category/getall')
         .then((data) => {
-            console.log(data.result);
+            console.log(data.Result);
             let tableBody = document.getElementById('Categorie');
 
             let rows =
                 '<option value="" disabled selected hidden>Kies een categorie</option>';
-            if (data.result) {
-                data.result.forEach((item) => {
+            if (data.Result) {
+                data.Result.forEach((item) => {
                     console.log(item);
                     rows +=
                         // Column namen van de data die je opvraagt
@@ -86,7 +86,7 @@ function getCategory() {
             }
         })
         .catch((error) => {
-            alert('Error fetching organisation!');
+            alert('Error fetching category!');
             console.log(
                 'There has been a problem with your fetch operation:',
                 error

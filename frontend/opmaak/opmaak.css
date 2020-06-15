@@ -442,3 +442,9 @@ th {
 .button:hover {
     background-color: #ffa81c;
 }
+
+#logo {
+    padding: 0px;
+    margin: 0px;
+    margin-right: 5px;
+}

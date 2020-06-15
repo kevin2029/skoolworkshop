@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `gebruiker` (
 	`Organisatie` VARCHAR(50) NOT NULL,
 	`Wachtwoord` VARCHAR(500) BINARY NOT NULL,
 	`PathLogo` VARCHAR(100),
+	`Inactive` BOOLEAN,
 	PRIMARY KEY (`ID`)
 ) 
 ENGINE = InnoDB;

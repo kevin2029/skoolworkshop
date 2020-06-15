@@ -108,25 +108,24 @@
 
     <script>
         function deleteUser(Id) {
-            checkAdminCookie();
-
-            console.log(Id);
-            sendPostRequest(apiUrl + '/api/user/delete/' + Id)
-                .then((data) => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        alert(data.message);
-                        getUser();
-                    }
-                })
-                .catch((error) => {
-                    alert('Error deleting user!');
-                    console.error(
-                        'There has been a problem with your fetch operation:',
-                        error
-                    );
-                });
+            if (confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?')) {
+                sendPostRequest(apiUrl + '/api/user/delete/' + Id)
+                    .then((data) => {
+                        if (data.error) {
+                            alert(data.error);
+                        } else {
+                            alert(data.message);
+                            getUser();
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error deleting user!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
         }
     </script>
 </body>
