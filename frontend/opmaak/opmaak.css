@@ -176,6 +176,8 @@ body {
     background-attachment: fixed;
     background-position: fixed;
     font-family: Helvetica, Verdana, Arial, sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
 
