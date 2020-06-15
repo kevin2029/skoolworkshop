@@ -178,17 +178,17 @@ let controller = {
                 req.valueString = valueString;
                 logger.debug("req.valueString: ", req.valueString);
                 next();
-            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon == undefined) {
-                valueString = "Percentage";
-                req.valueString = valueString;
-                logger.debug(valueString);
-                next();
-            } else if (couponValue.endsWith("%") && getOneResults.maxBedragCoupon != undefined) {
+            } else if (couponValue.endsWith("%") && (getOneResults.maxBedragCoupon != undefined || getOneResults.maxBedragCoupon != null || getOneResults.maxBedragCoupon != 0)) {
                 valueString = "PercentageMax";
                 req.valueString = valueString;
                 logger.debug(valueString);
                 next();
-            } else if (couponValue == "workshop" || couponValue == "Workshop") {
+            } else if (couponValue.endsWith("%") && (getOneResults.maxBedragCoupon == undefined || getOneResults.maxBedragCoupon == null || getOneResults.maxBedragCoupon == 0)) {
+                valueString = "Percentage";
+                req.valueString = valueString;
+                logger.debug(valueString);
+                next();
+            }  else if (couponValue == "workshop" || couponValue == "Workshop") {
                 valueString = "Workshop";
                 req.valueString = valueString;
                 logger.debug(valueString);
@@ -297,17 +297,40 @@ let controller = {
         logger.info("percentageCouponHandler called");
         const valueString = req.valueString;
         if (valueString !== "Percentage") {
-            next();
+            next()
         } else {
-            controller.getOne(couponCode, (results) => {
-                logger.debug("results: ", results);
-                getOneResults = results[0];
-                let Korting = getOneResults.Value
-                res.status(200).json({
-                    message: 'Coupon succesfully used!',
-                    Korting: Korting
+            const coupon = req.coupon;
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
                     });
-                
+                } else {
+                    let workshopPrice = results[0].Kosten;
+
+                        let Korting = coupon.Value.substring(0, coupon.Value.length - 1);
+                        logger.debug("Korting: ", Korting);
+
+                        totaalKorting = workshopPrice / 100 * Korting
+                        logger.debug("Totaalkorting: ", totaalKorting);
+        
+                        controller.updateCoupon(couponCode, (results) => {
+                        })
+        
+                        res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                        });
+                }
             });
         }
     },
@@ -321,9 +344,37 @@ let controller = {
             })
         } else {
             const coupon = req.coupon;
-            res.status(200).json({
-            message: 'Coupon succesfully sent!',
-            result: coupon
+            const couponCode = req.params.Code;
+            const workshop = req.workshop;
+            let Kosten;
+            logger.debug("coupon: ", coupon, "Workshop: ", workshop);
+
+            const query = 
+                `SELECT Kosten FROM Workshop WHERE Naam = '` + workshop + `';`;
+            connection.connectDatabase(query, (error, results, fields) => {
+                if (error) {
+                    logger.debug(couponCode, query, error);
+                    res.status(400).json({
+                        message: "Workshop doesn't exist",
+                        error: error
+                    });
+                } else {
+                    let workshopPrice = results[0].Kosten
+
+                        let Korting = coupon.Value.substring(0, coupon.Value.length - 1);
+                        logger.debug("Korting: ", Korting);
+
+                        totaalKorting = workshopPrice / 100 * Korting
+                        logger.debug("Totaalkorting: ", totaalKorting);
+        
+                        controller.updateCoupon(couponCode, (results) => {
+                        })
+        
+                        res.status(200).json({
+                            message: 'Coupon succesfully used!',
+                            Korting: totaalKorting
+                            });
+                }
             });
         }
     }
