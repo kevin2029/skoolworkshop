@@ -38,7 +38,7 @@ let controller = {
 
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash('Welkom01', salt, function(err, hash) {
-                let query = `INSERT INTO gebruiker (Naam, Email, Organisatie, Wachtwoord) VALUES (?, ?, ?, ?);`;
+                let query = `INSERT INTO Gebruiker (Naam, Email, Organisatie, Wachtwoord) VALUES (?, ?, ?, ?);`;
 
                 connection.connectDatabase(
                     query, [Naam, Email, Organisatie, hash],
@@ -67,7 +67,7 @@ let controller = {
         const userMail = req.params.userID;
 
         const query =
-            `SELECT Naam, Email, Organisatie, Adress FROM gebruiker WHERE ID = '` +
+            `SELECT Naam, Email, Organisatie, Adress FROM Gebruiker WHERE ID = '` +
             userMail +
             `';`;
 
@@ -88,7 +88,7 @@ let controller = {
     },
 
     getAll(req, res, next) {
-        const query = 'SELECT ID, Naam, Email, Organisatie FROM gebruiker;';
+        const query = 'SELECT ID, Naam, Email, Organisatie FROM Gebruiker;';
 
         connection.connectDatabase(query, (error, results, fields) => {
             if (error) {

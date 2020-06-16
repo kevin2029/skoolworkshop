@@ -213,7 +213,7 @@ let controller = {
         logger.info('userid: ', userID);
 
         let query =
-            'SELECT Naam, Beschrijving, Kosten, Vervolgkosten, Categorie FROM `gebruikerworkshop` JOIN workshop on gebruikerworkshop.Workshopnaam = workshop.Naam WHERE GebruikerID = ?';
+            'SELECT Naam, Beschrijving, Kosten, Vervolgkosten, Categorie FROM `Gebruikerworkshop` JOIN Workshop on Gebruikerworkshop.Workshopnaam = Workshop.Naam WHERE GebruikerID = ?';
         let values = [userID];
 
         connection.connectDatabase(query, values, (error, results, fields) => {
