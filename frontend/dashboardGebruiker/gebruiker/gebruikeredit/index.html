@@ -78,30 +78,6 @@
                     <button class="edit" type="button"></button>
                 </div>
 
-                <label for="Organisatie"><b>Naam van de organisatie</b></label>
-                <div class="editInput">
-                    <input
-                        type="text"
-                        placeholder="Vul naam in"
-                        name="Organisatie"
-                        id="Organisatie"
-                        required
-                    />
-                    <button class="edit" type="button"></button>
-                </div>
-
-                <label for="Adress"><b>Adress van de organisatie</b></label>
-                <div class="editInput">
-                    <input
-                        type="text"
-                        placeholder="Vul adres in"
-                        name="Adress"
-                        id="Adress"
-                        required
-                    />
-                    <button class="edit" type="button"></button>
-                </div>
-
                 <label for="Email"><b>Email</b></label>
                 <div class="editInput">
                     <input
@@ -113,9 +89,6 @@
                     />
                     <button class="edit" type="button"></button>
                 </div>
-
-                <!--  <label for="foto"><b>Foto van organisatie</b></label>
-                <input type="file" name="foto" id="foto" required /> -->
 
                 <hr />
 
@@ -158,8 +131,6 @@
                     alert(data.error);
                 } else {
                     $('input[name="Naam"]').val(data.User.Naam);
-                    $('input[name="Organisatie"]').val(data.User.Organisatie);
-                    $('input[name="Adress"]').val(data.User.Adress);
                     $('input[name="Email"]').val(data.User.Email);
                 }
             })
