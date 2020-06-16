@@ -85,7 +85,6 @@ input[type='file']:hover {
     margin-top: 15%;
 }
 
-
 /* inputfields */
 
 input[type='text'],
@@ -104,14 +103,12 @@ input[type='password']:focus {
     outline: none;
 }
 
-
 /* andere hr style*/
 
 hr {
     border: 1px solid #f1f1f1;
     margin-bottom: 25px;
 }
-
 
 /* style voor verstuur knop */
 
@@ -121,7 +118,8 @@ hr {
     }
     to {
         background-color: black;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 }
 
@@ -142,7 +140,6 @@ hr {
     opacity: inherit;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 19px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 /* resonpsive layout */
 
@@ -177,7 +174,6 @@ body {
     background-position: fixed;
     font-family: Helvetica, Verdana, Arial, sans-serif;
 }
-
 
 /*   Dropdown menu */
 
@@ -447,4 +443,8 @@ th {
     padding: 0px;
     margin: 0px;
     margin-right: 5px;
+}
+
+#logo img {
+    max-height: 40px;
 }
