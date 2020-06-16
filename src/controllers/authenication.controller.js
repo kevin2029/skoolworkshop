@@ -18,8 +18,7 @@ module.exports = {
             if (connection) {
                 // Check if the acc exists
                 connection.query(
-                    "SELECT ID, Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT ID, Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?",
-                    [req.body.Email, req.body.Email],
+                    "SELECT ID, Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT ID, Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?", [req.body.Email, req.body.Email],
                     (err, rows, fields) => {
                         connection.release();
                         if (err) {
@@ -38,8 +37,7 @@ module.exports = {
                                     'User not found or password is invalid'
                                 );
                                 res.status(400).json({
-                                    error:
-                                        'User not found or password is invalid',
+                                    error: 'User not found or password is invalid',
                                     datetime: new Date().toISOString()
                                 });
                             } else {
@@ -52,11 +50,10 @@ module.exports = {
                                     req.body.Wachtwoord,
                                     rows[0].Wachtwoord,
 
-                                    function (err, result) {
+                                    function(err, result) {
                                         if (result == false) {
                                             res.status(400).json({
-                                                error:
-                                                    'User not found or password is invalid',
+                                                error: 'User not found or password is invalid',
                                                 datetime: new Date().toISOString()
                                             });
                                         }
@@ -87,13 +84,11 @@ module.exports = {
                                             const userinfo = {
                                                 token: jwt.sign(
                                                     payload,
-                                                    'secret',
-                                                    {
+                                                    'secret', {
                                                         expiresIn: '2h'
                                                     }
                                                 ),
-                                                Organisatie:
-                                                    rows[0].Organisatie,
+                                                Organisatie: rows[0].Organisatie,
                                                 payload: payload
                                             };
                                             res.status(200).json(userinfo);
@@ -161,8 +156,7 @@ module.exports = {
             }
             if (connection) {
                 connection.query(
-                    "SELECT Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?",
-                    [req.body.Email, req.body.Email],
+                    "SELECT Email, Wachtwoord, 'GebruikerTable' as Origin FROM Gebruiker WHERE Email = ? UNION SELECT Email, Wachtwoord, 'AdminTable' as Origin FROM Admin WHERE Email = ?", [req.body.Email, req.body.Email],
                     (err, rows, fields) => {
                         if (err) {
                             logger.debug('Error: ', err.toString());
@@ -178,11 +172,11 @@ module.exports = {
                             });
                         } else {
                             // bcrypt is hashing the password
-                            bcrypt.genSalt(10, function (err, salt) {
+                            bcrypt.genSalt(10, function(err, salt) {
                                 bcrypt.hash(
                                     req.body.Wachtwoord,
                                     salt,
-                                    function (err, hash) {
+                                    function(err, hash) {
                                         logger.debug('password hashed: ', hash);
 
                                         if (req.url !== '/register/admin') {
@@ -202,7 +196,7 @@ module.exports = {
                                             );
                                         } else {
                                             sqlQuery =
-                                                'INSERT INTO `admin` (`Naam`, `Email`, `Wachtwoord`) VALUES (?, ?, ?)';
+                                                'INSERT INTO `Admin` (`Naam`, `Email`, `Wachtwoord`) VALUES (?, ?, ?)';
                                             parameter = [
                                                 req.body.Naam,
                                                 req.body.Email,
@@ -223,11 +217,10 @@ module.exports = {
                                                     // When the INSERT fails, we assume the user already exists
                                                     logger.debug(
                                                         'Error: ' +
-                                                            err.toString()
+                                                        err.toString()
                                                     );
                                                     res.status(400).json({
-                                                        error:
-                                                            'Registreren mislukt!',
+                                                        error: 'Registreren mislukt!',
                                                         datetime: new Date().toISOString()
                                                     });
                                                 } else {
@@ -236,8 +229,7 @@ module.exports = {
                                                     );
 
                                                     res.status(200).json({
-                                                        message:
-                                                            'Succes ' +
+                                                        message: 'Succes ' +
                                                             req.body.Naam +
                                                             ' is aangemaakt!'
                                                     });
