@@ -6,28 +6,13 @@ const { exit } = require('process');
 
 let controller = {
     validateEdit(req, res, next) {
-        let {
-            Naam,
-            Organisatie,
-            Adress,
-            Wachtwoord,
-            WachtwoordHerhaal,
-            Email
-        } = req.body;
+        let { Naam, Wachtwoord, WachtwoordHerhaal, Email } = req.body;
         let ID = req.params.userID;
         logger.debug('ID: ', ID);
 
         let edits = 0;
 
         if (typeof Naam === 'string') {
-            edits++;
-        }
-
-        if (typeof Organisatie === 'string') {
-            edits++;
-        }
-
-        if (typeof Adress === 'string') {
             edits++;
         }
 
@@ -72,14 +57,7 @@ let controller = {
     },
 
     editUser(req, res, next) {
-        let {
-            Naam,
-            Organisatie,
-            Adress,
-            Wachtwoord,
-            WachtwoordHerhaal,
-            Email
-        } = req.body;
+        let { Naam, Wachtwoord, WachtwoordHerhaal, Email } = req.body;
         let ID = req.params.userID;
         logger.debug('ID: ', ID);
 
@@ -89,16 +67,6 @@ let controller = {
         if (typeof Naam === 'string') {
             query += ' `Naam` = ?';
             values.push(Naam);
-        }
-
-        if (typeof Organisatie === 'string') {
-            query += ' `Organisatie` = ?';
-            values.push(Organisatie);
-        }
-
-        if (typeof Adress === 'string') {
-            query += ' `Adress` = ?';
-            values.push(Adress);
         }
 
         if (typeof Email === 'string') {
