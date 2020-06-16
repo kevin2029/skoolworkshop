@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+  </head>
+  <body>
+<ul class="topnav">
+    <li class="dropdown">
+      <a href="../gebruiker/index.html">Gebruikers</a>
+      <div class="dropdown-content">
+        <a href="../gebruiker/aanmaken.html">Aanmaken</a>
+        <a href="../gebruiker/deelnemers.html">Deelnemers</a>
+      </div>
+    </li>
+    <li class="dropdown">
+      <a href="../workshop/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="../workshop/aanmaken.html">Aanmaken</a>
+        <a href="../workshop/analysiek.html">Statistiek</a>
+      </div>
+    </li>
+  </li>
+  <li class="dropdown">
+    <a class="active" href="../factuur/index.html">Facturen</a>
+    <div class="dropdown-content">
+      <a class="active" href="../factuur/aanmaken.html">Aanmaken</a>
+    </div>
+  </li>
+  <li class="dropdown">
+      <a href="../coupon/index.html">Coupon</a>
+      <div class="dropdown-content">
+        <a href="../coupon/aanmaken.html">Aanmaken</a>
+      </div>
+    </li>
+
+    <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+  </ul>
+
+  <form id="factuurUploaden"  method="POST" action="afbeelding.php" enctype="multipart/form-data">
+    <!-- code pagina invoeren-->
+    <div class="container">
+      <h1>Uploaden van afbeelding</h1>
+      <label for="file"><b>Selecteer een afbeelding</b></label>
+      <input
+        id="fileToUpload"
+        name="fileToUpload"
+        type="file"
+        name="file"
+      />
+      <hr />
+      <button type="submit" class="registerbtn">
+        Toevoegen
+      </button>
+    </div>
+  </form>
+
+</body>
+  </html>

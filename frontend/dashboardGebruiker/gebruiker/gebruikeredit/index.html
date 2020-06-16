@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../../../opmaak/opmaak.css"
+        />
+    </head>
+
+    <style>
+        .editInput {
+            display: flex;
+
+            align-items: center;
+        }
+
+        .editInput button.edit {
+            height: 15px;
+            width: 15px;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            background: none;
+            background-image: url('./pencil-edit-button.png');
+            background-size: cover;
+            border: none;
+        }
+
+        .editInput input:disabled {
+            color: gray;
+            background-color: rgb(240, 240, 240);
+            font-style: italic;
+        }
+    </style>
+
+    <body>
+    <ul class="topnav">
+      <li>
+        <a href="../../mijnaccount/index.html">Mijn account</a>
+      </li>
+      <li>
+        <a href="./../../gebruiker/gebruikeredit/index.html">Account bewerken</a>
+      </li>
+    </li>
+    <li class="dropdown">
+      <a href="../../workshops/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="../../workshopsgevolgd/index.html">Gevolgde workshops</a>
+      </div>
+    </li>
+    <li>
+        <a href="../../facturen/index.html">Facturen</a>
+      </li>
+      <li>
+        <a href="../../couponLijst/coupon.html">Coupon</a>
+      </li>
+      
+      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+    </ul>
+
+        <form id="gebruikerEdit" onsubmit="verstuur();return false">
+            <!-- code pagina invoeren-->
+            <div class="container">
+                <h1>Gebruikerdetails aanpassen</h1>
+                <p>Wijzig de velden die aangepast moeten worden</p>
+                <hr />
+
+                <label for="Naam"><b>Naam van de beheerder</b></label>
+                <div class="editInput">
+                    <input
+                        type="text"
+                        placeholder="Vul naam in"
+                        name="Naam"
+                        id="Naam"
+                        required
+                    />
+                    <button class="edit" type="button"></button>
+                </div>
+
+                <label for="Organisatie"><b>Naam van de organisatie</b></label>
+                <div class="editInput">
+                    <input
+                        type="text"
+                        placeholder="Vul naam in"
+                        name="Organisatie"
+                        id="Organisatie"
+                        required
+                    />
+                    <button class="edit" type="button"></button>
+                </div>
+
+                <label for="Adress"><b>Adress van de organisatie</b></label>
+                <div class="editInput">
+                    <input
+                        type="text"
+                        placeholder="Vul adres in"
+                        name="Adress"
+                        id="Adress"
+                        required
+                    />
+                    <button class="edit" type="button"></button>
+                </div>
+
+                <label for="Email"><b>Email</b></label>
+                <div class="editInput">
+                    <input
+                        type="text"
+                        placeholder="Vul email in"
+                        name="Email"
+                        id="Email"
+                        required
+                    />
+                    <button class="edit" type="button"></button>
+                </div>
+
+                <!--  <label for="foto"><b>Foto van organisatie</b></label>
+                <input type="file" name="foto" id="foto" required /> -->
+
+                <hr />
+
+                <label for="Wachtwoord"><b>Nieuw wachtwoord</b></label>
+                <input
+                    type="password"
+                    placeholder="Vul wachtwoord in"
+                    name="Wachtwoord"
+                    id="Wachtwoord"
+                />
+
+                <label for="WachtwoordWerhaal"
+                    ><b>Herhaal wachtwoord</b></label
+                >
+
+                <input
+                    type="password"
+                    placeholder="Herhaal wachtwoord"
+                    name="WachtwoordHerhaal"
+                    id="WachtwoordHerhaal"
+                />
+
+                <hr />
+                <button type="submit" class="registerbtn">
+                    Wijzig
+                </button>
+            </div>
+        </form>
+
+        <script src="../../../scripts/cookie.js"></script>
+        <script src="../../../scripts/requests.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"
+        ></script>
+        <script>
+        let data = sendGetRequest('http://localhost:3000/api/user/getone/' + getCookie('userID')).then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    $('input[name="Naam"]').val(data.User.Naam);
+                    $('input[name="Organisatie"]').val(data.User.Organisatie);
+                    $('input[name="Adress"]').val(data.User.Adress);
+                    $('input[name="Email"]').val(data.User.Email);
+                }
+            })
+            .catch((error) => {
+                alert('Error editing user!');
+                console.error(
+                    'There has been a problem with your fetch operation:',
+                    error
+                );
+            });
+
+        $('.editInput').each((i, element) => {
+            let input = $(element).find('input');
+            let button = $(element).find('button');
+
+            button.click((e) => {
+                let pressedButton = $(e.target);
+                let targetInput = pressedButton.parent().find('input');
+
+                targetInput.attr('disabled', false);
+                targetInput.focus();
+            });
+
+            input.attr('disabled', true);
+        });
+
+        function verstuur() {
+            if(!$('#Wachtwoord').val()) {
+                $('#Wachtwoord').attr('disabled', true);
+                $('#WachtwoordHerhaal').attr('disabled', true);
+            }
+
+            let formData = new FormData(
+                    document.querySelector('#gebruikerEdit')
+            );
+
+            sendPostRequest(apiUrl + '/api/user/edit/' + getCookie('userID'), formData, getCookie('usertoken')).then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('OK');
+                    window.location.href = "";
+                }
+            })
+            .catch((error) => {
+                alert('Error editing user!');
+                console.error(
+                    'There has been a problem with your fetch operation:',
+                    error
+                );
+            });
+        }
+        </script>
+    </body>
+</html>

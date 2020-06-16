@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../opmaak/opmaak.css" />
+  </head>
+  <body>
+    <ul class="topnav">
+      <li>
+        <a href="../mijnaccount/index.html">Mijn account</a>
+      </li>
+      <li>
+        <a href="./../gebruiker/gebruikeredit/index.html">Account bewerken</a>
+      </li>
+    </li>
+    <li class="dropdown">
+      <a href="../workshops/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="../workshopsgevolgd/index.html">Gevolgde workshops</a>
+      </div>
+    </li>
+    <li>
+        <a href="../facturen/index.html">Facturen</a>
+      </li>
+      <li>
+        <a href="../couponLijst/coupon.html">Coupon</a>
+      </li>
+      
+      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+    </ul>
+
+    
+
+    <div class="titlepage">
+      <h1>Gevolgde workshops</h1>
+    </div>
+     
+      <div class="search">
+         <input type="text" class="searchTerm" placeholder="Zoeken">
+         <button type="submit" class="searchButton">
+           <i class="fa fa-search"></i>
+        </button>
+      </div>
+
+      
+    <div class="amountworkshops">
+      <a>24 workshops</a>
+    </div>
+
+    <div id="workshops">
+      <div class="containermid">
+        <table class="table table-striped table-hover">
+          <thead>
+              <th>Naam</th>
+              <th>Beschrijving</th>
+              <th>Kosten</th>
+              <th>Vervolgkosten</th>
+              <th>Categorie</th>
+              <th></th>
+          </thead>
+          <!-- id gelijk zetten aan id in script-->
+          <tbody id="workshoplist"></tbody>
+      </table>
+  </div>
+  </div>
+
+  <script src="/scripts/requests.js"></script>
+  <script src="/scripts/cookie.js"></script>
+
+  <script>
+      const euro = new Intl.NumberFormat('nl-NL', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 2
+      })
+
+          sendGetRequest(apiUrl + '/api/workshop/getallfollowed/' + getCookie('userID'))
+              .then((data) => {
+                  console.log(data.result);
+                  let tableBody = document.getElementById(
+                      'workshoplist'
+                  );
+
+                  let rows = '';
+                  if (data.result) {
+                      data.result.forEach((item) => {
+                          console.log('item number: ', item);
+                          rows += // Column namen van de data die je opvraagt
+                              `<tr><td>${item.Naam}</td>` + //
+                              `<td>${item.Beschrijving}</td>` +
+                              `<td>${euro.format(item.Kosten)}</td>` +
+                              `<td>${euro.format(item.Vervolgkosten)}</td>` +
+                              `<td>${item.Categorie}</td>`;
+
+                          console.log(item.Naam);
+                      });
+
+                      tableBody.innerHTML = rows; // Stop de aangemaakte tablerows in de body van de eerder gemaakt table
+                  } else {
+                      let niks = '';
+                      tableBody.innerHTML = niks;
+                  }
+              })
+              .catch((error) => {
+                  alert('Error fetching workshops!');
+                  console.log(
+                      'There has been a problem with your fetch operation:',
+                      error
+                  );
+              });
+     
+  </script>
+  </body>
+</html>

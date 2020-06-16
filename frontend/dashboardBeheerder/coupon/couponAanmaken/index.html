@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../../opmaak/opmaak.css" />
+    <script src="workshopaanmaken.js"></script>
+</head>
+
+<body>
+    <ul class="topnav">
+        <li class="dropdown">
+            <a href="../../gebruiker/gebruikerLijst/index.html">Gebruikers</a>
+            <div class="dropdown-content">
+                <a href="../../gebruiker/gebruikerAanmaken/aanmaken.html">Aanmaken</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../../workshop/index.html">Workshops</a>
+            <div class="dropdown-content">
+                <a href="../../workshop/workshopaanmaken/index.html">Aanmaken</a>
+                <a href="../../workshop/workshopStatistiek/index.html">Statistieken</a>
+            </div>
+        </li>
+        </li>
+        <li class="dropdown">
+            <a href="../../factuur/index.html">Facturen</a>
+            <div class="dropdown-content">
+                <a href="../facturenaanmaken/index.html">Uploaden</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="active" href="../../coupon/index.html">Coupon</a>
+            <div class="dropdown-content">
+                <a class="active" href="../../coupon/couponaanmaken/index.html">Aanmaken</a>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a href="../../organisatie/organisatieLijst/index.html">Organisatie</a>
+            <div class="dropdown-content">
+                <a href="../../organisatie/organisatieAanmaken/index.html">Aanmaken</a>
+            </div>
+        </li>
+
+        <li class="right"><a onclick="logout()">Uitloggen</a></li>
+        <!--Active of hover toevoegen-->
+    </ul>
+
+    <form id="couponAanmaken" onsubmit="sendForm();return false">
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <a class="link" href="../index.html">
+                < Terug naar overzicht </a>
+                    <h1>Toevoegen van coupon</h1>
+                    <p>Vul dit hele formulier in om een coupon toe te voegen</p>
+                    <hr />
+                    <label for="codeCoupon"><b>Code van de coupon</b></label>
+                    <input type="text" placeholder="Vul code in" name="codeCoupon" id="codeCoupon" required />
+
+                    <label for="valueCoupon"><b>Vul hier een geldbedrag, percentage, of voor workshop naar keuze "Workshop" in</b></label>
+                    <input type="text" placeholder="Vul een waarde in" name="valueCoupon" id="valueCoupon" required />
+                    <label for="maxBedragCoupon"><b>Maximaal geldbedrag (vul dit alleen bij een percentage in)</b></label>
+                    <input type="text" placeholder="Vul maximaal geldbedrag in" name="maxBedragCoupon" id="maxBedragCoupon" />
+
+                    <label for="maxGebruikCoupon"><b>Vul in hoevaak de coupon gebruikt kan worden</b></label>
+                    <br />
+                    <input type="number" min="1" placeholder="Vul maximaal gebruik in" name="maxGebruikCoupon" id="maxGebruikCoupon" required />
+                    <br />
+
+                    <label for="Organisatie"><b>Organisatie</b></label>
+                    <select id="Organisatie" name="Organisatie"></select>
+
+                    <hr />
+                    <button type="submit" class="registerbtn">
+          Toevoegen
+        </button>
+        </div>
+    </form>
+
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+    <script src="/scripts/dropdownGetter.js"></script>
+
+    <script>
+        checkAdminCookie();
+        getOrganisation();
+
+        function sendForm() {
+            let formData = new FormData(
+                document.querySelector('#couponAanmaken')
+            ); // ingevulde gegevens uit form worden opgehaald
+
+
+            // API call uitvoeren om data op te halen
+            sendPostRequest(apiUrl + '/api/coupon/create', formData)
+                .then((data) => {
+                    if (data.message) {
+                        alert('Error creating coupon! \n', data.message);
+                    } else {
+                        alert('Coupon succesvol aangemaakt!');
+                    }
+                })
+                .catch((error) => {
+                    alert('Error creating coupon!');
+                    console.error(
+                        'There has been a problem with your fetch operation:',
+                        error
+                    );
+                });
+        }
+    </script>
+
+</body>
+
+</html>

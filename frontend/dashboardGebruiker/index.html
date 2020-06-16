@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+    <script src="gebruikeraanmaken.js"></script>
+  </head>
+  <body>
+    <ul class="topnav">
+      <li>
+        <a href="mijnaccount/index.html">Mijn account</a>
+      </li>
+      <li>
+        <a href="./gebruiker/gebruikeredit/index.html">Account bewerken</a>
+      </li>
+    </li>
+    <li class="dropdown">
+      <a href="workshops/index.html">Workshops</a>
+      <div class="dropdown-content">
+        <a href="workshopsgevolgd/index.html">Gevolgde workshops</a>
+      </div>
+    </li>
+    <li>
+        <a href="facturen/index.html">Facturen</a>
+      </li>
+      <li>
+        <a href="couponLijst/coupon.html">Coupon</a>
+      </li>
+      
+      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+    </ul>
+
+    <div class="welkomst">
+      <a> Welkom op het dashboard! </a>
+  </div>
+
+  <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+
+    <script>
+      checkUserCookie();
+    </script>
+
+  </body>
+</html>

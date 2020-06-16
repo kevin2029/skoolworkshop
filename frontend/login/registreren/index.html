@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../opmaak/opmaak.css" />
+</head>
+
+<body>
+    <form class="needs-validation" id="registerForm" onsubmit="sendForm();return false;" novalidate>
+        <!-- code pagina invoeren-->
+        <div class="container">
+            <a class="link" href="/">
+                < Terug naar login </a>
+                    <h1 class="text-center">Registreren Skool Workshop</h1>
+                    <label for="Naam"><b>Naam</b></label>
+                    <input type="text" placeholder="Vul Naam in" name="Naam" id="Naam" required />
+
+                    <label for="Email"><b>Email</b></label>
+                    <input type="text" placeholder="Vul Email in" name="Email" id="Email" required />
+
+                    <label for="Organisatie"><b>Organisatie</b></label>
+                    <select id="Organisatie" name="Organisatie"></select>
+
+
+                    <label for="Wachtwoord"><b>Wachtwoord</b></label>
+                    <input type="password" placeholder="Vul Wachtwoord in" name="Wachtwoord" id="Wachtwoord" required />
+
+                    <label for="herhaalWachtwoord"><b>Herhaal wachtwoord</b></label>
+                    <input type="password" placeholder="Vul Wachtwoord in" name="herhaalWachtwoord" id="herhaalWachtwoord" required />
+
+                    <button type="submit" class="registerbtn">
+                    Registreren
+                </button>
+        </div>
+    </form>
+
+    <script src="/scripts/requests.js"></script>
+    <script src="/scripts/cookie.js"></script>
+    <script src="/scripts/dropdownGetter.js"></script>
+
+    <script>
+        checkLoginCookie();
+        getOrganisation();
+
+
+        function sendForm() {
+            const pass = document.getElementById('Wachtwoord').value;
+            const repeatPass = document.getElementById('herhaalWachtwoord')
+                .value;
+
+            let formData = new FormData(
+                document.querySelector('#registerForm')
+            ); // ingevulde gegevens uit form worden opgehaald
+
+            if (pass != repeatPass) {
+                alert('De ingevoerde wachtwoorden komen niet overeen!');
+            } else {
+                // API call uitvoeren om data op te halen
+                sendPostRequest(apiUrl + '/api/register', formData)
+                    .then((data) => {
+                        if (data.error) {
+                            alert('Error registering! \n', data.error);
+                        } else {
+                            alert('Succesvol geregistreerd!');
+                            window.location.href = '/';
+                        }
+                    })
+                    .catch((error) => {
+                        alert('Error registering!');
+                        console.error(
+                            'There has been a problem with your fetch operation:',
+                            error
+                        );
+                    });
+            }
+        }
+    </script>
+
+</body>
+
+</html>
