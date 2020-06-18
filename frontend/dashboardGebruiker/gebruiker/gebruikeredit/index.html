@@ -126,7 +126,7 @@
             crossorigin="anonymous"
         ></script>
         <script>
-        let data = sendGetRequest('http://localhost:3000/api/user/getone/' + getCookie('userID')).then((data) => {
+        let data = sendGetRequest(apiUrl + '/api/user/getone/' + getCookie('userID')).then((data) => {
                 if (data.error) {
                     alert(data.error);
                 } else {
