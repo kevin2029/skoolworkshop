@@ -8,7 +8,7 @@
   <body>
     <ul class="topnav">
       <li>
-        <a href="../mijnaccount/index.html">Mijn account</a>
+        <a class="active" href="../mijnaccount/index.html">Mijn account</a>
       </li>
       <li>
         <a href="./../gebruiker/gebruikeredit/index.html">Account bewerken</a>
@@ -27,7 +27,35 @@
         <a href="../couponLijst/coupon.html">Coupon</a>
       </li>
       
-      <li class="right"><a onclick="logout()">Uitloggen</a></li> <!--Active of hover toevoegen-->
+      <li class="right"><a onclick="logout()">Uitloggen</a></li>
+
+      <div class="container">
+        <h1 id="naam"></h1>
+        <h2 id="organisatie"></h2>
+        <hr>
+        <p id="email"></p>
+        <a href="../gebruiker/gebruikeredit/index.html">Wijzig mijn account</a>
+      </div>
     </ul>
+    <script src="../../scripts/cookie.js"></script>
+    <script src="../../scripts/requests.js"></script>
+    <script>
+       sendGetRequest(apiUrl + 'api/user/getone/' + getCookie('userID')).then((data) => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    $('#naam').text(data.User.Naam);
+                    $('#organisatie').val(data.User.Organisatie);
+                    $('#email').val(data.User.Email);
+                }
+            })
+            .catch((error) => {
+                alert('Error getting user!');
+                console.error(
+                    'There has been a problem with your fetch operation:',
+                    error
+                );
+            });
+    </script>
   </body>
 </html>
